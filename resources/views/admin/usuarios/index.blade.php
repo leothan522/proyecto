@@ -32,9 +32,9 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            @if (leerJson(Auth::user()->permisos, 'usuarios.create') || Auth::user()->role == 100)
+            @if (leerJson(Auth::user()->permisos, 'usuarios.store') || Auth::user()->role == 100)
             <div class="col-md-3">
-                <div class="card card-primary card-outline">
+                <div class="card card-navy">
                     <div class="card-header">
                         <h5 class="card-title">Nuevo Usuario</h5>
                         <div class="card-tools">
@@ -51,7 +51,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre y Apellido']) !!}
+                                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre y Apellido', 'required']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +60,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+                                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email', 'required']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -69,7 +69,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 </div>
-                                {!! Form::text('password', $clave, ['class' => 'form-control', 'placeholder' => 'Contraseña']) !!}
+                                {!! Form::text('password', $clave, ['class' => 'form-control', 'placeholder' => 'Contraseña', 'required']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,7 +78,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-cog"></i></span>
                                 </div>
-                                {!! Form::select('role', role() , null , ['class' => 'custom-select', 'placeholder' => 'Seleccione']) !!}
+                                {!! Form::select('role', role() , null , ['class' => 'custom-select', 'placeholder' => 'Seleccione', 'required']) !!}
                             </div>
                         </div>
                         @if ($errors->any())

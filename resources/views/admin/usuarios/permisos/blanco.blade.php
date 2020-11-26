@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-12">
     <div class="card card-primary card-outline">
         <div class="card-header">
             <h5 class="card-title">Dashboard</h5>

@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('/admin')->group(function (){
 
     Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard');
-    Route::resource('/usuarios', 'Admin\UsersController');
+    Route::resource('usuarios', 'Admin\UsersController');
+    Route::resource('municipios', 'Admin\MunicipiosController');
+    Route::resource('parroquias', 'Admin\ParroquiasController');
+    Route::resource('familias', 'Admin\FamiliasController');
+    Route::resource('bloques', 'Admin\BloquesController');
+    Route::get('/gestionar-bloques/consultar', 'Admin\BloquesController@consultar')->name('bloques.consultar');
 
 });

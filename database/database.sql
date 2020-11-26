@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.migrations: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.migrations: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -52,7 +52,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(6, '2020_11_12_151908_create_sessions_table', 1),
 	(7, '2020_11_22_133613_create_municipios_table', 1),
 	(8, '2020_11_22_133823_create_parroquias_table', 1),
-	(9, '2020_11_22_223710_add_users_plataforma', 1);
+	(9, '2020_11_22_223710_add_users_plataforma', 1),
+	(10, '2020_11_24_183254_create_parametros_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.municipios
@@ -60,28 +61,45 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_corto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla alguarisa.municipios: ~15 rows (aproximadamente)
+/*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
+INSERT INTO `municipios` (`id`, `nombre_completo`, `nombre_corto`, `created_at`, `updated_at`) VALUES
+	(1, 'SAN JOSE DE GUARIBE', 'GUARIBE\r', NULL, NULL),
+	(2, 'JOSE TADEO MONAGAS', 'MONAGAS\r', NULL, NULL),
+	(3, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO\r', NULL, NULL),
+	(4, 'ORTIZ', 'ORTIZ\r', NULL, NULL),
+	(5, 'JULIAN MELLADO', 'MELLADO\r', NULL, NULL),
+	(6, 'FRANCISCO DE MIRANDA', 'MIRANDA\r', NULL, NULL),
+	(7, 'ESTEROS DE CAMAGUAN', 'CAMAGUAN\r', NULL, NULL),
+	(8, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL\r', NULL, NULL),
+	(9, 'CHAGUARAMAS', 'CHAGUARAMAS\r', NULL, NULL),
+	(10, 'JUAN JOSE RONDON', 'LAS MERCEDES\r', NULL, NULL),
+	(11, 'LEONARDO INFANTE', 'INFANTE\r', NULL, NULL),
+	(12, 'JOSE FELIX RIBAS', 'RIBAS\r', NULL, NULL),
+	(13, 'EL SOCORRO', 'EL SOCORRO\r', NULL, NULL),
+	(14, 'SANTA MARIA DE IPIRE', 'SANTA MARIA\r', NULL, NULL),
+	(15, 'PEDRO ZARAZA', 'ZARAZA\r', NULL, NULL);
+/*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
+
+-- Volcando estructura para tabla alguarisa.parametros
+CREATE TABLE IF NOT EXISTS `parametros` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tabla_id` bigint(20) unsigned DEFAULT NULL,
+  `valor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.municipios: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
-INSERT INTO `municipios` (`id`, `nombre_completo`, `nombre_corto`) VALUES
-	(1, 'SAN JOSE DE GUARIBE', 'GUARIBE\r'),
-	(2, 'JOSE TADEO MONAGAS', 'MONAGAS\r'),
-	(3, 'JUAN GERMAN ROSCIO NIEVES', 'ROSCIO\r'),
-	(4, 'ORTIZ', 'ORTIZ\r'),
-	(5, 'JULIAN MELLADO', 'MELLADO\r'),
-	(6, 'FRANCISCO DE MIRANDA', 'MIRANDA\r'),
-	(7, 'ESTEROS DE CAMAGUAN', 'CAMAGUAN\r'),
-	(8, 'SAN GERONIMO DE GUAYABAL', 'GUAYABAL\r'),
-	(9, 'CHAGUARAMAS', 'CHAGUARAMAS\r'),
-	(10, 'JUAN JOSE RONDON', 'LAS MERCEDES\r'),
-	(11, 'LEONARDO INFANTE', 'INFANTE\r'),
-	(12, 'JOSE FELIX RIBAS', 'RIBAS\r'),
-	(13, 'EL SOCORRO', 'EL SOCORRO\r'),
-	(14, 'SANTA MARIA DE IPIRE', 'SANTA MARIA\r'),
-	(15, 'PEDRO ZARAZA', 'ZARAZA\r');
-/*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
+-- Volcando datos para la tabla alguarisa.parametros: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.parroquias
 CREATE TABLE IF NOT EXISTS `parroquias` (
@@ -89,53 +107,55 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_corto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `municipios_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `parroquias_municipios_id_foreign` (`municipios_id`),
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parroquias: ~39 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
-INSERT INTO `parroquias` (`id`, `nombre_completo`, `nombre_corto`, `municipios_id`) VALUES
-	(1, 'GUARIBE', NULL, 1),
-	(2, 'CARLOS SOUBLETTE', NULL, 2),
-	(3, 'PASO REAL DE MACAIRA', NULL, 2),
-	(4, 'SAN FRANCISCO DE MACAIRA', NULL, 2),
-	(5, 'ALTAGRACIA DE ORITUCO', NULL, 2),
-	(6, 'SAN RAFAEL DE ORITUCO', NULL, 2),
-	(7, 'LIBERTAD DE ORITUCO', NULL, 2),
-	(8, 'SAN FRANCISCO JAVIER DE LEZAMA', NULL, 2),
-	(9, 'SAN JUAN', NULL, 3),
-	(10, 'PARAPARA', NULL, 3),
-	(11, 'CANTAGALLO', NULL, 3),
-	(12, 'ORTIZ', NULL, 4),
-	(13, 'SAN JOSE DE TIZNADOS', NULL, 4),
-	(14, 'SAN LORENZO DE TIZNADOS', NULL, 4),
-	(15, 'SAN FRANCISCO DE TIZNADOS', NULL, 4),
-	(16, 'EL SOMBRERO', NULL, 5),
-	(17, 'SOSA', NULL, 5),
-	(18, 'CALABOZO', NULL, 6),
-	(19, 'EL RASTRO', NULL, 6),
-	(20, 'GUARDATINAJAS', NULL, 6),
-	(21, 'EL CALVARIO', NULL, 6),
-	(22, 'CAMAGUAN', NULL, 7),
-	(23, 'PUERTO MIRANDA', NULL, 7),
-	(24, 'UVERITO', NULL, 7),
-	(25, 'GUAYABAL', NULL, 8),
-	(26, 'CAZORLA', NULL, 8),
-	(27, 'CHAGUARAMAS', NULL, 9),
-	(28, 'LAS MERCEDES', NULL, 10),
-	(29, 'SANTA RIRA DE MANAPIRE', NULL, 10),
-	(30, 'CABRUTA', NULL, 10),
-	(31, 'VALLE DE LA PASCUA', NULL, 11),
-	(32, 'ESPINO', NULL, 11),
-	(33, 'TUCUPIDO', NULL, 12),
-	(34, 'SAN RAFAEL DE LAYA', NULL, 12),
-	(35, 'EL SOCORRO', NULL, 13),
-	(36, 'SANTA MARIA', NULL, 14),
-	(37, 'ALTAMIRA', NULL, 14),
-	(38, 'ZARAZA', NULL, 15),
-	(39, 'SAN JOSE DE UNARE', NULL, 15);
+INSERT INTO `parroquias` (`id`, `nombre_completo`, `nombre_corto`, `municipios_id`, `created_at`, `updated_at`) VALUES
+	(1, 'GUARIBE', NULL, 1, NULL, NULL),
+	(2, 'CARLOS SOUBLETTE', NULL, 2, NULL, NULL),
+	(3, 'PASO REAL DE MACAIRA', NULL, 2, NULL, NULL),
+	(4, 'SAN FRANCISCO DE MACAIRA', NULL, 2, NULL, NULL),
+	(5, 'ALTAGRACIA DE ORITUCO', NULL, 2, NULL, NULL),
+	(6, 'SAN RAFAEL DE ORITUCO', NULL, 2, NULL, NULL),
+	(7, 'LIBERTAD DE ORITUCO', NULL, 2, NULL, NULL),
+	(8, 'SAN FRANCISCO JAVIER DE LEZAMA', NULL, 2, NULL, NULL),
+	(9, 'SAN JUAN', NULL, 3, NULL, NULL),
+	(10, 'PARAPARA', NULL, 3, NULL, NULL),
+	(11, 'CANTAGALLO', NULL, 3, NULL, NULL),
+	(12, 'ORTIZ', NULL, 4, NULL, NULL),
+	(13, 'SAN JOSE DE TIZNADOS', NULL, 4, NULL, NULL),
+	(14, 'SAN LORENZO DE TIZNADOS', NULL, 4, NULL, NULL),
+	(15, 'SAN FRANCISCO DE TIZNADOS', NULL, 4, NULL, NULL),
+	(16, 'EL SOMBRERO', NULL, 5, NULL, NULL),
+	(17, 'SOSA', NULL, 5, NULL, NULL),
+	(18, 'CALABOZO', NULL, 6, NULL, NULL),
+	(19, 'EL RASTRO', NULL, 6, NULL, NULL),
+	(20, 'GUARDATINAJAS', NULL, 6, NULL, NULL),
+	(21, 'EL CALVARIO', NULL, 6, NULL, NULL),
+	(22, 'CAMAGUAN', NULL, 7, NULL, NULL),
+	(23, 'PUERTO MIRANDA', NULL, 7, NULL, NULL),
+	(24, 'UVERITO', NULL, 7, NULL, NULL),
+	(25, 'GUAYABAL', NULL, 8, NULL, NULL),
+	(26, 'CAZORLA', NULL, 8, NULL, NULL),
+	(27, 'CHAGUARAMAS', NULL, 9, NULL, NULL),
+	(28, 'LAS MERCEDES', NULL, 10, NULL, NULL),
+	(29, 'SANTA RIRA DE MANAPIRE', NULL, 10, NULL, NULL),
+	(30, 'CABRUTA', NULL, 10, NULL, NULL),
+	(31, 'VALLE DE LA PASCUA', NULL, 11, NULL, NULL),
+	(32, 'ESPINO', NULL, 11, NULL, NULL),
+	(33, 'TUCUPIDO', NULL, 12, NULL, NULL),
+	(34, 'SAN RAFAEL DE LAYA', NULL, 12, NULL, NULL),
+	(35, 'EL SOCORRO', NULL, 13, NULL, NULL),
+	(36, 'SANTA MARIA', NULL, 14, NULL, NULL),
+	(37, 'ALTAMIRA', NULL, 14, NULL, NULL),
+	(38, 'ZARAZA', NULL, 15, NULL, NULL),
+	(39, 'SAN JOSE DE UNARE', NULL, 15, NULL, NULL);
 /*!40000 ALTER TABLE `parroquias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.password_resets
@@ -183,10 +203,11 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.sessions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.sessions: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('QKogxRn0J2sHvZY5x0YK5eOQckFjOgyM71dyqiZU', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNXNqWmFZbXljRFBtdDRlM3hIMlMxanhjSk1QaktEcklWdVlSekFRcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2Rhc2hib2FyZCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkSXpaQi9Wc3lqUXlBNzBYeWE1c2gyLmRQNHFNOERoSzBFeEwyeS56YlVRdGdOYmNkQzhjOUMiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJEl6WkIvVnN5alF5QTcwWHlhNXNoMi5kUDRxTThEaEswRXhMMnkuemJVUXRnTmJjZEM4YzlDIjt9', 1606228835);
+	('QKogxRn0J2sHvZY5x0YK5eOQckFjOgyM71dyqiZU', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNXNqWmFZbXljRFBtdDRlM3hIMlMxanhjSk1QaktEcklWdVlSekFRcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2Rhc2hib2FyZCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkSXpaQi9Wc3lqUXlBNzBYeWE1c2gyLmRQNHFNOERoSzBFeEwyeS56YlVRdGdOYmNkQzhjOUMiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJEl6WkIvVnN5alF5QTcwWHlhNXNoMi5kUDRxTThEaEswRXhMMnkuemJVUXRnTmJjZEM4YzlDIjt9', 1606228835),
+	('Sec3uUFdgslwRRSNfQSv0XKwxqJQcMLVt94dLQlS', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoib1NBSHBrUlUwVVVDSnZheWZWMGczSTZxYnNGaGtsT0s2UTRnalhPNSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM1OiJodHRwOi8vcHJveWVjdG8udGVzdC9hZG1pbi91c3VhcmlvcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRJelpCL1ZzeWpReUE3MFh5YTVzaDIuZFA0cU04RGhLMEV4TDJ5LnpiVVF0Z05iY2RDOGM5QyI7fQ==', 1606410473);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.users

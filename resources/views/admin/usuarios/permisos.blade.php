@@ -55,9 +55,25 @@
         {!! Form::open(['route' => ['usuarios.update', $user->id], 'method' => 'PUT']) !!}
         <div class="row justify-content-center">
             @if ($user->role > 0)
+
                 @include('admin.usuarios.permisos.dashboard')
-                @include('admin.usuarios.permisos.modulo_usuarios')
+                <div class="col-md-3">
+                    <label class="col-md-12">Configuración</label>
+                    @include('admin.usuarios.permisos.modulo_usuarios')
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12">Parametros</label>
+                    @include('admin.usuarios.permisos.modulo_municipios')
+                    @include('admin.usuarios.permisos.modulo_parroquias')
+                    @include('admin.usuarios.permisos.modulo_familias')
+                    @include('admin.usuarios.permisos.modulo_bloques')
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12">Gestionar Bloques</label>
+                    @include('admin.usuarios.permisos.modulo_consultar_bloques')
+                </div>
                 @else
+                {{-- Usuarios Estandar --}}
                 @include('admin.usuarios.permisos.blanco')
             @endif
         </div>
@@ -76,16 +92,4 @@
     </div>
 
 
-@endsection
-
-@section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var btn_crear_usuario = document.getElementById('optionUsuarios1');
-            var btn_usuarios_store = document.getElementById('optionUsuariosp1');
-            btn_crear_usuario.addEventListener('click', function () {
-               btn_usuarios_store.click();
-            });
-        });
-    </script>
 @endsection

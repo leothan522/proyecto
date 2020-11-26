@@ -15,6 +15,105 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
+            @if (leerJson(Auth::user()->permisos, 'gestionar_claps') || Auth::user()->role == 100)
+                <li class="nav-item has-treeview lko- {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-">
+                        <i class="nav-icon fas fa-clone"></i>
+                        <p>
+                            Gestionar CLAPS
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (leerJson(Auth::user()->permisos, 'bloques.consultar') || Auth::user()->role == 100)
+                            <li class="nav-item">
+                                <a href="{{ route('bloques.consultar') }}" class="nav-link lk-">
+                                    <i class="fa fa-list-alt nav-icon"></i>
+                                    <p>Consultar</p>
+                                </a>
+                            </li>
+                        @endif
+                        <li class="nav-item">
+                            <a href="#" class="nav-link lk-">
+                                <i class="fa fa-cloud-upload-alt nav-icon"></i>
+                                <p>Importar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if (leerJson(Auth::user()->permisos, 'gestionar_bloques') || Auth::user()->role == 100)
+                <li class="nav-item has-treeview lko-bloques.consultar {{--menu-open--}}">
+                <a href="#" class="nav-link lkm-bloques.consultar">
+                    <i class="nav-icon fas fa-cubes"></i>
+                    <p>
+                        Gestionar Bloques
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if (leerJson(Auth::user()->permisos, 'bloques.consultar') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('bloques.consultar') }}" class="nav-link lk-bloques.consultar">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Consultar Bloques</p>
+                            </a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <a href="#" class="nav-link lk-">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Mover CLAPS</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
+            @if (leerJson(Auth::user()->permisos, 'parametros') || Auth::user()->role == 100)
+                <li class="nav-item has-treeview lko-municipios.index lko-parroquias.index lko-familias.index lko-bloques.index{{--menu-open--}}">
+                <a href="#" class="nav-link lkm-municipios.index lkm-parroquias.index lkm-familias.index lkm-bloques.index">
+                    <i class="nav-icon fas fa-tasks"></i>
+                    <p>
+                        Parametros
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if (leerJson(Auth::user()->permisos, 'municipios.index') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('municipios.index') }}" class="nav-link lk-municipios.index">
+                                <i class="fas fa-tag nav-icon"></i>
+                                <p>Municipios</p>
+                            </a>
+                        </li>
+                    @endif
+                    @if (leerJson(Auth::user()->permisos, 'parroquias.index') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('parroquias.index') }}" class="nav-link lk-parroquias.index">
+                                <i class="fas fa-tags nav-icon"></i>
+                                <p>Parroquias</p>
+                            </a>
+                        </li>
+                    @endif
+                    @if (leerJson(Auth::user()->permisos, 'bloques.index') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('bloques.index') }}" class="nav-link lk-bloques.index">
+                                <i class="fas fa-cubes nav-icon"></i>
+                                <p>Bloques</p>
+                            </a>
+                        </li>
+                    @endif
+                    @if (leerJson(Auth::user()->permisos, 'familias.index') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('familias.index') }}" class="nav-link lk-familias.index">
+                                <i class="fas fa-child nav-icon"></i>
+                                <p>Familias</p>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+            @endif
             @if (leerJson(Auth::user()->permisos, 'configuracion') || Auth::user()->role == 100)
                 <li class="nav-item has-treeview lko-usuarios.index{{--menu-open--}}">
                 <a href="#" class="nav-link lkm-usuarios.index">
@@ -33,52 +132,10 @@
                         </a>
                     </li>
                     @endif
-                    {{--<li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Inactive Page</p>
-                        </a>
-                    </li>--}}
                 </ul>
             </li>
             @endif
         </ul>
-        {{--<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-            <li class="nav-item has-treeview menu-open">
-                <a href="#" class="nav-link active">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Starter Pages
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Active Page</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Inactive Page</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Simple Link
-                        <span class="right badge badge-danger">New</span>
-                    </p>
-                </a>
-            </li>
-        </ul>--}}
     </nav>
     @endif
     <!-- /.sidebar-menu -->

@@ -1,5 +1,5 @@
 <div class="col-md-3">
-    <div class="card card-primary card-outline">
+    <div class="card card-navy">
         <div class="card-header">
             <h5 class="card-title">Admin Dashboard</h5>
             <div class="card-tools">

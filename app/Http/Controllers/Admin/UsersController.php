@@ -48,6 +48,7 @@ class UsersController extends Controller
     {
         $user = new User($request->all());
         $user->password = Hash::make($request->password);
+        $user->role = $request->role;
         $user->save();
         flash('Registrado Exitosamente', 'success')->important();
         return redirect()->route('usuarios.index');
@@ -120,12 +121,29 @@ class UsersController extends Controller
                 $permisos = [
                     'admin.dashboard'   => $request->input('admin_dashboard'),
                     'usuarios.index'    => $request->input('usuarios_index'),
-                    'usuarios.create'    => $request->input('usuarios_create'),
                     'usuarios.store'    => $request->input('usuarios_store'),
                     'usuarios.status'    => $request->input('usuarios_status'),
                     'usuarios.editar'    => $request->input('usuarios_editar'),
                     'usuarios.clave'    => $request->input('usuarios_clave'),
-                    'usuarios.edit'    => $request->input('usuarios_edit')
+                    'usuarios.edit'    => $request->input('usuarios_edit'),
+                    'municipios.index'    => $request->input('municipios_index'),
+                    'municipios.store'    => $request->input('municipios_store'),
+                    'municipios.update'    => $request->input('municipios_update'),
+                    'municipios.destroy'    => $request->input('municipios_destroy'),
+                    'parroquias.index'    => $request->input('parroquias_index'),
+                    'parroquias.store'    => $request->input('parroquias_store'),
+                    'parroquias.update'    => $request->input('parroquias_update'),
+                    'parroquias.destroy'    => $request->input('parroquias_destroy'),
+                    'familias.index'    => $request->input('familias_index'),
+                    'familias.store'    => $request->input('familias_store'),
+                    'familias.update'    => $request->input('familias_update'),
+                    'familias.destroy'    => $request->input('familias_destroy'),
+                    'bloques.index'    => $request->input('bloques_index'),
+                    'bloques.store'    => $request->input('bloques_store'),
+                    'bloques.destroy'    => $request->input('bloques_destroy'),
+                    'bloques.consultar'    => $request->input('bloques_consultar'),
+                    'bloques.update'    => $request->input('bloques_update')
+
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -144,6 +162,20 @@ class UsersController extends Controller
                 //******************************************** Permisos de Usuario
                 if ($permisos['usuarios.edit']){
                     $permisos['usuarios.update'] = "true";
+                }
+
+                //******************************************** parametros SIDEBAR
+                if ($permisos['municipios.index'] || $permisos['parroquias.index'] || $permisos['familias.index'] || $permisos['bloques.index']){
+                    $permisos['parametros'] = "true";
+                }else{
+                    $permisos['parametros'] = null;
+                }
+
+                //******************************************* Gestionar BLoques
+                if ($permisos['bloques.consultar']){
+                    $permisos['gestionar_bloques'] = "true";
+                }else{
+                    $permisos = null;
                 }
 
                 $permisos = json_encode($permisos);

@@ -80,7 +80,7 @@
             </div>
             @if (leerJson(Auth::user()->permisos, 'usuarios.editar') || Auth::user()->role == 100)
             <div class="col-md-3">
-                <div class="card card-primary card-outline">
+                <div class="card card-navy">
                     <div class="card-header">
                         <h5 class="card-title">Editar Usuario</h5>
                         <div class="card-tools">
@@ -97,7 +97,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     </div>
-                                    {!! Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Nombre y Apellido']) !!}
+                                    {!! Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Nombre y Apellido', 'required']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -106,7 +106,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    {!! Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+                                    {!! Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Email', 'required']) !!}
                                 </div>
                             </div>
                         @endif
@@ -155,7 +155,7 @@
             @endif
             @if (leerJson(Auth::user()->permisos, 'usuarios.clave') || Auth::user()->role == 100)
             <div class="col-md-3">
-                <div class="card card-primary card-outline">
+                <div class="card card-navy">
                     <div class="card-header">
                         <h5 class="card-title">Seguridad</h5>
                         <div class="card-tools">

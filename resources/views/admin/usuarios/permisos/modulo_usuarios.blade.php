@@ -1,5 +1,5 @@
-<div class="col-md-3">
-    <div class="card card-primary card-outline">
+<div class="col-md-12">
+    <div class="card card-navy">
         <div class="card-header">
             <h5 class="card-title">Usuarios</h5>
             <div class="card-tools">
@@ -14,14 +14,9 @@
         <div class="card-body">
 
             <div class="custom-control custom-checkbox">
-                <input name="usuarios_create" value="true" class="custom-control-input" type="checkbox" id="optionUsuarios1"
-                @if (leerJson($user->permisos, 'usuarios.create')) checked @endif>
+                <input name="usuarios_store" value="true" class="custom-control-input" type="checkbox" id="optionUsuarios1"
+                @if (leerJson($user->permisos, 'usuarios.store')) checked @endif>
                 <label for="optionUsuarios1" class="custom-control-label">Crear Usuarios</label>
-            </div>
-            <div class="custom-control custom-checkbox d-none">
-                <input name="usuarios_store" value="true" class="custom-control-input" type="checkbox" id="optionUsuariosp1"
-                       @if (leerJson($user->permisos, 'usuarios.store')) checked @endif>
-                <label for="optionUsuariosp1" class="custom-control-label">usuarios.store</label>
             </div>
             <div class="custom-control custom-checkbox">
                 <input name="usuarios_status" value="true" class="custom-control-input" type="checkbox" id="optionUsuarios3"

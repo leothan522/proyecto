@@ -19,7 +19,7 @@ class CreateParroquiasTable extends Migration
             $table->string('nombre_corto')->nullable();
             $table->bigInteger('municipios_id')->unsigned();
             $table->foreign('municipios_id')->references('id')->on('municipios')->cascadeOnDelete();
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

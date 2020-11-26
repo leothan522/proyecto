@@ -59,3 +59,27 @@ function leerJson($json, $key)
     }
 }
 
+//funcion formato millares
+function formatoMillares($cantidad, $decimal = 2){
+    return number_format($cantidad, $decimal, ',', '.');
+}
+
+//Ceros a la izquierda
+function cerosIzquierda($cantidad, $cantCeros = 2){
+    if ($cantidad == 0){
+        return 0;
+    }
+    return str_pad($cantidad, $cantCeros, "0", STR_PAD_LEFT);
+}
+
+//calculo de porcentaje
+function obtenerPorcentaje($cantidad, $total) {
+    if ($total != 0){
+        $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
+        $porcentaje = round($porcentaje, 2);  // Quitar los decimales
+        return $porcentaje;
+    }
+    return 0;
+}
+
+
