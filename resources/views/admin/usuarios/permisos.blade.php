@@ -56,8 +56,8 @@
         <div class="row justify-content-center">
             @if ($user->role > 0)
 
-                @include('admin.usuarios.permisos.dashboard')
                 <div class="col-md-3">
+                    @include('admin.usuarios.permisos.dashboard')
                     <label class="col-md-12">Configuración</label>
                     @include('admin.usuarios.permisos.modulo_usuarios')
                 </div>
@@ -71,6 +71,10 @@
                 <div class="col-md-3">
                     <label class="col-md-12">Gestionar Bloques</label>
                     @include('admin.usuarios.permisos.modulo_consultar_bloques')
+                </div>
+                <div class="col-md-3">
+                    <label class="col-md-12">Modulo CLAPS</label>
+                    @include('admin.usuarios.permisos.modulo_consultar_claps')
                 </div>
                 @else
                 {{-- Usuarios Estandar --}}

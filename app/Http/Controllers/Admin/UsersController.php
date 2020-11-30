@@ -142,8 +142,10 @@ class UsersController extends Controller
                     'bloques.store'    => $request->input('bloques_store'),
                     'bloques.destroy'    => $request->input('bloques_destroy'),
                     'bloques.consultar'    => $request->input('bloques_consultar'),
-                    'bloques.update'    => $request->input('bloques_update')
-
+                    'bloques.update'    => $request->input('bloques_update'),
+                    'gestionar_claps'    => $request->input('gestionar_claps'),
+                    'claps.get_import'    => $request->input('claps_get_import'),
+                    'claps.post_import'    => $request->input('claps_get_import')
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){

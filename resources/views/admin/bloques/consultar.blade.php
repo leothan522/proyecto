@@ -43,49 +43,50 @@
                 theme: 'bootstrap4'
             })
         });
-    </script>
 
-        <script>
-            function select_bloques(){
-                //tomo el valor del select elegido
-                var municipios_id;
-                municipios_id = document.f1.municipios_id[document.f1.municipios_id.selectedIndex].value;
-                //miro a ver si el select está definido
-                if (municipios_id != 0) {
-                    //si estaba definido, entonces coloco las opciones correspondientes.
-                    //selecciono el array adecuado
-                    mis_bloques=bloques_nombres[municipios_id];
-                    mis_id=bloques_id[municipios_id];
-                    //calculo el numero del array
-                    num_bloques = mis_bloques.length;
-                    //marco el número de elementos en el select
-                    document.f1.bloques_id.length = num_bloques;
-                    //para cada elemento del array, la introduzco en el select
-                    for(i=0;i<num_bloques;i++){
-                        document.f1.bloques_id.options[i].value=mis_id[i];
-                        document.f1.bloques_id.options[i].text=mis_bloques[i];
-                    }
-                }else{
-                    //si no había bloques_id seleccionada, elimino las bloques_ids del select
-                    document.f1.bloques_id.length = 1;
-                    //coloco un guión en la única opción que he dejado
-                    document.f1.bloques_id.options[0].value = "-";
-                    document.f1.bloques_id.options[0].text = "-";
+        function select_bloques(){
+            //tomo el valor del select elegido
+            var municipios_id;
+            municipios_id = document.f1.municipios_id[document.f1.municipios_id.selectedIndex].value;
+            //miro a ver si el select está definido
+            if (municipios_id != 0) {
+                //si estaba definido, entonces coloco las opciones correspondientes.
+                //selecciono el array adecuado
+                mis_bloques=bloques_nombres[municipios_id];
+                mis_id=bloques_id[municipios_id];
+                //calculo el numero del array
+                num_bloques = mis_bloques.length;
+                //marco el número de elementos en el select
+                document.f1.bloques_id.length = num_bloques;
+                //para cada elemento del array, la introduzco en el select
+                for(i=0;i<num_bloques;i++){
+                    document.f1.bloques_id.options[i].value=mis_id[i];
+                    document.f1.bloques_id.options[i].text=mis_bloques[i];
                 }
-                //marco como seleccionada la opción primera de bloques_id
-                document.f1.bloques_id.options[0].selected = true;
+            }else{
+                //si no había bloques_id seleccionada, elimino las bloques_ids del select
+                document.f1.bloques_id.length = 1;
+                //coloco un guión en la única opción que he dejado
+                document.f1.bloques_id.options[0].value = "-";
+                document.f1.bloques_id.options[0].text = "-";
             }
+            //marco como seleccionada la opción primera de bloques_id
+            document.f1.bloques_id.options[0].selected = true;
+        }
 
-        </script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var resultado_busqueda = document.getElementById('resultado_busqueda');
+            var boton_cerrar = document.getElementById('boton_cerrar');
+            boton_cerrar.addEventListener('click', function () {
+                resultado_busqueda.classList.add('d-none');
+            });
+        });
+
+    </script>
 @endsection
 
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-sm-4 text-center">
-                @include('flash::message')
-            </div>
-        </div>
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="col-12 col-sm-6 col-md-12">
@@ -120,7 +121,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                 </div>
-                                {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_bloques()']) !!}
+                                {!! Form::select('municipios_id', $municipios, $id_municipio, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_bloques()']) !!}
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -129,12 +130,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                 </div>
-                                {!! Form::select('bloques_id', ['' => 'Seleccione'] , null , ['class' => 'custom-select select2bs4']) !!}
+                                {!! Form::select('bloques_id', $mun_bloques, $id_bloque, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                             </div>
                         </div>
                         </div>
                         <div class="float-right">
-                            <a href="{{ route('bloques.consultar') }}" class="btn btn-sm btn-default">Limpiar</a>
                             <button class="btn btn-sm bg-navy"><i class="fas fa-search"></i> Buscar</button>
                         </div>
 
@@ -145,8 +145,13 @@
             </div>
 
         </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-4 text-center">
+                @include('flash::message')
+            </div>
+        </div>
         @if ($ver_municipio)
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" id="resultado_busqueda">
                 <div class="col-md-2">
                     <div class="card-body">
 
@@ -213,7 +218,7 @@
                                     @endif
                                 @endif
                             @endif
-                            <span class="btn btn-tool"><i class="fas fa-cubes"></i></span>
+                            <button type="button" class="btn btn-tool" id="boton_cerrar"><i class="fas fa-times"></i></button>
                             {!! Form::close() !!}
                         </div>
                     </div>

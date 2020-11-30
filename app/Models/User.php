@@ -60,4 +60,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function parametros()
+    {
+        return $this->hasMany(Parametro::class, 'valor', 'id');
+    }
+
 }

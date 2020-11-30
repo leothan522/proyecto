@@ -35,6 +35,12 @@ function haceCuanto($fecha){
     return $carbon->parse($fecha)->diffForHumans();
 }
 
+function fecha($fecha, $format = null){
+    $carbon = new Carbon();
+    if ($format == null){ $format = "d-m-Y"; }
+    return $carbon->parse($fecha)->format($format);
+}
+
 function iconoPlataforma($plataforma){
     if ($plataforma == 0){
         return '<i class="fas fa-desktop"></i>';

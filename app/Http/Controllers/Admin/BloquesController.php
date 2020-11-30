@@ -212,9 +212,17 @@ class BloquesController extends Controller
             unset($array_id);
         }
 
+        $id_bloque = null;
         if ($request->all()){
 
             $ver_municipios = Municipio::find($request->municipios_id);
+            $id_municipio = $ver_municipios->id;
+            if ($request->bloques_id != null){
+                $bloque = Parametro::find($request->bloques_id);
+                $id_bloque = $bloque->id;
+            }
+            $mun_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->pluck('valor', 'id');
+
             $ver_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->where('id','LIKE', $request->bloques_id)->get();
             $ver_bloques->each(function ($bloque){
                 $clap = Parametro::where('nombre', 'bloque_claps')->where('tabla_id', $bloque->id)->first();
@@ -256,6 +264,9 @@ class BloquesController extends Controller
         }else{
             $ver_bloques = null;
             $ver_municipios = null;
+            $mun_bloques = [];
+            $id_municipio = null;
+            $id_bloque = null;
         }
 
 
@@ -269,7 +280,10 @@ class BloquesController extends Controller
             ->with('total_familias', $total_familias)
             ->with('mun_claps', $mun_claps)
             ->with('mun_familias', $mun_familias)
-            ->with('total', $total);
+            ->with('total', $total)
+            ->with('mun_bloques', $mun_bloques)
+            ->with('id_municipio', $id_municipio)
+            ->with('id_bloque', $id_bloque);
     }
 
 }

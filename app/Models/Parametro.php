@@ -11,8 +11,19 @@ class Parametro extends Model
     protected $table = "parametros";
     protected $fillable = ['nombre', 'tabla_id', 'valor'];
 
-    public function municipios(){
+    public function municipios()
+    {
         return $this->belongsTo(Municipio::class, 'tabla_id', 'id');
+    }
+
+    public function usuarios()
+    {
+        return $this->belongsTo(User::class, 'valor', 'id');
+    }
+
+    public function imports()
+    {
+        return $this->hasMany(ImportClap::class, 'import_id', 'id');
     }
 
 }
