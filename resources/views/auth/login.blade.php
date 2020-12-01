@@ -10,20 +10,20 @@
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
             </div>
-            <x-jet-button class="ml-4">
+            {{--<x-jet-button class="ml-4">
                 {{ __('Login') }}
-            </x-jet-button>
+            </x-jet-button>--}}
         @endif
 
         @if (session('banned'))
             <div class="mb-4 font-medium text-center text-sm text-red-600">
                 {{ session('banned') }}
             </div>
-            <div class="mb-4 text-center">
+            {{--<div class="mb-4 text-center">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Login') }}
                 </a>
-            </div>
+            </div>--}}
 
         @else
 
