@@ -23,11 +23,16 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->get('/dashboard'
     return view('dashboard');
 })->name('dashboard');
 
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect()->route('login');
+})->name('cerrar');
+
 //**************************************** Ruta para  Usuarios Suspendidos
-Route::get('/logout2', function () {
+Route::get('/banned', function () {
     Auth::logout();
     return redirect()->route('login')->with('banned', 'Usuario Suspendido');
-})->name('logout2');
+})->name('banned');
 
 
 //*************************************************** Rutas App Android

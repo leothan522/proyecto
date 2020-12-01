@@ -20,7 +20,7 @@ class UserStatus
         if (Auth::user()->status != 0 || Auth::user()->role == 100){
             return $next($request);
         }else{
-            return redirect()->route('logout2');
+            return redirect()->route('banned');
         }
 
     }

@@ -117,13 +117,17 @@
             </div>
         </li>--}}
         <li class="nav-item">
-            {!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
+            <a href="{{ route('cerrar') }}" class="nav-link" data-toggle="tooltip" data-placement="bottom"
+               title="{{ __('Logout') }}">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+            {{--{!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
             <a href="{{ route('logout') }}" class="nav-link" data-toggle="tooltip" data-placement="bottom"
                title="{{ __('Logout') }}" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
-            {!! Form::close() !!}
+            {!! Form::close() !!}--}}
         </li>
         @if (Auth::user()->role == 100)
             <li class="nav-item">
