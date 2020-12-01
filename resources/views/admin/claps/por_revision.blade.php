@@ -40,7 +40,7 @@
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <span class="text-muted">{{ fecha($parametro->created_at, 'd-m-Y h:i a') }}</span>
+                            <span>CLAPS Por Revisión</span>
                         </h3>
 
                         <div class="card-tools">
@@ -48,7 +48,9 @@
                                 <i class="fas fa-minus"></i></button>
                             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
                                 <i class="fas fa-times"></i></button>--}}
-                            <span class="float-right text-muted text-xs"><i class="fa fa-user"></i> {{ $parametro->usuarios->name }}</span>
+                            <span class="float-right text-muted text-xs">
+                                {{ fecha($parametro->created_at, 'd-m-Y h:i a') }} /
+                                <i class="fa fa-user"></i> {{ $parametro->usuarios->name }}</span>
                         </div>
                     </div>
                     <div class="card-body">
@@ -84,13 +86,12 @@
                                     <td class="col-md-1">
                                         <div class="btn-group">
                                             <input type="hidden" name="delete" value="{{ false }}">
+                                            <input type="hidden" name="todo" value="{{ false }}">
                                             <input type="hidden" name="id_clap" value="{{ $import->id }}">
                                             <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $import->id }}"><i class="fas fa-eye"></i></a>
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
-                                                <button type="submit" class="btn btn-info">
-                                                    <i class="fas fa-save"></i>
-                                                </button>
-                                            @endif
+                                            <button type="submit" class="btn btn-info">
+                                                <i class="fas fa-save"></i>
+                                            </button>
                                         </div>
                                     </td>
                                     {!! Form::close() !!}
@@ -98,13 +99,12 @@
 
                                         {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post']) !!}
                                         <div class="btn-group">
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
-                                                <input type="hidden" name="delete" value="{{ true }}">
-                                                <input type="hidden" name="id_clap" value="{{ $import->id }}">
-                                                <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                            @endif
+                                            <input type="hidden" name="delete" value="{{ true }}">
+                                            <input type="hidden" name="todo" value="{{ false }}">
+                                            <input type="hidden" name="id_clap" value="{{ $import->id }}">
+                                            <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
                                         </div>
-                                    {!! Form::close() !!}
+                                        {!! Form::close() !!}
 
 
 
@@ -179,6 +179,18 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        <div class="row col-md-12 justify-content-end mt-3">
+                            {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post']) !!}
+                            <div>
+                                <input type="hidden" name="delete" value="{{ true }}">
+                                <input type="hidden" name="todo" value="{{ true }}">
+                                <input type="hidden" name="id_clap" value="{{ $import->id }}">
+                                <a href="{{ route('claps.get_revision_export', $parametro->id) }}" class="btn btn-sm bg-navy"><i class="fas fa-file-excel"></i> Generar Excel</a>
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Borrar todo</button>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
 
                     </div>
                     <!-- /.card-body -->

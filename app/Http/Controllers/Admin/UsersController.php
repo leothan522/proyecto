@@ -145,7 +145,10 @@ class UsersController extends Controller
                     'bloques.update'    => $request->input('bloques_update'),
                     'gestionar_claps'    => $request->input('gestionar_claps'),
                     'claps.get_import'    => $request->input('claps_get_import'),
-                    'claps.post_import'    => $request->input('claps_get_import')
+                    'claps.post_import'    => $request->input('claps_get_import'),
+                    'claps.get_revision'    => $request->input('claps_get_import'),
+                    'claps.post_revision'    => $request->input('claps_get_import'),
+                    'claps.get_revision_export'    => $request->input('claps_get_import')
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -177,7 +180,7 @@ class UsersController extends Controller
                 if ($permisos['bloques.consultar']){
                     $permisos['gestionar_bloques'] = "true";
                 }else{
-                    $permisos = null;
+                    $permisos['gestionar_bloques'] = null;
                 }
 
                 $permisos = json_encode($permisos);

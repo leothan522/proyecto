@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //return view('welcome');
+    //return view('auth.login');
     return redirect()->route('login');
 });
 
@@ -24,16 +24,16 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->get('/dashboard'
 })->name('dashboard');
 
 //**************************************** Ruta para  Usuarios Suspendidos
-Route::get('logout2', function () {
+Route::get('/logout2', function () {
     Auth::logout();
     return redirect()->route('login')->with('banned', 'Usuario Suspendido');
 })->name('logout2');
 
 
 //*************************************************** Rutas App Android
-Route::prefix('android')->group(function (){
+Route::prefix('/android')->group(function (){
 
-    Route::get('usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
+    Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
 
 });
 

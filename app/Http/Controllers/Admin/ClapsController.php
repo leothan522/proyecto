@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ImportClapsExport;
 use App\Http\Controllers\Controller;
 use App\Imports\ClapsImport;
 use App\Models\Clap;
@@ -100,22 +101,22 @@ class ClapsController extends Controller
         $import_claps = null;
         $detalle_import = null;
         $parametros = Parametro::where('nombre', 'import_clap')->orderBy('created_at', "DESC")->get();
-        $parametros->each(function ($parametro){
+        $parametros->each(function ($parametro) {
             $import = ImportClap::where('import_id', $parametro->id)->first();
-            if ($import){
+            if ($import) {
                 $parametro->class = "text-danger";
-            }else{
+            } else {
                 $parametro->class = "text-muted";
             }
         });
-        if ($id_import){
+        if ($id_import) {
             $detalle_import = Parametro::findOrFail($id_import);
             $claps_table = Clap::where('import_id', $id_import)->count();
             $import_claps = ImportClap::where('import_id', $id_import)->count();
             $claps_procesados = $claps_table + $import_claps;
 
             $claps_cargados = Clap::where('import_id', $id_import)->get()->groupBy('municipios_id');
-            foreach ($claps_cargados as $key => $claps){
+            foreach ($claps_cargados as $key => $claps) {
                 $municipio = Municipio::find($key);
                 $claps->nombre = $municipio->nombre_completo;
                 $claps->total = $claps->count();
@@ -163,7 +164,7 @@ class ClapsController extends Controller
         $parametros = Parametro::find($id);
         $import = ImportClap::find($request->id_clap);
 
-        if(!$request->delete) {
+        if (!$request->delete) {
             $claps = new Clap();
             $claps->nombre_clap = $import->nombre_clap;
             $claps->programa = $import->programa;
@@ -209,17 +210,37 @@ class ClapsController extends Controller
                 flash('CLAPS Guardado Correctamente', 'success')->important();
             }
 
-        }else{
-            $import->delete();
-            flash('Fila Eliminada', 'danger')->important();
+        } else {
+            if ($request->todo) {
+                $todos = ImportClap::where('import_id', $parametros->id)->get();
+                foreach ($todos as $todo) {
+                    $todo->delete();
+                }
+                flash('Todas las Filas han sido Eliminadas', 'danger')->important();
+            } else {
+                $import->delete();
+                flash('Fila Eliminada', 'danger')->important();
+            }
+
+
         }
 
         $verificar = ImportClap::where('import_id', $parametros->id)->first();
-        if ($verificar){
+        if ($verificar) {
             return back();
-        }else{
+        } else {
             return redirect()->route('claps.get_import', $parametros->id);
         }
 
     }
+
+    public function exportImportClaps($id)
+    {
+        $imports = ImportClap::where('import_id', $id)->get();
+        $parametro = Parametro::find($id);
+        $nombre = fecha($parametro->created_at, 'd-m-Y_h-i_a');
+        //return view('admin.claps.exports.import_claps')->with('imports', $imports);
+        return Excel::download(new ImportClapsExport($imports), "Por_Revision_$nombre.xlsx");
+    }
+
 }

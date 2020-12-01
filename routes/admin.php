@@ -22,10 +22,13 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::resource('familias', 'Admin\FamiliasController');
     Route::resource('bloques', 'Admin\BloquesController');
     Route::get('/gestionar-bloques/consultar', 'Admin\BloquesController@consultar')->name('bloques.consultar');
+
+    // modulo clap
     Route::get('/claps/importar/{id_import?}', 'Admin\ClapsController@subirArchivo')->name('claps.get_import');
     Route::post('/claps/importar', 'Admin\ClapsController@import')->name('claps.post_import');
     Route::get('/claps/importar/{id}/por-revision', 'Admin\ClapsController@getRevision')->name('claps.get_revision');
     Route::post('/claps/importar/{id}/por-revision', 'Admin\ClapsController@postRevision')->name('claps.post_revision');
+    Route::get('/claps/importar/{id}/por-revision/exportar', 'Admin\ClapsController@exportImportClaps')->name('claps.get_revision_export');
     Route::resource('claps', 'Admin\ClapsController');
 
 });
