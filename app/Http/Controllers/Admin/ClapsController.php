@@ -11,10 +11,9 @@ use App\Models\Municipio;
 use App\Models\Parametro;
 use App\Models\Parroquia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use mysql_xdevapi\Exception;
+//use mysql_xdevapi\Exception;
 
 class ClapsController extends Controller
 {
@@ -25,7 +24,16 @@ class ClapsController extends Controller
      */
     public function index()
     {
-        //
+        $total_claps = Clap::count();
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+        $parroquias = [];
+        $bloques = [];
+
+        return view('admin.claps.index')
+            ->with('total_claps', $total_claps)
+            ->with('municipios', $select_municipios)
+            ->with('parroquias', $parroquias)
+            ->with('bloques', $bloques);
     }
 
     /**

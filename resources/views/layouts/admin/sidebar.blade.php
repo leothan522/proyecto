@@ -25,12 +25,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @if (leerJson(Auth::user()->permisos, 'claps.index') || Auth::user()->role == 100)
                             <li class="nav-item">
-                                <a href="{{ route('bloques.consultar') }}" class="nav-link lk-">
+                                <a href="{{ route('claps.index') }}" class="nav-link lk-">
                                     <i class="fa fa-list-alt nav-icon"></i>
                                     <p>Consultar</p>
                                 </a>
                             </li>
+                        @endif
                         @if (leerJson(Auth::user()->permisos, 'claps.get_import') || Auth::user()->role == 100)
                         <li class="nav-item">
                             <a href="{{ route('claps.get_import') }}" class="nav-link lk-">
