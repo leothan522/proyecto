@@ -95,86 +95,87 @@
                     </div>
                     <div class="card-body">
 
-
-                        <table class="table table-hover bg-light">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
-                                <th scope="col">Nombre Completo</th>
-                                <th scope="col">Nombre Corto</th>
-                                <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($municipios as $municipio)
+                        <div class="table-responsive">
+                            <table class="table table-hover bg-light">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <th scope="row" class="text-center">{{ $i++ }}</th>
-                                    <td>{{ strtoupper($municipio->nombre_completo) }}</td>
-                                    <td>{{ strtoupper($municipio->nombre_corto) }}</td>
-                                    <td class="">
-                                        {!! Form::open(['route' => ['municipios.destroy', $municipio->id], 'method' => 'DELETE']) !!}
-                                        <div class="btn-group">
-                                            @if (leerJson(Auth::user()->permisos, 'municipios.update') || Auth::user()->role == 100)
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $municipio->id }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                {{--<a href="{{ route('usuarios.show', $municipio->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>--}}
-                                            @endif
-                                            @if (leerJson(Auth::user()->permisos, 'municipios.destroy') || Auth::user()->role == 100)
-                                                <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                            @endif
-                                        </div>
-                                        {!! Form::close() !!}
+                                    <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
+                                    <th scope="col">Nombre Completo</th>
+                                    <th scope="col">Nombre Corto</th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($municipios as $municipio)
+                                    <tr>
+                                        <th scope="row" class="text-center">{{ $i++ }}</th>
+                                        <td>{{ strtoupper($municipio->nombre_completo) }}</td>
+                                        <td>{{ strtoupper($municipio->nombre_corto) }}</td>
+                                        <td class="">
+                                            {!! Form::open(['route' => ['municipios.destroy', $municipio->id], 'method' => 'DELETE']) !!}
+                                            <div class="btn-group">
+                                                @if (leerJson(Auth::user()->permisos, 'municipios.update') || Auth::user()->role == 100)
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $municipio->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    {{--<a href="{{ route('usuarios.show', $municipio->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>--}}
+                                                @endif
+                                                @if (leerJson(Auth::user()->permisos, 'municipios.destroy') || Auth::user()->role == 100)
+                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                                @endif
+                                            </div>
+                                            {!! Form::close() !!}
 
-                                    <!-- Modal -->
-                                        <div class="modal fade" id="modal-{{ $municipio->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Modificar Municipio</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                        <!-- Modal -->
+                                            <div class="modal fade" id="modal-{{ $municipio->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modificar Municipio</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
 
-                                                        {!! Form::open(['route' => ['municipios.update', $municipio->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['municipios.update', $municipio->id], 'method' => 'PUT']) !!}
 
-                                                        <div class="form-group">
-                                                            <label for="name">Nombre del Municipio</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">Nombre del Municipio</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                                    </div>
+                                                                    {!! Form::text('nombre_completo2', $municipio->nombre_completo, ['class' => 'form-control', 'placeholder' => 'Nombre Completo', 'required']) !!}
                                                                 </div>
-                                                                {!! Form::text('nombre_completo2', $municipio->nombre_completo, ['class' => 'form-control', 'placeholder' => 'Nombre Completo', 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Abreviado</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">Abreviado</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                                    </div>
+                                                                    {!! Form::text('nombre_corto2', $municipio->nombre_corto, ['class' => 'form-control', 'placeholder' => 'Nombre Corto', 'required']) !!}
                                                                 </div>
-                                                                {!! Form::text('nombre_corto2', $municipio->nombre_corto, ['class' => 'form-control', 'placeholder' => 'Nombre Corto', 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group text-right">
-                                                            <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
-                                                        </div>
+                                                            <div class="form-group text-right">
+                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
+                                                            </div>
 
-                                                        {!! Form::close() !!}
+                                                            {!! Form::close() !!}
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    <!-- /Modal -->
+                                        <!-- /Modal -->
 
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">

@@ -224,106 +224,107 @@
                     </div>
                     <div class="card-body">
 
-
-                        <table class="table table-hover bg-light">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="text-center">Bloques</th>
-                                <th scope="col" data-breakpoints="xs" class="text-center">N° CLAPS</th>
-                                <th scope="col" data-breakpoints="xs" class="text-center">N° Familias</th>
-                                <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($ver_bloques as $bloque)
+                        <div class="table-responsive">
+                            <table class="table table-hover bg-light">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <td class="text-center">{{ strtoupper($bloque->valor) }}</td>
-                                    <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->claps, 0)) }}</td>
-                                    <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
-                                    <td class="">
+                                    <th scope="col" class="text-center">Bloques</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">N° CLAPS</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">N° Familias</th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($ver_bloques as $bloque)
+                                    <tr>
+                                        <td class="text-center">{{ strtoupper($bloque->valor) }}</td>
+                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->claps, 0)) }}</td>
+                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
+                                        <td class="">
 
-                                        {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE']) !!}
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $bloque->id }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            @endif
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
-                                                <input type="hidden" name="consultar" value="{{ true }}">
-                                                <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                            @endif
-                                        </div>
-                                        {!! Form::close() !!}
+                                            {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE']) !!}
+                                            <div class="btn-group">
+                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $bloque->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endif
+                                                @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
+                                                    <input type="hidden" name="consultar" value="{{ true }}">
+                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                                @endif
+                                            </div>
+                                            {!! Form::close() !!}
 
 
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modal-{{ $bloque->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Modificar Parametro</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal-{{ $bloque->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modificar Parametro</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
 
-                                                        {!! Form::open(['route' => ['bloques.update', $bloque->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['bloques.update', $bloque->id], 'method' => 'PUT']) !!}
 
-                                                        <div class="form-group">
-                                                            <label for="name">Nombre Bloque</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">Nombre Bloque</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                                    </div>
+                                                                    {{--<input type="hidden" name="tabla_id" value="{{ $bloque->id }}">--}}
+                                                                    {!! Form::text('nombre_bloque', $bloque->valor, ['class' => 'form-control', 'placeholder' => 'Nombre', 'required']) !!}
                                                                 </div>
-                                                                {{--<input type="hidden" name="tabla_id" value="{{ $bloque->id }}">--}}
-                                                                {!! Form::text('nombre_bloque', $bloque->valor, ['class' => 'form-control', 'placeholder' => 'Nombre', 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">N° CLAPS</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">N° CLAPS</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                                    </div>
+                                                                    <input type="hidden" name="id_clap" value="{{ $bloque->id_clap }}">
+                                                                    <input type="hidden" name="nombre_clap" value="bloque_claps">
+                                                                    {!! Form::number('valor_clap', $bloque->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                                 </div>
-                                                                <input type="hidden" name="id_clap" value="{{ $bloque->id_clap }}">
-                                                                <input type="hidden" name="nombre_clap" value="bloque_claps">
-                                                                {!! Form::number('valor_clap', $bloque->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">N° Familias</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">N° Familias</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                                    </div>
+                                                                    <input type="hidden" name="id_familias" value="{{ $bloque->id_familia }}">
+                                                                    <input type="hidden" name="nombre_familias" value="bloque_familias">
+                                                                    {!! Form::number('valor_familias', $bloque->familias, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                                 </div>
-                                                                <input type="hidden" name="id_familias" value="{{ $bloque->id_familia }}">
-                                                                <input type="hidden" name="nombre_familias" value="bloque_familias">
-                                                                {!! Form::number('valor_familias', $bloque->familias, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group text-right">
-                                                            <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
-                                                        </div>
+                                                            <div class="form-group text-right">
+                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
+                                                            </div>
 
-                                                        {!! Form::close() !!}
+                                                            {!! Form::close() !!}
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- /Modal -->
+                                            <!-- /Modal -->
 
 
 
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
 
 

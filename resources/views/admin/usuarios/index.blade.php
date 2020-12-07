@@ -113,44 +113,46 @@
                     </div>
                     <div class="card-body">
 
+                        <div class="table-responsive">
+                            <table class="table table-hover bg-light">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
+                                    <th scope="col" class="text-center"><i class="fas fa-cloud"></i></th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col" data-breakpoints="xs">Email</th>
+                                    <th scope="col" class="text-center" data-breakpoints="xs">Rol</th>
+                                    <th scope="col" class="text-center" data-breakpoints="xs">Estatus</th>
+                                    <th scope="col" class="text-right" data-breakpoints="xs">Registro</th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($users as $user)
+                                <tr>
+                                    <th scope="row" class="text-center">{{ $user->id }}</th>
+                                    <th class="text-center">{!! iconoPlataforma($user->plataforma) !!}</th>
+                                    <td>{{ ucwords($user->name) }}</td>
+                                    <td>{{ strtolower($user->email) }}</td>
+                                    <td class="text-center">{{ role($user->role) }}</td>
+                                    <td class="text-center">{!! status($user->status) !!}</td>
+                                    <td class="text-right">{{ haceCuanto($user->created_at)  }}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            @if (leerJson(Auth::user()->permisos, 'usuarios.show') || Auth::user()->role == 100)
+                                            <a href="{{ route('usuarios.show', $user->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if (leerJson(Auth::user()->permisos, 'usuarios.edit') || Auth::user()->role == 100)
+                                            <a href="{{ route('usuarios.edit', $user->id) }}" class="btn btn-info"><i class="fas fa-cogs"></i></a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
-                        <table class="table table-hover bg-light">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
-                                <th scope="col" class="text-center"><i class="fas fa-cloud"></i></th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col" data-breakpoints="xs">Email</th>
-                                <th scope="col" class="text-center" data-breakpoints="xs">Rol</th>
-                                <th scope="col" class="text-center" data-breakpoints="xs">Estatus</th>
-                                <th scope="col" class="text-right" data-breakpoints="xs">Registro</th>
-                                <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($users as $user)
-                            <tr>
-                                <th scope="row" class="text-center">{{ $user->id }}</th>
-                                <th class="text-center">{!! iconoPlataforma($user->plataforma) !!}</th>
-                                <td>{{ ucwords($user->name) }}</td>
-                                <td>{{ strtolower($user->email) }}</td>
-                                <td class="text-center">{{ role($user->role) }}</td>
-                                <td class="text-center">{!! status($user->status) !!}</td>
-                                <td class="text-right">{{ haceCuanto($user->created_at)  }}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        @if (leerJson(Auth::user()->permisos, 'usuarios.show') || Auth::user()->role == 100)
-                                        <a href="{{ route('usuarios.show', $user->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                                        @endif
-                                        @if (leerJson(Auth::user()->permisos, 'usuarios.edit') || Auth::user()->role == 100)
-                                        <a href="{{ route('usuarios.edit', $user->id) }}" class="btn btn-info"><i class="fas fa-cogs"></i></a>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
 
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">

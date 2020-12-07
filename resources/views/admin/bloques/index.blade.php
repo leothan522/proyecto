@@ -57,56 +57,57 @@
                     </div>
                     <div class="card-body">
 
-
-                        <table class="table table-hover bg-light">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
-                                <th scope="col">Municipios</th>
-                                <th scope="col" class="text-center">N° Bloques</th>
-                                <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($municipios as $municipio)
+                        <div class="table-responsive">
+                            <table class="table table-hover bg-light">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <th scope="row" class="text-center">{{ $i++ }}</th>
-                                    <td>{{ strtoupper($municipio->nombre_completo) }}</td>
-                                    <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($municipio->bloques, 0)) }}</td>
-                                    <td class="">
-
-                                        <div class="btn-group">
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
-                                                {!! Form::open(['route' => ['bloques.destroy', $municipio->id], 'method' => 'DELETE']) !!}
-                                                    @if ($municipio->bloques > 0)
-                                                        <button type="submit" class="btn text-danger"><i class="fas fa-minus-circle"></i></button>
-                                                        @else
-                                                        <button type="button" class="btn text-danger disabled"><i class="fas fa-minus-circle"></i></button>
-                                                    @endif
-
-                                                {!! Form::close() !!}
-                                            @endif
-                                            @if (leerJson(Auth::user()->permisos, 'bloques.store') || Auth::user()->role == 100)
-                                                {!! Form::open(['route' => 'bloques.store', 'method' => 'POST']) !!}
-                                                    <input type="hidden" name="nombre" value="bloques">
-                                                    <input type="hidden" name="tabla_id" value="{{ $municipio->id }}">
-                                                    <input type="hidden" name="valor" value="{{ $municipio->bloques + 1 }}">
-                                                    @if ($municipio->bloques < 4)
-                                                        <button type="submit" class="btn text-success"><i class="fas fa-plus-circle"></i></button>
-                                                    @else
-                                                        <button type="button" class="btn text-success disabled"><i class="fas fa-plus-circle"></i></button>
-                                                    @endif
-
-                                                {!! Form::close() !!}
-                                            @endif
-                                        </div>
-
-
-                                    </td>
+                                    <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
+                                    <th scope="col">Municipios</th>
+                                    <th scope="col" class="text-center">N° Bloques</th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach ($municipios as $municipio)
+                                    <tr>
+                                        <th scope="row" class="text-center">{{ $i++ }}</th>
+                                        <td>{{ strtoupper($municipio->nombre_completo) }}</td>
+                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($municipio->bloques, 0)) }}</td>
+                                        <td class="">
+
+                                            <div class="btn-group">
+                                                @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
+                                                    {!! Form::open(['route' => ['bloques.destroy', $municipio->id], 'method' => 'DELETE']) !!}
+                                                        @if ($municipio->bloques > 0)
+                                                            <button type="submit" class="btn text-danger"><i class="fas fa-minus-circle"></i></button>
+                                                            @else
+                                                            <button type="button" class="btn text-danger disabled"><i class="fas fa-minus-circle"></i></button>
+                                                        @endif
+
+                                                    {!! Form::close() !!}
+                                                @endif
+                                                @if (leerJson(Auth::user()->permisos, 'bloques.store') || Auth::user()->role == 100)
+                                                    {!! Form::open(['route' => 'bloques.store', 'method' => 'POST']) !!}
+                                                        <input type="hidden" name="nombre" value="bloques">
+                                                        <input type="hidden" name="tabla_id" value="{{ $municipio->id }}">
+                                                        <input type="hidden" name="valor" value="{{ $municipio->bloques + 1 }}">
+                                                        @if ($municipio->bloques < 4)
+                                                            <button type="submit" class="btn text-success"><i class="fas fa-plus-circle"></i></button>
+                                                        @else
+                                                            <button type="button" class="btn text-success disabled"><i class="fas fa-plus-circle"></i></button>
+                                                        @endif
+
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">

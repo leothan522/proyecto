@@ -22,18 +22,103 @@ class ClapsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $total_claps = Clap::count();
-        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $parroquias = [];
         $bloques = [];
+        $resultado = null;
+        $id_municipio = null;
+        $id_parroquia = null;
+        $id_bloque = null;
+        $nombre_clap = null;
+        $codigo_spda = null;
+        $cedula_lider = null;
+        $ver_resultados = null;
+
+        $total_claps = Clap::count();
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+
+        $municipios = Municipio::all();
+
+        //JSON Parroquias
+        $i = 0;
+        $json_parroquias_valor[] = null;
+        $json_parroquias_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parroquia::where('municipios_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->nombre_completo);
+                array_push($array_id, $item->id);
+            }
+            $json_parroquias_valor[$i] = $array_valor;
+            $json_parroquias_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+        //JSON Bloques
+        $i = 0;
+        $json_bloques_valor[] = null;
+        $json_bloques_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->valor);
+                array_push($array_id, $item->id);
+            }
+            $json_bloques_valor[$i] = $array_valor;
+            $json_bloques_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+
+        if ($request->buscar){
+            if ($request->municipios_id == null && $request->parroquias_id == null && $request->bloques_id == null
+                && $request->nombre_clap == null && $request->codigo_spda == null && $request->cedula_lider == null){
+                flash('Debes definir al menos un parametro para la Buscqueda', 'warning')->important();
+                $resultado = null;
+            }else{
+                $id_municipio = $request->municipios_id;
+                $parroquias = Parroquia::where('municipios_id', $id_municipio)->pluck('nombre_completo', 'id');
+                $id_parroquia = $request->parroquias_id;
+                $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $id_municipio)->pluck('valor', 'id');
+                $id_bloque = $request->bloques_id;
+                $nombre_clap = $request->nombre_clap;
+                $codigo_spda = $request->codigo_spda;
+                $cedula_lider = $request->cedula_lider;
+                $resultado = true;
+
+                $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')->get();
+
+            }
+
+        }
+
 
         return view('admin.claps.index')
             ->with('total_claps', $total_claps)
             ->with('municipios', $select_municipios)
             ->with('parroquias', $parroquias)
-            ->with('bloques', $bloques);
+            ->with('bloques', $bloques)
+            ->with('json_parroquias_valor', $json_parroquias_valor)
+            ->with('json_parroquias_id', $json_parroquias_id)
+            ->with('json_bloques_valor', $json_bloques_valor)
+            ->with('json_bloques_id', $json_bloques_id)
+            ->with('resultado', $resultado)
+            ->with('id_municipio', $id_municipio)
+            ->with('id_parroquia', $id_parroquia)
+            ->with('id_bloque', $id_bloque)
+            ->with('nombre_clap', $nombre_clap)
+            ->with('codigo_spda', $codigo_spda)
+            ->with('cedula_lider', $cedula_lider)
+            ->with('ver_resultados', $ver_resultados);
     }
 
     /**

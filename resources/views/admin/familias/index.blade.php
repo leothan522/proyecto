@@ -211,100 +211,101 @@
                     </div>
                     <div class="card-body">
 
-
-                        <table class="table table-hover bg-light">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
-                                <th scope="col">Municipios</th>
-                                <th scope="col" class="text-center">N° CLAPS</th>
-                                <th scope="col" class="text-center">N° Familias</th>
-                                <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($familias as $familia)
+                        <div class="table-responsive">
+                            <table class="table table-hover bg-light">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <th scope="row" class="text-center">{{ $i++ }}</th>
-                                    <td>{{ $familia->municipios->nombre_corto }}</td>
-                                    <td class="text-center">{{ formatoMillares($familia->claps, 0) }}</td>
-                                    <td class="text-center">{{ formatoMillares($familia->valor, 0) }}</td>
-                                    <td class="">
-                                        {!! Form::open(['route' => ['familias.destroy', $familia->id], 'method' => 'DELETE']) !!}
-                                        <div class="btn-group">
-                                            @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $familia->id }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            @endif
-                                            @if (leerJson(Auth::user()->permisos, 'familias.destroy') || Auth::user()->role == 100)
-                                                <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
-                                                <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                            @endif
-                                        </div>
-                                        {!! Form::close() !!}
+                                    <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
+                                    <th scope="col">Municipios</th>
+                                    <th scope="col" class="text-center">N° CLAPS</th>
+                                    <th scope="col" class="text-center">N° Familias</th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($familias as $familia)
+                                    <tr>
+                                        <th scope="row" class="text-center">{{ $i++ }}</th>
+                                        <td>{{ $familia->municipios->nombre_corto }}</td>
+                                        <td class="text-center">{{ formatoMillares($familia->claps, 0) }}</td>
+                                        <td class="text-center">{{ formatoMillares($familia->valor, 0) }}</td>
+                                        <td class="">
+                                            {!! Form::open(['route' => ['familias.destroy', $familia->id], 'method' => 'DELETE']) !!}
+                                            <div class="btn-group">
+                                                @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $familia->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endif
+                                                @if (leerJson(Auth::user()->permisos, 'familias.destroy') || Auth::user()->role == 100)
+                                                    <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
+                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                                @endif
+                                            </div>
+                                            {!! Form::close() !!}
 
-                                    <!-- Modal -->
-                                        <div class="modal fade" id="modal-{{ $familia->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Modificar Parametro</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                        <!-- Modal -->
+                                            <div class="modal fade" id="modal-{{ $familia->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modificar Parametro</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
 
-                                                        {!! Form::open(['route' => ['familias.update', $familia->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['familias.update', $familia->id], 'method' => 'PUT']) !!}
 
-                                                        <input type="hidden" name="nombre" value="familias">
-                                                        <input type="hidden" name="nombre_clap" value="claps">
-                                                        <div class="form-group">
-                                                            <label for="name">Municipio</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                            <input type="hidden" name="nombre" value="familias">
+                                                            <input type="hidden" name="nombre_clap" value="claps">
+                                                            <div class="form-group">
+                                                                <label for="name">Municipio</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                                    </div>
+                                                                    {!! Form::select('tabla_id2', $municipios, $familia->tabla_id, ['class' => 'custom-select']) !!}
                                                                 </div>
-                                                                {!! Form::select('tabla_id2', $municipios, $familia->tabla_id, ['class' => 'custom-select']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">N° CLAPS</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">N° CLAPS</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                                    </div>
+                                                                    {!! Form::number('valor_clap2', $familia->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
                                                                 </div>
-                                                                {!! Form::number('valor_clap2', $familia->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
-                                                                <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">N° Familias</label>
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                            <div class="form-group">
+                                                                <label for="name">N° Familias</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                                    </div>
+                                                                    {!! Form::number('valor2', $familia->valor, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                                 </div>
-                                                                {!! Form::number('valor2', $familia->valor, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group text-right">
-                                                            <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
-                                                        </div>
+                                                            <div class="form-group text-right">
+                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
+                                                            </div>
 
-                                                        {!! Form::close() !!}
+                                                            {!! Form::close() !!}
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    <!-- /Modal -->
+                                        <!-- /Modal -->
 
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">
