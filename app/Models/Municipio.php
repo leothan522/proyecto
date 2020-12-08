@@ -9,14 +9,21 @@ class Municipio extends Model
 {
     //use HasFactory;
     protected $table = "municipios";
-    protected $fillable =['nombre_completo', 'nombre_corto'];
+    protected $fillable = ['nombre_completo', 'nombre_corto'];
 
-    public function parroquias(){
+    public function parroquias()
+    {
         return $this->hasMany(Parroquia::class, 'municipios_id', 'id');
     }
 
-    public function parametros(){
+    public function parametros()
+    {
         return $this->hasMany(Parametro::class, 'tabla_id', 'id');
+    }
+
+    public function claps()
+    {
+        return $this->hasMany(Clap::class, 'municipios_id', 'id');
     }
 
 }

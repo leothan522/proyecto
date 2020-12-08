@@ -41,4 +41,20 @@ class Clap extends Model
         'observaciones',
         'import_id'
     ];
+
+    public function municipios()
+    {
+        return $this->belongsTo(Municipio::class, 'municipios_id', 'id');
+    }
+
+    public function parroquias()
+    {
+        return $this->belongsTo(Parroquia::class, 'parroquias_id', 'id');
+    }
+
+    public function parametros()
+    {
+        return $this->belongsTo(Parametro::class, 'bloques_id', 'id');
+    }
+
 }

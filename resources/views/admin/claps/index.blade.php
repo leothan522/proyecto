@@ -294,7 +294,7 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col" class="text-center">ID</th>
-                                    <th scope="col" class="text-center">Codigo SPDA</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">Codigo SPDA</th>
                                     <th scope="col" class="text-center">Nombre CLAPS</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Municipio</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Parroquia</th>
@@ -306,13 +306,13 @@
                                 <tbody>
                                 @foreach ($ver_resultados as $clap)
                                     <tr>
-                                        <td class="text-center">id</td>
-                                        <td class="text-center text-bold">codigo_spda</td>
-                                        <td class="text-center">nombre_clap</td>
-                                        <td class="text-center">municipio</td>
-                                        <td class="text-center">parroquia</td>
-                                        <td class="text-center">bloque</td>
-                                        <td class="text-center">cedula_lider</td>
+                                        <td class="text-center">{{ $clap->id }}</td>
+                                        <td class="text-center text-bold">{{ strtoupper($clap->codigo_spda) }}</td>
+                                        <td class="text-center">{{ strtoupper($clap->nombre_clap) }}</td>
+                                        <td class="text-center">{{ $clap->municipios->nombre_corto }}</td>
+                                        <td class="text-center">{{ $clap->parroquias->nombre_completo }}</td>
+                                        <td class="text-center">{{ strtoupper($clap->parametros->valor) }}</td>
+                                        <td class="text-center">@if ($clap->nacionalidad_lider == "VENEZOLANA")V @endif{{ formatoMillares($clap->cedula_lider, 0) }}</td>
                                         <td class="">
 
                                             {!! Form::open(['route' => ['bloques.destroy', $clap->id], 'method' => 'DELETE']) !!}

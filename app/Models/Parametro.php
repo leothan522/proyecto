@@ -26,4 +26,9 @@ class Parametro extends Model
         return $this->hasMany(ImportClap::class, 'import_id', 'id');
     }
 
+    public function claps()
+    {
+        return $this->hasMany(Clap::class, 'bloques_id', 'id');
+    }
+
 }
