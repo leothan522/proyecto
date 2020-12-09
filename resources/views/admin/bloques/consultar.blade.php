@@ -44,6 +44,27 @@
             })
         });
 
+        function confirmar() {
+            bootbox.confirm({
+                size: "small",
+                message: "¿Esta seguro que desea Eliminar?",
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result){
+                    /* result is a boolean; true = OK, false = Cancel*/
+                    return result;
+                }
+            })
+        }
+
         function select_bloques(){
             //tomo el valor del select elegido
             var municipios_id;
@@ -242,7 +263,7 @@
                                         <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
                                         <td class="">
 
-                                            {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE']) !!}
+                                            {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_felete']) !!}
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
@@ -252,7 +273,7 @@
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
-                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-info" onsubmit="return confirmar()"><i class="fas fa-trash"></i></button>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

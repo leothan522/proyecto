@@ -109,7 +109,7 @@
             <div class="col-md-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Parroquias Registradss</h5>
+                        <h5 class="card-title">Parroquias Registradas</h5>
                         <div class="card-tools">
                             <span class="btn btn-tool"><i class="fas fa-tags"></i></span>
                         </div>
@@ -135,7 +135,7 @@
                                         <td>{{ strtoupper($parroquia->nombre_corto) }}</td>
                                         <td>{{ strtoupper($parroquia->municipios->nombre_corto) }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['parroquias.destroy', $parroquia->id], 'method' => 'DELETE']) !!}
+                                            {!! Form::open(['route' => ['parroquias.destroy', $parroquia->id], 'method' => 'DELETE', 'id' => 'form_felete']) !!}
                                             <div class="btn-group">
                                                 @if (leerJson(Auth::user()->permisos, 'parroquias.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $parroquia->id }}">
@@ -144,7 +144,7 @@
                                                     {{--<a href="{{ route('usuarios.show', $municipio->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>--}}
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'parroquias.destroy') || Auth::user()->role == 100)
-                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                                    <button type="button" class="btn btn-info show-alert"><i class="fas fa-trash"></i></button>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

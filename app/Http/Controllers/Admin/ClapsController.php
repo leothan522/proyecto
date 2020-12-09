@@ -31,11 +31,16 @@ class ClapsController extends Controller
         $id_parroquia = null;
         $id_bloque = null;
         $nombre_clap = null;
-        $codigo_spda = null;
+        $codigo_sica = null;
         $cedula_lider = null;
         $ver_resultados = null;
+        $claps_estadal = null;
+        $claps_municipal = null;
+        $claps_mun = null;
 
         $total_claps = Clap::count();
+        $estadal = Parametro::where('nombre', 'claps_estadal')->first();
+        if ($estadal){ $claps_estadal = $estadal->valor; }
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
 
         $municipios = Municipio::all();
@@ -81,7 +86,7 @@ class ClapsController extends Controller
 
         if ($request->buscar){
             if ($request->municipios_id == null && $request->parroquias_id == null && $request->bloques_id == null
-                && $request->nombre_clap == null && $request->codigo_spda == null && $request->cedula_lider == null){
+                && $request->nombre_clap == null && $request->codigo_sica == null && $request->cedula_lider == null){
                 flash('Debes definir al menos un parametro para la Buscqueda', 'warning')->important();
                 $resultado = null;
             }else{
@@ -91,11 +96,35 @@ class ClapsController extends Controller
                 $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $id_municipio)->pluck('valor', 'id');
                 $id_bloque = $request->bloques_id;
                 $nombre_clap = $request->nombre_clap;
-                $codigo_spda = $request->codigo_spda;
+                $codigo_sica = $request->codigo_sica;
                 $cedula_lider = $request->cedula_lider;
                 $resultado = true;
 
-                $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')->get();
+                if ($codigo_sica){
+                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                        ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                        ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
+                        ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                        ->get();
+                }else{
+                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                        ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                        ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                        ->get();
+                }
+
+
+                if ($id_municipio){
+                    $claps_municipal = Parametro::where('nombre', 'claps')->where('tabla_id', $id_municipio)->first();
+                    if ($claps_municipal){ $claps_municipal = $claps_municipal->valor; }
+                    $claps_mun = Clap::where('municipios_id', $id_municipio)->count();
+                }
+
+
 
             }
 
@@ -104,6 +133,9 @@ class ClapsController extends Controller
 
         return view('admin.claps.index')
             ->with('total_claps', $total_claps)
+            ->with('claps_estadal', $claps_estadal)
+            ->with('claps_municipal', $claps_municipal)
+            ->with('claps_mun', $claps_mun)
             ->with('municipios', $select_municipios)
             ->with('parroquias', $parroquias)
             ->with('bloques', $bloques)
@@ -116,7 +148,7 @@ class ClapsController extends Controller
             ->with('id_parroquia', $id_parroquia)
             ->with('id_bloque', $id_bloque)
             ->with('nombre_clap', $nombre_clap)
-            ->with('codigo_spda', $codigo_spda)
+            ->with('codigo_sica', $codigo_sica)
             ->with('cedula_lider', $cedula_lider)
             ->with('ver_resultados', $ver_resultados);
     }
@@ -331,9 +363,48 @@ class ClapsController extends Controller
     {
         $imports = ImportClap::where('import_id', $id)->get();
         $parametro = Parametro::find($id);
-        $nombre = fecha($parametro->created_at, 'd-m-Y_h-i_a');
-        //return view('admin.claps.exports.import_claps')->with('imports', $imports);
-        return Excel::download(new ImportClapsExport($imports), "Por_Revision_$nombre.xlsx");
+        if ($id){
+            $nombre = fecha($parametro->created_at, 'd-m-Y_h-i_a');
+            //return view('admin.claps.exports.import_claps')->with('imports', $imports);
+            return Excel::download(new ImportClapsExport($imports, true), "Por_Revision_$nombre.xlsx");
+        }else{
+            $nombre = "Formato_Import_CLAPS";
+            //return view('admin.claps.exports.import_claps')->with('imports', $imports);
+            return Excel::download(new ImportClapsExport($imports), "$nombre.xlsx");
+        }
+
     }
+
+    public function exportClaps(Request $request)
+    {
+        $id_municipio = $request->municipios_id;
+        $id_parroquia = $request->parroquias_id;
+        $id_bloque = $request->bloques_id;
+        $nombre_clap = $request->nombre_clap;
+        $codigo_sica = $request->codigo_sica;
+        $cedula_lider = $request->cedula_lider;
+
+        if ($codigo_sica){
+            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
+                ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                ->get();
+        }else{
+            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                ->get();
+        }
+        //return view('admin.claps.exports.claps')->with('imports', $ver_resultados);
+        $nombre = "Export_Clap_".date('d-m-Y');
+        return Excel::download(new ImportClapsExport($ver_resultados), "$nombre.xlsx");
+
+    }
+
 
 }

@@ -160,34 +160,47 @@
                             <span class="info-box-text">N° Total CLAPS</span>
                             <span class="info-box-number">
                                 {{ cerosIzquierda(formatoMillares($total_claps, 0)) }}
+                                <span class="float-right">
+                                    <a href="{{ route('claps.export') }}" class="text-muted"><i class="fas fa-cloud-download-alt"></i></a>
+                                </span>
                             </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
-                    <div class="col-md-12" id="estadisticas">
-                        <div class="card-body">
 
-                            <p class="text-center">
-                                <strong>Datos Cargados</strong>
-                            </p>
+                        <div class="col-md-12">
+                            <div class="card-body">
 
-                            <div class="progress-group">
-                                N° CLAPS
-                                <span class="float-right"><b>{{ formatoMillares(0, 0) }}</b>/{{ formatoMillares(0, 0) }}</span>
-                                <div class="progress progress-sm">
-                                    <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje(0, 0) }}%">{{ obtenerPorcentaje(0, 0) }}%</div>
+                                <p class="text-center">
+                                    <strong>Datos Cargados</strong>
+                                </p>
+
+                                <div class="progress-group">
+                                    N° CLAPS
+                                    <span class="float-right"><b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($claps_estadal, 0) }}</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje($total_claps, $claps_estadal) }}%">{{ obtenerPorcentaje($total_claps, $claps_estadal) }}%</div>
+                                    </div>
                                 </div>
+                                @if ($id_municipio)
+                                    <div id="estadisticas">
+                                    <br><div class="dropdown-divider"></div>
+                                    <p class="text-center">
+                                        {{--<strong>Parametros Municipio</strong>--}}
+                                    </p>
+                                    <div class="progress-group">
+                                        {{ $municipios[$id_municipio] }}
+                                    <span class="float-right"><b>{{ formatoMillares($claps_mun, 0) }}</b>/{{ formatoMillares($claps_municipal, 0) }}</span>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-success" style="width: {{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%">{{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%</div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    </div>
+                                @endif
                             </div>
-                            {{--<div class="progress-group">
-                                N° CLAPS
-                                <span class="float-right"><b>{{ formatoMillares(0, 0) }}</b>/{{ formatoMillares(0, 0) }}</span>
-                                <div class="progress progress-sm">
-                                    <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje(0, 0) }}%">{{ obtenerPorcentaje(0, 0) }}%</div>
-                                </div>
-                            </div>--}}
-                            <!-- /.progress-group -->
                         </div>
-                    </div>
+
                 </div>
                 <!-- /.info-box -->
             </div>
@@ -240,12 +253,12 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="name">Codigo SPDA</label>
+                                <label for="name">Codigo SICA</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-code"></i></span>
                                     </div>
-                                    {!! Form::text('codigo_spda', $codigo_spda, ['class' => 'form-control', 'placeholder' => 'Ingrese Codigo']) !!}
+                                    {!! Form::text('codigo_sica', $codigo_sica, ['class' => 'form-control', 'placeholder' => 'Ingrese Codigo']) !!}
                                 </div>
                             </div>
                            <div class="form-group col-md-4">
@@ -261,6 +274,7 @@
                         </div>
                         <div class="float-right">
                             <input type="hidden" name="buscar" value="true">
+                            <a href="{{ route('claps.index') }}"class="btn btn-sm btn-default"><i class="fas fa-trash"></i> Limpiar</a>
                             <button class="btn btn-sm bg-navy"><i class="fas fa-search"></i> Buscar</button>
                         </div>
 
@@ -281,8 +295,11 @@
                 <div class="col-md-11">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Resultados de la Busqueda</h5>
+                        <h5 class="card-title">Resultados de la Busqueda: <strong class="text-primary">{{ cerosIzquierda(formatoMillares($ver_resultados->count(), 0)) }}</strong></h5>
                         <div class="card-tools">
+                            <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => $id_parroquia,
+                            'bloques_id' => $id_bloque, 'nombre_clap' => $nombre_clap, 'codigo_sica' => $codigo_sica, 'cedula_lider' => $cedula_lider]) }}"
+                               class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
                             <button type="button" class="btn btn-tool" id="boton_cerrar"><i class="fas fa-times"></i></button>
                             {!! Form::close() !!}
                         </div>
@@ -294,101 +311,327 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col" class="text-center">ID</th>
-                                    <th scope="col" data-breakpoints="xs" class="text-center">Codigo SPDA</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">Codigo SICA</th>
                                     <th scope="col" class="text-center">Nombre CLAPS</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Municipio</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Parroquia</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Bloque</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Cedula Lider</th>
-                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 5%;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($ver_resultados as $clap)
                                     <tr>
                                         <td class="text-center">{{ $clap->id }}</td>
-                                        <td class="text-center text-bold">{{ strtoupper($clap->codigo_spda) }}</td>
+                                        <td class="text-center text-bold">{{ strtoupper($clap->codigo_sica) }}</td>
                                         <td class="text-center">{{ strtoupper($clap->nombre_clap) }}</td>
                                         <td class="text-center">{{ $clap->municipios->nombre_corto }}</td>
                                         <td class="text-center">{{ $clap->parroquias->nombre_completo }}</td>
                                         <td class="text-center">{{ strtoupper($clap->parametros->valor) }}</td>
-                                        <td class="text-center">@if ($clap->nacionalidad_lider == "VENEZOLANA")V @endif{{ formatoMillares($clap->cedula_lider, 0) }}</td>
-                                        <td class="">
+                                        <td class="text-center">@if ($clap->nacionalidad_lider == "VENEZOLANA")V- @endif{{ formatoMillares($clap->cedula_lider, 0) }}</td>
+                                        <td>
 
                                             {!! Form::open(['route' => ['bloques.destroy', $clap->id], 'method' => 'DELETE']) !!}
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
-                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
+                                                    <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                                 @endif
-                                                @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
+                                                {{--@if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
                                                     <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                                @endif
+                                                @endif--}}
                                             </div>
                                             {!! Form::close() !!}
 
 
 
-                                            {{--<!-- Modal -->
+                                            <!-- Modal -->
                                             <div class="modal fade" id="modal-{{ $clap->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
+                                                <div class="modal-dialog modal-xl" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modificar Parametro</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">CLAP <span class="text-bold">{{ $clap->nombre_clap }}</span></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {!! Form::open(['route' => ['bloques.update', $clap->id], 'method' => 'PUT']) !!}
 
-                                                            <div class="form-group">
-                                                                <label for="name">Nombre Bloque</label>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <!-- Default box -->
+                                                                    <div class="card card-navy">
+                                                                        <div class="card-header">
+                                                                            <h3 class="card-title">Datos del CLAP</h3>
+                                                                        </div>
+                                                                        <div class="card-body fondo">
+                                                                            <div class="row">
+                                                                                <div class="col-md-2">
+                                                                                    <label for="name">Programa</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-cog"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->programa }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Municipio</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->municipios->nombre_completo }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Parroquia</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->parroquias->nombre_completo }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <label for="name">Bloque</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->parametros->valor }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <label for="name">Codigo SPDA</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->codigo_spda) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Codigo SICA</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->codigo_sica) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label for="name">Comunidad</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->comunidad) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-5">
+                                                                                    <label for="name">Nombre del CLAP</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->nombre_clap) }}</span>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
                                                                     </div>
-                                                                    <input type="hidden" name="tabla_id" value="{{ $clap->id }}">
-                                                                    {!! Form::text('nombre_bloque', $clap->valor, ['class' => 'form-control', 'placeholder' => 'Nombre', 'required']) !!}
+                                                                    <!-- /.card -->
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="name">N° CLAPS</label>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <!-- Default box -->
+                                                                    <div class="card card-navy">
+                                                                        <div class="card-header">
+                                                                            <h3 class="card-title">Datos del Responsable</h3>
+                                                                        </div>
+                                                                        <div class="card-body fondo">
+                                                                            <div class="row">
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Nacionalidad</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->nacionalidad_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Cedula</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->cedula_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="name">Nombre del Responsable</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">
+                                                                                            {{ strtoupper($clap->primer_nombre_lider) }}
+                                                                                            {{ strtoupper($clap->segundo_nombre_lider) }}
+                                                                                            {{ strtoupper($clap->primer_apellido_lider) }}
+                                                                                            {{ strtoupper($clap->segundo_apellido_lider) }}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">N° DE TELEFONO 1</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->telefono_1_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">N° DE TELEFONO 2</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->telefono_2_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label for="name">Email</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtolower($clap->email_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <label for="name">Estatus</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->estatus_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Genero</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->genero) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Fecha de Nacimiento</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ fecha($clap->fecha_nac_lider, 'd-m-Y') }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Profesión</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->profesion_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Trabajo</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->trabajo_lider) }}</span>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
                                                                     </div>
-                                                                    <input type="hidden" name="id_clap" value="{{ $clap->id_clap }}">
-                                                                    <input type="hidden" name="nombre_clap" value="bloque_claps">
-                                                                    {!! Form::number('valor_clap', $clap->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    <!-- /.card -->
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="name">N° Familias</label>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <!-- Default box -->
+                                                                    <div class="card card-navy">
+                                                                        <div class="card-header">
+                                                                            <h3 class="card-title">Geolocalización</h3>
+                                                                        </div>
+                                                                        <div class="card-body fondo">
+                                                                            <div class="row">
+                                                                                <div class="col-md-4">
+                                                                                    <label for="name">Longitud</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->longitud) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label for="name">Latitud</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->latitud) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label for="name">Google Maps</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->google_maps) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <label for="name">Dirección</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->direccion) }}</span>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
                                                                     </div>
-                                                                    <input type="hidden" name="id_familias" value="{{ $clap->id_familia }}">
-                                                                    <input type="hidden" name="nombre_familias" value="bloque_familias">
-                                                                    {!! Form::number('valor_familias', $clap->familias, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    <!-- /.card -->
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group text-right">
-                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
                                                             </div>
 
-                                                            {!! Form::close() !!}
 
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- /Modal -->--}}
+                                            <!-- /Modal -->
 
 
 

@@ -5,8 +5,8 @@
 @section('header', 'CLAPS')
 
 @section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('claps.get_revision_export', 0) }}"><i class="fas fa-download"></i> Formato Excel</a></li>
     <li class="breadcrumb-item active">Importar CLAPS</li>
-    {{--<li class="breadcrumb-item"><a href="#">Nuevo Usuario</a></li>--}}
 @endsection
 
 @section('link')

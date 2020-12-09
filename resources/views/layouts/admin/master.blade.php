@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/pace-progress/themes/white/pace-theme-flash.css') }}">
     <!-- adminlte-->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
     <!-- Google Font: Source Sans Pro -->
     {{--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">--}}
     <link href="{{ asset('adminlte/fonts.googleapis.css') }}" rel="stylesheet">
@@ -108,14 +110,35 @@
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 {{--<script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>--}}
-
-
+<!-- Bootbox -->
+<script src="{{ asset('plugins/bootbox/bootbox.all.min.js') }}"></script>
 
 <script>
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
+
+    $(document).on("click", ".show-alert", function(e) {
+        bootbox.confirm({
+            size: "small",
+            message: "¿Esta seguro que desea Eliminar?",
+            buttons: {
+                confirm: {
+                    label: 'Si',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result){
+                /* result is a boolean; true = OK, false = Cancel*/
+                return result;
+            }
+        })
+    });
 
     /*$(document).ready(function () {
         $('div.alert').not('alert-important').delay(3000).fadeOut(350);
