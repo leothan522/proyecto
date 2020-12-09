@@ -97,12 +97,39 @@
                                     {!! Form::close() !!}
                                     <td class="">
 
-                                        {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post']) !!}
+                                        {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post', 'id' => 'form_delete_'.$import->id]) !!}
                                         <div class="btn-group">
                                             <input type="hidden" name="delete" value="{{ true }}">
                                             <input type="hidden" name="todo" value="{{ false }}">
                                             <input type="hidden" name="id_clap" value="{{ $import->id }}">
-                                            <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
+                                            <button type="button" class="btn btn-info" id="show-alert-{{ $import->id }}"><i class="fas fa-trash"></i></button>
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    var boton = document.getElementById('show-alert-{{ $import->id }}');
+                                                    boton.addEventListener('click', function () {
+                                                        bootbox.confirm({
+                                                            size: "small",
+                                                            message: "¿Esta seguro que desea Eliminar?",
+                                                            buttons: {
+                                                                confirm: {
+                                                                    label: 'Si',
+                                                                    className: 'btn-success'
+                                                                },
+                                                                cancel: {
+                                                                    label: 'No',
+                                                                    className: 'btn-danger'
+                                                                }
+                                                            },
+                                                            callback: function(result){
+                                                                /* result is a boolean; true = OK, false = Cancel*/
+                                                                if (result){
+                                                                    document.getElementById('form_delete_{{ $import->id }}').submit();
+                                                                }
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            </script>
                                         </div>
                                         {!! Form::close() !!}
 
@@ -181,13 +208,40 @@
                         </table>
 
                         <div class="row col-md-12 justify-content-end mt-3">
-                            {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post']) !!}
+                            {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'Post', 'id' => 'form_delete_todo']) !!}
                             <div>
                                 <input type="hidden" name="delete" value="{{ true }}">
                                 <input type="hidden" name="todo" value="{{ true }}">
                                 <input type="hidden" name="id_clap" value="{{ $import->id }}">
                                 <a href="{{ route('claps.get_revision_export', $parametro->id) }}" class="btn btn-sm bg-navy"><i class="fas fa-file-excel"></i> Generar Excel</a>
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Borrar todo</button>
+                                <button type="button" class="btn btn-sm btn-danger" id="show-alert-todo"><i class="fas fa-trash"></i> Borrar todo</button>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var boton = document.getElementById('show-alert-todo');
+                                        boton.addEventListener('click', function () {
+                                            bootbox.confirm({
+                                                size: "small",
+                                                message: "¿Eliminar Todo?",
+                                                buttons: {
+                                                    confirm: {
+                                                        label: 'Si',
+                                                        className: 'btn-success'
+                                                    },
+                                                    cancel: {
+                                                        label: 'No',
+                                                        className: 'btn-danger'
+                                                    }
+                                                },
+                                                callback: function(result){
+                                                    /* result is a boolean; true = OK, false = Cancel*/
+                                                    if (result){
+                                                        document.getElementById('form_delete_todo').submit();
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
                             </div>
                             {!! Form::close() !!}
                         </div>
