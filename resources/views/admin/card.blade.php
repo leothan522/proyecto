@@ -20,3 +20,28 @@
     <!-- /.card-footer-->
 </div>
 <!-- /.card -->
+
+<script>
+    $(document).on("click", ".show-alert-{{ $bloque->id }}", function(e) {
+        bootbox.confirm({
+            size: "small",
+            message: "¿Esta seguro que desea Eliminar?",
+            buttons: {
+                confirm: {
+                    label: 'Si',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result){
+                /* result is a boolean; true = OK, false = Cancel*/
+                if (result){
+                    document.getElementById('form_delete_{{ $bloque->id }}').submit();
+                }
+            }
+        });
+    });
+</script>

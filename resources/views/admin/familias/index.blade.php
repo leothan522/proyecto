@@ -230,7 +230,7 @@
                                         <td class="text-center">{{ formatoMillares($familia->claps, 0) }}</td>
                                         <td class="text-center">{{ formatoMillares($familia->valor, 0) }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['familias.destroy', $familia->id], 'method' => 'DELETE', 'id' => 'form_felete']) !!}
+                                            {!! Form::open(['route' => ['familias.destroy', $familia->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$familia->id]) !!}
                                             <div class="btn-group">
                                                 @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $familia->id }}">
@@ -239,7 +239,31 @@
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'familias.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
-                                                    <button type="button" class="btn btn-info show-alert"><i class="fas fa-trash"></i></button>
+                                                    <button type="button" class="btn btn-info show-alert-{{ $familia->id }}"><i class="fas fa-trash"></i></button>
+                                                        <script>
+                                                            $(document).on("click", ".show-alert-{{ $familia->id }}", function(e) {
+                                                                bootbox.confirm({
+                                                                    size: "small",
+                                                                    message: "¿Esta seguro que desea Eliminar?",
+                                                                    buttons: {
+                                                                        confirm: {
+                                                                            label: 'Si',
+                                                                            className: 'btn-success'
+                                                                        },
+                                                                        cancel: {
+                                                                            label: 'No',
+                                                                            className: 'btn-danger'
+                                                                        }
+                                                                    },
+                                                                    callback: function(result){
+                                                                        /* result is a boolean; true = OK, false = Cancel*/
+                                                                        if (result){
+                                                                            document.getElementById('form_delete_{{ $familia->id }}').submit();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            });
+                                                        </script>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

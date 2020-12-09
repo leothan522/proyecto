@@ -112,7 +112,7 @@
                                         <td>{{ strtoupper($municipio->nombre_completo) }}</td>
                                         <td>{{ strtoupper($municipio->nombre_corto) }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['municipios.destroy', $municipio->id], 'method' => 'DELETE', 'id' => 'form_felete']) !!}
+                                            {!! Form::open(['route' => ['municipios.destroy', $municipio->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$municipio->id]) !!}
                                             <div class="btn-group">
                                                 @if (leerJson(Auth::user()->permisos, 'municipios.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $municipio->id }}">
@@ -121,7 +121,31 @@
                                                     {{--<a href="{{ route('usuarios.show', $municipio->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>--}}
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'municipios.destroy') || Auth::user()->role == 100)
-                                                    <button type="button" class="btn btn-info show-alert"><i class="fas fa-trash"></i></button>
+                                                    <button type="button" class="btn btn-info show-alert-{{ $municipio->id }}"><i class="fas fa-trash"></i></button>
+                                                        <script>
+                                                            $(document).on("click", ".show-alert-{{ $municipio->id }}", function(e) {
+                                                                bootbox.confirm({
+                                                                    size: "small",
+                                                                    message: "¿Esta seguro que desea Eliminar?",
+                                                                    buttons: {
+                                                                        confirm: {
+                                                                            label: 'Si',
+                                                                            className: 'btn-success'
+                                                                        },
+                                                                        cancel: {
+                                                                            label: 'No',
+                                                                            className: 'btn-danger'
+                                                                        }
+                                                                    },
+                                                                    callback: function(result){
+                                                                        /* result is a boolean; true = OK, false = Cancel*/
+                                                                        if (result){
+                                                                            document.getElementById('form_delete_{{ $municipio->id }}').submit();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            });
+                                                        </script>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

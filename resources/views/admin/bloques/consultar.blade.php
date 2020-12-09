@@ -44,27 +44,6 @@
             })
         });
 
-        function confirmar() {
-            bootbox.confirm({
-                size: "small",
-                message: "¿Esta seguro que desea Eliminar?",
-                buttons: {
-                    confirm: {
-                        label: 'Si',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'No',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function(result){
-                    /* result is a boolean; true = OK, false = Cancel*/
-                    return result;
-                }
-            })
-        }
-
         function select_bloques(){
             //tomo el valor del select elegido
             var municipios_id;
@@ -263,7 +242,7 @@
                                         <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
                                         <td class="">
 
-                                            {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_felete']) !!}
+                                            {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$bloque->id]) !!}
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
@@ -273,7 +252,32 @@
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
-                                                    <button type="submit" class="btn btn-info" onsubmit="return confirmar()"><i class="fas fa-trash"></i></button>
+                                                    <input type="hidden" id="indice" value="{{ $bloque->id }}">
+                                                    <button type="button" class="btn btn-info show-alert-{{ $bloque->id }}"><i class="fas fa-trash"></i></button>
+                                                    <script>
+                                                        $(document).on("click", ".show-alert-{{ $bloque->id }}", function(e) {
+                                                            bootbox.confirm({
+                                                                size: "small",
+                                                                message: "¿Esta seguro que desea Eliminar?",
+                                                                buttons: {
+                                                                    confirm: {
+                                                                        label: 'Si',
+                                                                        className: 'btn-success'
+                                                                    },
+                                                                    cancel: {
+                                                                        label: 'No',
+                                                                        className: 'btn-danger'
+                                                                    }
+                                                                },
+                                                                callback: function(result){
+                                                                    /* result is a boolean; true = OK, false = Cancel*/
+                                                                    if (result){
+                                                                        document.getElementById('form_delete_{{ $bloque->id }}').submit();
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

@@ -119,27 +119,6 @@
         $('[data-toggle="tooltip"]').tooltip()
     });
 
-    $(document).on("click", ".show-alert", function(e) {
-        bootbox.confirm({
-            size: "small",
-            message: "¿Esta seguro que desea Eliminar?",
-            buttons: {
-                confirm: {
-                    label: 'Si',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function(result){
-                /* result is a boolean; true = OK, false = Cancel*/
-                return result;
-            }
-        })
-    });
-
     /*$(document).ready(function () {
         $('div.alert').not('alert-important').delay(3000).fadeOut(350);
         /!*$('#flash-overlay-modal').modal();*!/
