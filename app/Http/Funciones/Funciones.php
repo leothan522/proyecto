@@ -88,4 +88,16 @@ function obtenerPorcentaje($cantidad, $total) {
     return 0;
 }
 
+function programa($i = null){
+    $status = [
+        'CLAP'     => 'CLAP',
+        'BASE'     => 'BASE'
+    ];
+    if (is_null($i)){
+        return $status;
+    }else{
+        return $status[$i];
+    }
+}
+
 

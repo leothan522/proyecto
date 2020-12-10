@@ -1,8 +1,8 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Consultar CLAPS')
+@section('title', 'CLAPS')
 
-@section('header', 'Consultar CLAPS')
+@section('header', 'CLAPS')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">CLAPS Registrados</li>
@@ -58,18 +58,6 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             })
-        });
-
-        $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-            });
         });
 
         function select_bloques(){
@@ -160,9 +148,14 @@
                             <span class="info-box-text">N° Total CLAPS</span>
                             <span class="info-box-number">
                                 {{ cerosIzquierda(formatoMillares($total_claps, 0)) }}
-                                <span class="float-right">
-                                    <a href="{{ route('claps.export') }}" class="text-muted"><i class="fas fa-cloud-download-alt"></i></a>
-                                </span>
+                                @if ($total_claps > 0)
+                                    @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
+                                    <span class="float-right">
+                                        <a href="{{ route('claps.export') }}" class="text-muted"><i class="fas fa-cloud-download-alt"></i></a>
+                                    </span>
+                                    @endif
+                                @endif
+
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -272,10 +265,15 @@
                             </div>
 
                         </div>
+                        <div class="card-tools">
+                            @if (leerJson(Auth::user()->permisos, 'claps.create') || Auth::user()->role == 100)
+                                <a href="{{ route('claps.create') }}"class="btn btn-sm btn-tool text-primary mt-1"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+                            @endif
                         <div class="float-right">
                             <input type="hidden" name="buscar" value="true">
                             <a href="{{ route('claps.index') }}"class="btn btn-sm btn-default"><i class="fas fa-trash"></i> Limpiar</a>
                             <button class="btn btn-sm bg-navy"><i class="fas fa-search"></i> Buscar</button>
+                        </div>
                         </div>
 
                     {!! Form::close() !!}
@@ -297,11 +295,15 @@
                     <div class="card-header">
                         <h5 class="card-title">Resultados de la Busqueda: <strong class="text-primary">{{ cerosIzquierda(formatoMillares($ver_resultados->count(), 0)) }}</strong></h5>
                         <div class="card-tools">
-                            <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => $id_parroquia,
+                            @if ($ver_resultados->count() > 0)
+                                @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
+                                <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => $id_parroquia,
                             'bloques_id' => $id_bloque, 'nombre_clap' => $nombre_clap, 'codigo_sica' => $codigo_sica, 'cedula_lider' => $cedula_lider]) }}"
-                               class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
-                            <button type="button" class="btn btn-tool" id="boton_cerrar"><i class="fas fa-times"></i></button>
-                            {!! Form::close() !!}
+                                   class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
+                                @endif
+                                <button type="button" class="btn btn-tool" id="boton_cerrar"><i class="fas fa-times"></i></button>
+                            @endif
+                            {{--{!! Form::close() !!}--}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -332,18 +334,43 @@
                                         <td class="text-center">@if ($clap->nacionalidad_lider == "VENEZOLANA")V- @endif{{ formatoMillares($clap->cedula_lider, 0) }}</td>
                                         <td>
 
-                                            {!! Form::open(['route' => ['bloques.destroy', $clap->id], 'method' => 'DELETE']) !!}
+                                            {!! Form::open(['route' => ['claps.destroy', $clap->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$clap->id]) !!}
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
-                                                    <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                                @if (leerJson(Auth::user()->permisos, 'claps.edit') || Auth::user()->role == 100)
+                                                    <a href="{{ route('claps.edit', $clap->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                                 @endif
-                                                {{--@if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
+                                                @if (leerJson(Auth::user()->permisos, 'claps.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
-                                                    <button type="submit" class="btn btn-info"><i class="fas fa-trash"></i></button>
-                                                @endif--}}
+                                                    <button type="button" class="btn btn-info show-alert-{{ $clap->id }}"><i class="fas fa-trash"></i></button>
+                                                    <script>
+                                                        $(document).on("click", ".show-alert-{{ $clap->id }}", function(e) {
+                                                            bootbox.confirm({
+                                                                size: "small",
+                                                                message: "¿Esta seguro que desea Eliminar?",
+                                                                buttons: {
+                                                                    confirm: {
+                                                                        label: 'Si',
+                                                                        className: 'btn-success'
+                                                                    },
+                                                                    cancel: {
+                                                                        label: 'No',
+                                                                        className: 'btn-danger'
+                                                                    }
+                                                                },
+                                                                callback: function(result){
+                                                                    /* result is a boolean; true = OK, false = Cancel*/
+                                                                    if (result){
+                                                                        document.getElementById('form_delete_{{ $clap->id }}').submit();
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+
+                                                @endif
                                             </div>
                                             {!! Form::close() !!}
 
@@ -464,7 +491,7 @@
                                                                                     <label for="name">Nacionalidad</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-passport"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->nacionalidad_lider) }}</span>
                                                                                     </div>
@@ -473,7 +500,7 @@
                                                                                     <label for="name">Cedula</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->cedula_lider) }}</span>
                                                                                     </div>
@@ -482,7 +509,7 @@
                                                                                     <label for="name">Nombre del Responsable</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">
                                                                                             {{ strtoupper($clap->primer_nombre_lider) }}
@@ -496,7 +523,7 @@
                                                                                     <label for="name">N° DE TELEFONO 1</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->telefono_1_lider) }}</span>
                                                                                     </div>
@@ -505,7 +532,7 @@
                                                                                     <label for="name">N° DE TELEFONO 2</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->telefono_2_lider) }}</span>
                                                                                     </div>
@@ -514,7 +541,7 @@
                                                                                     <label for="name">Email</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtolower($clap->email_lider) }}</span>
                                                                                     </div>
@@ -523,7 +550,7 @@
                                                                                     <label for="name">Estatus</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-question-circle"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->estatus_lider) }}</span>
                                                                                     </div>
@@ -532,7 +559,7 @@
                                                                                     <label for="name">Genero</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-male"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->genero) }}</span>
                                                                                     </div>
@@ -541,7 +568,7 @@
                                                                                     <label for="name">Fecha de Nacimiento</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ fecha($clap->fecha_nac_lider, 'd-m-Y') }}</span>
                                                                                     </div>
@@ -550,7 +577,7 @@
                                                                                     <label for="name">Profesión</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->profesion_lider) }}</span>
                                                                                     </div>
@@ -559,7 +586,7 @@
                                                                                     <label for="name">Trabajo</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-user-md"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->trabajo_lider) }}</span>
                                                                                     </div>
@@ -585,7 +612,7 @@
                                                                                     <label for="name">Longitud</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->longitud) }}</span>
                                                                                     </div>
@@ -594,7 +621,7 @@
                                                                                     <label for="name">Latitud</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->latitud) }}</span>
                                                                                     </div>
@@ -603,7 +630,7 @@
                                                                                     <label for="name">Google Maps</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->google_maps) }}</span>
                                                                                     </div>
@@ -612,7 +639,7 @@
                                                                                     <label for="name">Dirección</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
                                                                                         </div>
                                                                                         <span class="form-control">{{ strtoupper($clap->direccion) }}</span>
                                                                                     </div>
@@ -625,7 +652,11 @@
                                                                     <!-- /.card -->
                                                                 </div>
                                                             </div>
-
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-right">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                                </div>
+                                                            </div>
 
                                                         </div>
                                                     </div>

@@ -134,7 +134,8 @@
 
                         @foreach ($claps_cargados as $claps)
                             <div class="progress-group">
-                                <a href="#" class="text-muted">{{ $claps->nombre }}</a>
+                                <a href="{{ route('claps.index', ['municipios_id' => $claps->municipios_id, 'parroquias_id' => null,
+                            'bloques_id' => null, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true]) }}" class="text-muted">{{ $claps->nombre }}</a>
                                 <span class="float-right"><b>{{ formatoMillares($claps->total, 0) }}</b>/{{ formatoMillares($claps_procesados, 0) }}</span>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-success" style="width: {{ obtenerPorcentaje($claps->total, $claps_procesados) }}%">{{ formatoMillares(obtenerPorcentaje($claps->total, $claps_procesados), 0) }}%</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\ImportClapsExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClapsRequest;
 use App\Imports\ClapsImport;
 use App\Models\Clap;
 use App\Models\ImportClap;
@@ -12,7 +13,9 @@ use App\Models\Parametro;
 use App\Models\Parroquia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Validator;
 //use mysql_xdevapi\Exception;
 
 class ClapsController extends Controller
@@ -100,7 +103,7 @@ class ClapsController extends Controller
                 $cedula_lider = $request->cedula_lider;
                 $resultado = true;
 
-                if ($codigo_sica){
+                if ($codigo_sica && $cedula_lider){
                     $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                         ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                         ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
@@ -108,12 +111,28 @@ class ClapsController extends Controller
                         ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                         ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                         ->get();
-                }else{
+                }
+                if (!$codigo_sica && $cedula_lider){
                     $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                         ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                         ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                        ->get();
+                }
+                if ($codigo_sica && !$cedula_lider){
+                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                        ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                        ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
+                        ->get();
+                }
+                if (!$codigo_sica && !$cedula_lider){
+                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                        ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->get();
                 }
 
@@ -160,7 +179,59 @@ class ClapsController extends Controller
      */
     public function create()
     {
-        //
+        $parroquias = [];
+        $bloques = [];
+
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+
+        $municipios = Municipio::all();
+
+        //JSON Parroquias
+        $i = 0;
+        $json_parroquias_valor[] = null;
+        $json_parroquias_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parroquia::where('municipios_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->nombre_completo);
+                array_push($array_id, $item->id);
+            }
+            $json_parroquias_valor[$i] = $array_valor;
+            $json_parroquias_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+        //JSON Bloques
+        $i = 0;
+        $json_bloques_valor[] = null;
+        $json_bloques_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->valor);
+                array_push($array_id, $item->id);
+            }
+            $json_bloques_valor[$i] = $array_valor;
+            $json_bloques_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+        return view('admin.claps.create')
+            ->with('municipios', $select_municipios)
+            ->with('parroquias', $parroquias)
+            ->with('bloques', $bloques)
+            ->with('json_parroquias_valor', $json_parroquias_valor)
+            ->with('json_parroquias_id', $json_parroquias_id)
+            ->with('json_bloques_valor', $json_bloques_valor)
+            ->with('json_bloques_id', $json_bloques_id);
     }
 
     /**
@@ -169,9 +240,12 @@ class ClapsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClapsRequest $request)
     {
-        //
+        $clap = new Clap($request->all());
+        $clap->save();
+        flash('CLAP Guardado Exitosamente', 'success')->important();
+        return redirect()->route('claps.edit', $clap->id);
     }
 
     /**
@@ -193,7 +267,64 @@ class ClapsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parroquias = [];
+        $bloques = [];
+
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+
+        $municipios = Municipio::all();
+
+        //JSON Parroquias
+        $i = 0;
+        $json_parroquias_valor[] = null;
+        $json_parroquias_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parroquia::where('municipios_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->nombre_completo);
+                array_push($array_id, $item->id);
+            }
+            $json_parroquias_valor[$i] = $array_valor;
+            $json_parroquias_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+        //JSON Bloques
+        $i = 0;
+        $json_bloques_valor[] = null;
+        $json_bloques_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $items = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->get();
+            foreach ($items as $item) {
+                array_push($array_valor, $item->valor);
+                array_push($array_id, $item->id);
+            }
+            $json_bloques_valor[$i] = $array_valor;
+            $json_bloques_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+        $clap = Clap::find($id);
+        $parroquias = Parroquia::where('municipios_id', $clap->municipios_id)->pluck('nombre_completo', 'id');
+        $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $clap->municipios_id)->pluck('valor', 'id');
+
+        return view('admin.claps.edit')
+            ->with('municipios', $select_municipios)
+            ->with('parroquias', $parroquias)
+            ->with('bloques', $bloques)
+            ->with('json_parroquias_valor', $json_parroquias_valor)
+            ->with('json_parroquias_id', $json_parroquias_id)
+            ->with('json_bloques_valor', $json_bloques_valor)
+            ->with('json_bloques_id', $json_bloques_id)
+            ->with('clap', $clap);
     }
 
     /**
@@ -205,7 +336,29 @@ class ClapsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'programa' => 'required',
+            'municipios_id' => 'required',
+            'parroquias_id' => 'required',
+            'bloques_id' => 'required',
+            'nombre_clap' => 'required|min:4',
+            'comunidad' => 'required|min:4',
+            'codigo_sica' => ['required', Rule::unique('claps')->ignore($id),]
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()){
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $clap = Clap::find($id);
+        $clap->fill($request->all());
+        $clap->update();
+
+        flash('Cambios Guardados Correctamente', 'primary')->important();
+        return back();
+
     }
 
     /**
@@ -216,7 +369,10 @@ class ClapsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $clap = Clap::find($id);
+        $clap->delete();
+        flash('CLAP Eliminado Exitosamente', 'danger')->important();
+        return back();
     }
 
     public function subirArchivo($id_import = null)
@@ -245,6 +401,7 @@ class ClapsController extends Controller
                 $municipio = Municipio::find($key);
                 $claps->nombre = $municipio->nombre_completo;
                 $claps->total = $claps->count();
+                $claps->municipios_id = $municipio->id;
             }
         }
         return view('admin.claps.importar')
@@ -384,7 +541,7 @@ class ClapsController extends Controller
         $codigo_sica = $request->codigo_sica;
         $cedula_lider = $request->cedula_lider;
 
-        if ($codigo_sica){
+        if ($codigo_sica && $cedula_lider){
             $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
@@ -392,12 +549,28 @@ class ClapsController extends Controller
                 ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                 ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                 ->get();
-        }else{
+        }
+        if (!$codigo_sica && $cedula_lider){
             $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
+                ->get();
+        }
+        if ($codigo_sica && !$cedula_lider){
+            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
+                ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
+                ->get();
+        }
+        if (!$codigo_sica && !$cedula_lider){
+            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->get();
         }
         //return view('admin.claps.exports.claps')->with('imports', $ver_resultados);

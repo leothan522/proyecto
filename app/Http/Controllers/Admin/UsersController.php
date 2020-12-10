@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -144,6 +143,13 @@ class UsersController extends Controller
                     'bloques.consultar'    => $request->input('bloques_consultar'),
                     'bloques.update'    => $request->input('bloques_update'),
                     'gestionar_claps'    => $request->input('gestionar_claps'),
+                    'claps.index'    => $request->input('gestionar_claps'),
+                    'claps.create'    => $request->input('claps_create'),
+                    'claps.store'    => $request->input('claps_create'),
+                    'claps.edit'    => $request->input('claps_edit'),
+                    'claps.update'    => $request->input('claps_edit'),
+                    'claps.destroy'    => $request->input('claps_destroy'),
+                    'claps.export'    => $request->input('claps_export'),
                     'claps.get_import'    => $request->input('claps_get_import'),
                     'claps.post_import'    => $request->input('claps_get_import'),
                     'claps.get_revision'    => $request->input('claps_get_import'),

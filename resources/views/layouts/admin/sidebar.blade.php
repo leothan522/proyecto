@@ -16,8 +16,8 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             @if (leerJson(Auth::user()->permisos, 'gestionar_claps') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko- {{--menu-open--}}">
-                    <a href="#" class="nav-link lkm-">
+                <li class="nav-item has-treeview lko-claps.get_import lko-claps.index {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-claps.get_import lkm-claps.index">
                         <i class="nav-icon fas fa-clone"></i>
                         <p>
                             Gestionar CLAPS
@@ -27,7 +27,7 @@
                     <ul class="nav nav-treeview">
                         @if (leerJson(Auth::user()->permisos, 'claps.index') || Auth::user()->role == 100)
                             <li class="nav-item">
-                                <a href="{{ route('claps.index') }}" class="nav-link lk-">
+                                <a href="{{ route('claps.index') }}" class="nav-link lk-claps.index">
                                     <i class="fa fa-list-alt nav-icon"></i>
                                     <p>Consultar</p>
                                 </a>
@@ -35,7 +35,7 @@
                         @endif
                         @if (leerJson(Auth::user()->permisos, 'claps.get_import') || Auth::user()->role == 100)
                         <li class="nav-item">
-                            <a href="{{ route('claps.get_import') }}" class="nav-link lk-">
+                            <a href="{{ route('claps.get_import') }}" class="nav-link lk-claps.get_import">
                                 <i class="fa fa-cloud-upload-alt nav-icon"></i>
                                 <p>Importar</p>
                             </a>

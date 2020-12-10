@@ -244,7 +244,11 @@
 
                                             {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$bloque->id]) !!}
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                @if (leerJson(Auth::user()->permisos, 'claps.index') || Auth::user()->role == 100)
+                                                <a href="{{ route('claps.index', ['municipios_id' => $bloque->tabla_id, 'parroquias_id' => null,
+                                                'bloques_id' => $bloque->id, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true]) }}"
+                                                   class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                @endif
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $bloque->id }}">
                                                         <i class="fas fa-edit"></i>

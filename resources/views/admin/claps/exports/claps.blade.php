@@ -268,9 +268,6 @@
         font-size: 11px;
         text-align: center;
         ">
-                @if (leerJson($import->observaciones, 'parroquia'))
-                    *
-                @endif
                 {{ strtoupper($import->parroquias->nombre_completo) }}
             </td>
             <td style="

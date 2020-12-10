@@ -16,6 +16,55 @@
 CREATE DATABASE IF NOT EXISTS `alguarisa` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
 USE `alguarisa`;
 
+-- Volcando estructura para tabla alguarisa.claps
+CREATE TABLE IF NOT EXISTS `claps` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre_clap` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `programa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CLAP',
+  `municipios_id` bigint(20) unsigned DEFAULT NULL,
+  `parroquias_id` bigint(20) unsigned DEFAULT NULL,
+  `comunidad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_spda` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_sica` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bloques_id` bigint(20) unsigned DEFAULT NULL,
+  `cedula_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primer_nombre_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `segundo_nombre_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primer_apellido_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `segundo_apellido_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nacionalidad_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `genero` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_nac_lider` date DEFAULT NULL,
+  `profesion_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trabajo_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_1_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_2_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estatus_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` text COLLATE utf8mb4_unicode_ci,
+  `longitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_maps` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `import_id` bigint(20) unsigned DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `claps_import_id_foreign` (`import_id`),
+  KEY `claps_bloques_id_foreign` (`bloques_id`),
+  KEY `claps_parroquias_id_foreign` (`parroquias_id`),
+  KEY `claps_municipios_id_foreign` (`municipios_id`),
+  CONSTRAINT `claps_bloques_id_foreign` FOREIGN KEY (`bloques_id`) REFERENCES `parametros` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `claps_import_id_foreign` FOREIGN KEY (`import_id`) REFERENCES `parametros` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `claps_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `claps_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla alguarisa.claps: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `claps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `claps` ENABLE KEYS */;
+
 -- Volcando estructura para tabla alguarisa.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,15 +82,57 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
+-- Volcando estructura para tabla alguarisa.import_claps
+CREATE TABLE IF NOT EXISTS `import_claps` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre_clap` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `programa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CLAP',
+  `municipios_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parroquias_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comunidad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_spda` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_sica` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bloques_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cedula_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primer_nombre_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `segundo_nombre_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primer_apellido_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `segundo_apellido_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nacionalidad_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `genero` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_nac_lider` date DEFAULT NULL,
+  `profesion_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trabajo_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_1_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_2_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estatus_lider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` text COLLATE utf8mb4_unicode_ci,
+  `longitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_maps` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `import_id` bigint(20) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `import_claps_import_id_foreign` (`import_id`),
+  CONSTRAINT `import_claps_import_id_foreign` FOREIGN KEY (`import_id`) REFERENCES `parametros` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla alguarisa.import_claps: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `import_claps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `import_claps` ENABLE KEYS */;
+
 -- Volcando estructura para tabla alguarisa.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.migrations: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.migrations: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -53,7 +144,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(7, '2020_11_22_133613_create_municipios_table', 1),
 	(8, '2020_11_22_133823_create_parroquias_table', 1),
 	(9, '2020_11_22_223710_add_users_plataforma', 1),
-	(10, '2020_11_24_183254_create_parametros_table', 1);
+	(10, '2020_11_24_183254_create_parametros_table', 1),
+	(11, '2020_11_27_061319_create_claps_table', 1),
+	(12, '2020_11_27_064319_create_import_claps_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.municipios
@@ -66,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.municipios: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.municipios: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
 INSERT INTO `municipios` (`id`, `nombre_completo`, `nombre_corto`, `created_at`, `updated_at`) VALUES
 	(1, 'SAN JOSE DE GUARIBE', 'GUARIBE\r', NULL, NULL),
@@ -114,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parroquias: ~39 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parroquias: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
 INSERT INTO `parroquias` (`id`, `nombre_completo`, `nombre_corto`, `municipios_id`, `created_at`, `updated_at`) VALUES
 	(1, 'GUARIBE', NULL, 1, NULL, NULL),
@@ -203,9 +296,10 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.sessions: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.sessions: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+	('9TXq1yhdJlxIrvab4pRHAtNDAcCawol9UI8jCjKT', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiOXZuZkRKc29HY2E5Sll0NVpsMzdlYnlMeUVia1dzZDlnZlEwSWxBbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2FkbWluL2ZhbWlsaWFzIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJEl6WkIvVnN5alF5QTcwWHlhNXNoMi5kUDRxTThEaEswRXhMMnkuemJVUXRnTmJjZEM4YzlDIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRJelpCL1ZzeWpReUE3MFh5YTVzaDIuZFA0cU04RGhLMEV4TDJ5LnpiVVF0Z05iY2RDOGM5QyI7fQ==', 1607521364),
 	('QKogxRn0J2sHvZY5x0YK5eOQckFjOgyM71dyqiZU', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNXNqWmFZbXljRFBtdDRlM3hIMlMxanhjSk1QaktEcklWdVlSekFRcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2Rhc2hib2FyZCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkSXpaQi9Wc3lqUXlBNzBYeWE1c2gyLmRQNHFNOERoSzBFeEwyeS56YlVRdGdOYmNkQzhjOUMiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJEl6WkIvVnN5alF5QTcwWHlhNXNoMi5kUDRxTThEaEswRXhMMnkuemJVUXRnTmJjZEM4YzlDIjt9', 1606228835),
 	('Sec3uUFdgslwRRSNfQSv0XKwxqJQcMLVt94dLQlS', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoib1NBSHBrUlUwVVVDSnZheWZWMGczSTZxYnNGaGtsT0s2UTRnalhPNSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM1OiJodHRwOi8vcHJveWVjdG8udGVzdC9hZG1pbi91c3VhcmlvcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRJelpCL1ZzeWpReUE3MFh5YTVzaDIuZFA0cU04RGhLMEV4TDJ5LnpiVVF0Z05iY2RDOGM5QyI7fQ==', 1606410473);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
