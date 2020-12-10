@@ -183,20 +183,20 @@
                     <!-- /.progress-group -->
                     <div class="progress-group">
                         <span class="progress-text">N° CLAPS</span>
-                        <span class="float-right"><b>480</b>/{{ formatoMillares($total_claps, 0) }}</span>
+                        <span class="float-right"><b>{{ formatoMillares($claps_cargados, 0) }}</b>/{{ formatoMillares($total_claps, 0) }}</span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-success" style="width: 60%">60%</div>
+                            <div class="progress-bar bg-success" style="width: {{ obtenerPorcentaje($claps_cargados, $total_claps) }}%">{{ obtenerPorcentaje($claps_cargados, $total_claps) }}%</div>
                         </div>
                     </div>
 
                     <!-- /.progress-group -->
-                    <div class="progress-group">
+                    {{--<div class="progress-group">
                         N° Familias
                         <span class="float-right"><b>250</b>/{{ formatoMillares($total_familias, 0) }}</span>
                         <div class="progress progress-sm">
                             <div class="progress-bar bg-warning" style="width: 50%">50%</div>
                         </div>
-                    </div>
+                    </div>--}}
                     <!-- /.progress-group -->
                     </div>
                 </div>

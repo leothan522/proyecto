@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clap;
 use App\Models\Municipio;
 use App\Models\Parametro;
 use Illuminate\Http\Request;
@@ -157,6 +158,11 @@ class BloquesController extends Controller
 
             $bloque = Parametro::find($id);
             $municipio = Municipio::find($bloque->tabla_id);
+            $claps = Clap::where('bloques_id', $id)->count();
+            if ($claps){
+                flash('El Bloque NO se puede eliminar porque tiene CLAPS vinculados', 'warning')->important();
+                return back();
+            }
 
             $clap = Parametro::where('nombre', 'bloque_claps')->where('tabla_id', $id)->first();
             if ($clap){
@@ -174,8 +180,12 @@ class BloquesController extends Controller
 
             $municipio = Municipio::find($id);
             $parametros = Parametro::where('nombre', 'bloques')->where('tabla_id', $id)->orderBy('id', 'DESC')->first();
+            $claps = Clap::where('bloques_id', $parametros->id)->count();
+            if ($claps){
+                flash('El Bloque NO se puede eliminar porque tiene CLAPS vinculados', 'warning')->important();
+                return back();
+            }
             $parametros->delete();
-
         }
 
         flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
@@ -188,6 +198,7 @@ class BloquesController extends Controller
         $total_familias = null;
         $mun_claps = null;
         $mun_familias = null;
+        $claps_cargados = null;
 
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::all();
@@ -260,6 +271,7 @@ class BloquesController extends Controller
             }
 
             $total = $ver_bloques->count();
+            $claps_cargados = Clap::where('municipios_id', $request->municipios_id)->count();
 
         }else{
             $ver_bloques = null;
@@ -283,7 +295,8 @@ class BloquesController extends Controller
             ->with('total', $total)
             ->with('mun_bloques', $mun_bloques)
             ->with('id_municipio', $id_municipio)
-            ->with('id_bloque', $id_bloque);
+            ->with('id_bloque', $id_bloque)
+            ->with('claps_cargados', $claps_cargados);
     }
 
 }
