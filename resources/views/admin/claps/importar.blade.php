@@ -15,6 +15,10 @@
 
 @section('script')
     <script>
+        function cambiar(){
+            var pdrs = document.getElementById('customFileLang').files[0].name;
+            document.getElementById('info').innerHTML = pdrs;
+        }
        document.addEventListener('DOMContentLoaded', function () {
             var detalles_import = document.getElementById('detalles_import');
             var boton_cerrar = document.getElementById('boton_cerrar');
@@ -47,8 +51,8 @@
                                     <span class="input-group-text"><i class="fas fa-file-excel"></i></span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="excel" class="custom-file-input" id="customFileLang" lang="es" accept=".xlsx,.xls" required>
-                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir">Seleccionar Archivo</label>
+                                    <input type="file" name="excel" class="custom-file-input" id="customFileLang" onchange='cambiar()' lang="es" accept=".xlsx,.xls" required>
+                                    <label class="custom-file-label" for="customFileLang" data-browse="Elegir" id="info">Seleccionar Archivo</label>
                                 </div>
                             </div>
                         </div>
