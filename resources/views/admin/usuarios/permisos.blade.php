@@ -32,7 +32,7 @@
                     <div class="card-header">
                         <div class="user-block">
                             <a href="#" data-toggle="modal" data-target="#modal-default">
-                                <img class="img-circle img-bordered-sm" src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="user image">
+                                <img class="img-circle img-bordered-sm" src="{{ asset('img/user.png') }}" alt="user image">
                             </a>
                             <span class="username">
                                 <a href="#">{{ ucwords($user->name) }}</a>
