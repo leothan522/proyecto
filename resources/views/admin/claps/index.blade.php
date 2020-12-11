@@ -169,8 +169,10 @@
                                 </p>
 
                                 <div class="progress-group">
-                                    N° CLAPS
-                                    <span class="float-right"><b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($claps_estadal, 0) }}</span>
+                                    <a href="{{ route('claps.show', 'datos-cargados') }}" class="text-muted">N° CLAPS</a>
+                                    <span class="float-right @if($total_claps && !$claps_estadal) text-danger @endif">
+                                        @if($total_claps && !$claps_estadal) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
+                                        <b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($claps_estadal, 0) }}</span>
                                     <div class="progress progress-sm">
                                         <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje($total_claps, $claps_estadal) }}%">{{ obtenerPorcentaje($total_claps, $claps_estadal) }}%</div>
                                     </div>
@@ -182,10 +184,18 @@
                                         {{--<strong>Parametros Municipio</strong>--}}
                                     </p>
                                     <div class="progress-group">
-                                        {{ $municipios[$id_municipio] }}
-                                    <span class="float-right"><b>{{ formatoMillares($claps_mun, 0) }}</b>/{{ formatoMillares($claps_municipal, 0) }}</span>
+                                        @if ($claps_mun != 0)
+                                            <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => null,
+                                          'bloques_id' => null, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true, 'datos_cargados' => true]) }}"
+                                               class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipios[$id_municipio] }}</a>
+                                        @else
+                                            <span class="text-muted">{{ $municipios[$id_municipio] }}</span>
+                                        @endif
+                                    <span class="float-right @if($claps_mun != 0 && $claps_municipal == 0) text-danger @endif">
+                                        @if($claps_mun != 0 && $claps_municipal == 0) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
+                                        <b>{{ formatoMillares($claps_mun, 0) }}</b>/{{ formatoMillares($claps_municipal, 0) }}</span>
                                         <div class="progress progress-sm">
-                                            <div class="progress-bar bg-success" style="width: {{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%">{{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%</div>
+                                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($claps_mun, $claps_municipal)) }}" style="width: {{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%">{{ obtenerPorcentaje($claps_mun, $claps_municipal) }}%</div>
                                         </div>
                                     </div>
                                     <!-- /.progress-group -->

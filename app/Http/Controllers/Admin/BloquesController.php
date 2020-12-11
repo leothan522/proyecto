@@ -154,6 +154,7 @@ class BloquesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+
         if ($request->consultar){
 
             $bloque = Parametro::find($id);
@@ -175,6 +176,8 @@ class BloquesController extends Controller
             }
 
             $bloque->delete();
+            flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            return redirect()->route('bloques.consultar', ['municipios_id' => $municipio->id]);
 
         }else{
 
@@ -186,10 +189,10 @@ class BloquesController extends Controller
                 return back();
             }
             $parametros->delete();
-        }
+            flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            return back();
 
-        flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
-        return back();
+        }
     }
 
     public function consultar(Request $request)
@@ -212,7 +215,7 @@ class BloquesController extends Controller
             $i++;
             $array_valor[] = "Seleccione";
             $array_id[] = "";
-            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->get();
+            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
             foreach ($bloques as $bloque) {
                 array_push($array_valor, $bloque->valor);
                 array_push($array_id, $bloque->id);
@@ -225,16 +228,17 @@ class BloquesController extends Controller
 
         $id_bloque = null;
         if ($request->all()){
-
             $ver_municipios = Municipio::find($request->municipios_id);
+            $claps_cargados = Clap::where('municipios_id', $request->municipios_id)->count();
             $id_municipio = $ver_municipios->id;
             if ($request->bloques_id != null){
                 $bloque = Parametro::find($request->bloques_id);
                 $id_bloque = $bloque->id;
+                $claps_cargados = Clap::where('bloques_id', $id_bloque)->count();
             }
-            $mun_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->pluck('valor', 'id');
+            $mun_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->orderBy('valor', 'ASC')->pluck('valor', 'id');
 
-            $ver_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->where('id','LIKE', $request->bloques_id)->get();
+            $ver_bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $request->municipios_id)->where('id','LIKE', $request->bloques_id)->orderBy('valor', 'ASC')->get();
             $ver_bloques->each(function ($bloque){
                 $clap = Parametro::where('nombre', 'bloque_claps')->where('tabla_id', $bloque->id)->first();
                 if ($clap){
@@ -252,6 +256,9 @@ class BloquesController extends Controller
                     $bloque->familias = null;
                     $bloque->id_familia = null;
                 }
+
+                $claps = Clap::where('bloques_id', $bloque->id)->count();
+                $bloque->claps_cargados = $claps;
 
             });
 
@@ -271,7 +278,6 @@ class BloquesController extends Controller
             }
 
             $total = $ver_bloques->count();
-            $claps_cargados = Clap::where('municipios_id', $request->municipios_id)->count();
 
         }else{
             $ver_bloques = null;

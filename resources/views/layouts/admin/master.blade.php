@@ -18,6 +18,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/v4-shims.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('adminlte/ionicons.min.css') }}">
     <!-- pace-progress -->

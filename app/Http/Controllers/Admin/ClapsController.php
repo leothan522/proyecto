@@ -256,7 +256,32 @@ class ClapsController extends Controller
      */
     public function show($id)
     {
-        //
+        if ($id = "datos-cargados") {
+
+            $claps_estadal = null;
+
+            $total_claps = Clap::count();
+            $estadal = Parametro::where('nombre', 'claps_estadal')->first();
+            if ($estadal){ $claps_estadal = $estadal->valor; }
+            $municipios = Municipio::orderBy('nombre_completo', 'ASC')->get();
+            $municipios->each(function ($municipio){
+                $claps = Clap::where('municipios_id', $municipio->id)->count();
+                $municipio->claps = $claps;
+                $claps_municipal = Parametro::where('nombre', 'claps')->where('tabla_id', $municipio->id)->first();
+                if ($claps_municipal){
+                    $municipio->total_claps = $claps_municipal->valor;
+                }else{
+                    $municipio->total_claps = 0;
+                }
+
+            });
+
+            return view('admin.claps.datos_cargados')
+                ->with('total_claps', $total_claps)
+                ->with('claps_estadal', $claps_estadal)
+                ->with('municipios', $municipios);
+
+        }
     }
 
     /**
@@ -540,6 +565,7 @@ class ClapsController extends Controller
         $nombre_clap = $request->nombre_clap;
         $codigo_sica = $request->codigo_sica;
         $cedula_lider = $request->cedula_lider;
+        $municipio = null;
 
         if ($codigo_sica && $cedula_lider){
             $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
@@ -573,8 +599,13 @@ class ClapsController extends Controller
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->get();
         }
+
+        if ($request->datos_cargados){
+            $municipio = Municipio::find($id_municipio);
+            $municipio = $municipio->nombre_corto;
+        }
         //return view('admin.claps.exports.claps')->with('imports', $ver_resultados);
-        $nombre = "Export_Clap_".date('d-m-Y');
+        $nombre = "Export_Clap_".$municipio."_".date('d-m-Y');
         return Excel::download(new ImportClapsExport($ver_resultados), "$nombre.xlsx");
 
     }

@@ -91,7 +91,7 @@
                                                         <input type="hidden" name="nombre" value="bloques">
                                                         <input type="hidden" name="tabla_id" value="{{ $municipio->id }}">
                                                         <input type="hidden" name="valor" value="{{ $municipio->bloques + 1 }}">
-                                                        @if ($municipio->bloques < 4)
+                                                        @if ($municipio->bloques < 5)
                                                             <button type="submit" class="btn text-success"><i class="fas fa-plus-circle"></i></button>
                                                         @else
                                                             <button type="button" class="btn text-success disabled"><i class="fas fa-plus-circle"></i></button>

@@ -162,7 +162,9 @@
 
                     <div class="progress-group">
                         N° CLAPS
-                        <span class="float-right"><b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($mun_claps, 0) }}</span>
+                        <span class="float-right @if($total_claps != 0 && $mun_claps == 0) text-danger @endif">
+                            @if($total_claps != 0 && $mun_claps == 0) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
+                            <b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($mun_claps, 0) }}</span>
                         <div class="progress progress-sm">
                             <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje($total_claps, $mun_claps) }}%">{{ obtenerPorcentaje($total_claps, $mun_claps) }}%</div>
                         </div>
@@ -171,9 +173,11 @@
 
                     <div class="progress-group">
                         N° Familias
-                        <span class="float-right"><b>{{ formatoMillares($total_familias, 0) }}</b>/{{ formatoMillares($mun_familias, 0) }}</span>
+                        <span class="float-right @if($total_familias != 0 && $mun_familias == 0) text-danger @endif">
+                            @if($total_familias != 0 && $mun_familias == 0) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
+                            <b>{{ formatoMillares($total_familias, 0) }}</b>/{{ formatoMillares($mun_familias, 0) }}</span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-danger" style="width: {{ obtenerPorcentaje($total_familias, $mun_familias) }}%">{{ obtenerPorcentaje($total_familias, $mun_familias) }}%</div>
+                            <div class="progress-bar bg-primary" style="width: {{ obtenerPorcentaje($total_familias, $mun_familias) }}%">{{ obtenerPorcentaje($total_familias, $mun_familias) }}%</div>
                         </div>
                     </div>
                     <br><div class="dropdown-divider"></div>
@@ -185,18 +189,18 @@
                         <span class="progress-text">N° CLAPS</span>
                         <span class="float-right"><b>{{ formatoMillares($claps_cargados, 0) }}</b>/{{ formatoMillares($total_claps, 0) }}</span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-success" style="width: {{ obtenerPorcentaje($claps_cargados, $total_claps) }}%">{{ obtenerPorcentaje($claps_cargados, $total_claps) }}%</div>
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($claps_cargados, $total_claps)) }}" style="width: {{ obtenerPorcentaje($claps_cargados, $total_claps) }}%">{{ obtenerPorcentaje($claps_cargados, $total_claps) }}%</div>
                         </div>
                     </div>
 
                     <!-- /.progress-group -->
-                    {{--<div class="progress-group">
+                    <div class="progress-group">
                         N° Familias
-                        <span class="float-right"><b>250</b>/{{ formatoMillares($total_familias, 0) }}</span>
+                        <span class="float-right"><b>0</b>/{{ formatoMillares($total_familias, 0) }}</span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-warning" style="width: 50%">50%</div>
+                            <div class="progress-bar bg-warning" style="width: 0%">0%</div>
                         </div>
-                    </div>--}}
+                    </div>
                     <!-- /.progress-group -->
                     </div>
                 </div>
@@ -212,7 +216,7 @@
                                 <input type="hidden" name="nombre" value="bloques">
                                 <input type="hidden" name="tabla_id" value="{{ $ver_municipio->id }}">
                                 <input type="hidden" name="valor" value="{{ $ver_bloques->count() + 1  }}">
-                                @if ($ver_bloques->count() < 4)
+                                @if ($id_bloque == null && $ver_bloques->count() < 5)
                                     @if (leerJson(Auth::user()->permisos, 'bloques.store') || Auth::user()->role == 100)
                                         <button type="submit" class="btn btn-tool text-success"><i class="fas fa-plus-circle"></i> Crear Bloque</button>
                                     @endif
@@ -231,6 +235,7 @@
                                     <th scope="col" class="text-center">Bloques</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">N° CLAPS</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">N° Familias</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">Datos Cargados</th>
                                     <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
                                 </tr>
                                 </thead>
@@ -240,6 +245,7 @@
                                         <td class="text-center">{{ strtoupper($bloque->valor) }}</td>
                                         <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->claps, 0)) }}</td>
                                         <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
+                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->claps_cargados, 0)) }} / 0</td>
                                         <td class="">
 
                                             {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$bloque->id]) !!}
@@ -247,7 +253,7 @@
                                                 @if (leerJson(Auth::user()->permisos, 'claps.index') || Auth::user()->role == 100)
                                                 <a href="{{ route('claps.index', ['municipios_id' => $bloque->tabla_id, 'parroquias_id' => null,
                                                 'bloques_id' => $bloque->id, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true]) }}"
-                                                   class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                   class="btn btn-info @if($bloque->claps_cargados == 0) disabled @endif"><i class="fas fa-eye"></i></a>
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $bloque->id }}">

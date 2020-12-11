@@ -100,4 +100,24 @@ function programa($i = null){
     }
 }
 
+function colorBarra($porcentaje){
+    switch ($porcentaje){
+        case $porcentaje <= 40:
+            return "bg-danger";
+        break;
+        case $porcentaje <= 80:
+            return "bg-warning";
+        break;
+        case $porcentaje <= 90:
+            return "bg-info";
+        break;
+        case $porcentaje >= 100:
+            return "bg-success";
+        break;
+        default:
+            return "bg-info";
+        break;
+    }
+}
+
 
