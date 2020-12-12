@@ -228,11 +228,11 @@ class BloquesController extends Controller
 
         $id_bloque = null;
         if ($request->all()){
-            $ver_municipios = Municipio::find($request->municipios_id);
+            $ver_municipios = Municipio::findOrFail($request->municipios_id);
             $claps_cargados = Clap::where('municipios_id', $request->municipios_id)->count();
             $id_municipio = $ver_municipios->id;
             if ($request->bloques_id != null){
-                $bloque = Parametro::find($request->bloques_id);
+                $bloque = Parametro::findOrFail($request->bloques_id);
                 $id_bloque = $bloque->id;
                 $claps_cargados = Clap::where('bloques_id', $id_bloque)->count();
             }

@@ -61,7 +61,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return view('admin.usuarios.show')
             ->with('user', $user);
     }
@@ -74,7 +74,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrfail($id);
         return view('admin.usuarios.permisos')
             ->with('user', $user);
     }
@@ -144,6 +144,7 @@ class UsersController extends Controller
                     'bloques.update'    => $request->input('bloques_update'),
                     'gestionar_claps'    => $request->input('gestionar_claps'),
                     'claps.index'    => $request->input('gestionar_claps'),
+                    'claps.show'    => $request->input('gestionar_claps'),
                     'claps.create'    => $request->input('claps_create'),
                     'claps.store'    => $request->input('claps_create'),
                     'claps.edit'    => $request->input('claps_edit'),
