@@ -35,7 +35,7 @@
 
     @yield('link')
 </head>
-<body class="hold-transition sidebar-mini sidebar-collapse layout-navbar-fixed pace-primary">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-navbar-fixed layout-fixed pace-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
     <!-- Navbar -->
