@@ -9,8 +9,8 @@
     <meta name="routeName" content="{{ Route::currentRouteName() }}">
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('img/favicons/apple-touch-icon.png') }}" sizes="180x180">
-    <link rel="icon" href="{{ asset('img/favicons/favicon-32x32.png') }}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('img/favicons/apple-touch-icon_2.png') }}" sizes="180x180">
+    <link rel="icon" href="{{ asset('img/favicons/favicon-32x32_2.png') }}" sizes="32x32" type="image/png">
     <link rel="icon" href="{{ asset('img/favicons/favicon-16x16.png') }}" sizes="16x16" type="image/png">
     <link rel="manifest" href="{{ asset('img/favicons/manifest.json') }}">
     <link rel="mask-icon" href="{{ asset('img/favicons/safari-pinned-tab.svg') }}" color="#563d7c">
@@ -47,7 +47,7 @@
         <!-- Brand Logo -->
         <a href="{{ route('dashboard') }}" class="brand-link">
             {{--<img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}"--}}
-            <img src="{{ asset('img/alguarisa_logo_128x128.png') }}"
+            <img src="{{ asset('img/favicons/apple-touch-icon_2.png') }}"
                  alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
