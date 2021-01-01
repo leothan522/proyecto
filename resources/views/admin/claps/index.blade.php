@@ -124,6 +124,13 @@
             document.f1.parroquias_id.options[0].selected = true;
         }
 
+        var btn_exportar_all = document.getElementById('all_btn');
+        var url_all = btn_exportar_all.getAttribute('href');
+        btn_exportar_all.addEventListener('click', function (e) {
+            e.preventDefault();
+            alertExport(url_all);
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             var resultado_busqueda = document.getElementById('resultado_busqueda');
             var estadisticas = document.getElementById('estadisticas');
@@ -132,6 +139,14 @@
                 resultado_busqueda.classList.add('d-none');
                 estadisticas.classList.add('d-none');
             });
+
+            var btn_exportar = document.getElementById('btn_exportar');
+            var url = btn_exportar.getAttribute('href');
+            btn_exportar.addEventListener('click', function (e) {
+                e.preventDefault();
+                alertExport(url);
+            });
+
         });
 
     </script>
@@ -151,7 +166,7 @@
                                 @if ($total_claps > 0)
                                     @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
                                     <span class="float-right">
-                                        <a href="{{ route('claps.export') }}" class="text-muted"><i class="fas fa-cloud-download-alt"></i></a>
+                                        <a href="{{ route('claps.export') }}" id="all_btn" class="text-muted"><i class="fas fa-cloud-download-alt"></i></a>
                                     </span>
                                     @endif
                                 @endif
@@ -309,6 +324,7 @@
                                 @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
                                 <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => $id_parroquia,
                             'bloques_id' => $id_bloque, 'nombre_clap' => $nombre_clap, 'codigo_sica' => $codigo_sica, 'cedula_lider' => $cedula_lider]) }}"
+                                   id="btn_exportar"
                                    class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
                                 @endif
                                 <button type="button" class="btn btn-tool" id="boton_cerrar"><i class="fas fa-times"></i></button>
@@ -354,8 +370,8 @@
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'claps.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
-                                                    <button type="button" class="btn btn-info show-alert-{{ $clap->id }}"><i class="fas fa-trash"></i></button>
-                                                    <script>
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $clap->id }}')" class="btn btn-info {{--show-alert-{{ $clap->id }}--}}"><i class="fas fa-trash"></i></button>
+                                                    {{--<script>
                                                         $(document).on("click", ".show-alert-{{ $clap->id }}", function(e) {
                                                             bootbox.confirm({
                                                                 size: "small",
@@ -378,7 +394,7 @@
                                                                 }
                                                             });
                                                         });
-                                                    </script>
+                                                    </script>--}}
 
                                                 @endif
                                             </div>

@@ -45,7 +45,8 @@ class MunicipiosController extends Controller
     {
         $municipio = new Municipio($request->all());
         $municipio->save();
-        flash('Municipio Creado Correctamente', 'success')->important();
+        //flash('Municipio Creado Correctamente', 'success')->important();
+        verSweetAlert2('Municipio creado correctamente.');
         return back();
     }
 
@@ -84,7 +85,8 @@ class MunicipiosController extends Controller
         $nombre = $municipio->nombre_completo;
         $abreviado = $municipio->nombre_corto;
         if ($nombre == $request->nombre_completo2 && $abreviado == $request->nombre_corto2){
-            flash('No se realizo ningun cambio', 'warning')->important();
+            //flash('No se realizo ningun cambio', 'warning')->important();
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
             return back();
         }else{
             $rules = [
@@ -97,13 +99,15 @@ class MunicipiosController extends Controller
             ];
             $validator = Validator::make($data, $rules);
             if ($validator->fails()){
-                flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+                //flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+                verSweetAlert2('Parametro Repetido. No se pudo guardar.', 'toast', 'error');
                 return back();
             }
             $municipio->nombre_completo = $request->nombre_completo2;
             $municipio->nombre_corto = $request->nombre_corto2;
             $municipio->update();
-            flash('Modificado Exitosamente', 'primary')->important();
+            //flash('Modificado Exitosamente', 'primary')->important();
+            verSweetAlert2('Cambios guardados correctamente.');
             return back();
         }
 
@@ -118,8 +122,10 @@ class MunicipiosController extends Controller
     public function destroy($id)
     {
         $municipio = Municipio::find($id);
+        $nombre = strtoupper($municipio->nombre_completo);
         $municipio->delete();
-        flash('Eliminado Exitosamente', 'danger')->important();
+        //flash('Eliminado Exitosamente', 'danger')->important();
+        verSweetAlert2("Borrada el municipio <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error');
         return back();
     }
 }

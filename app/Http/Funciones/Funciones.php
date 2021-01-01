@@ -120,4 +120,67 @@ function colorBarra($porcentaje){
     }
 }
 
+//Alertas de sweetAlert2
+function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash"></i>', $title = '¡Éxito!')
+{
+    switch ($alert){
+        default:
+            alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
+            break;
+        case "iconHtml":
+            alert($title, $mensaje, $type)->iconHtml($icono)->persistent(true,false)->toHtml();
+            break;
+        case "toast":
+            toast($mensaje, $type);
+            break;
+    }
+    /*alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+        alert()->info('InfoAlert','Lorem ipsum dolor sit amet.');
+        alert()->warning('WarningAlert','Lorem ipsum dolor sit amet.');
+        alert()->error('ErrorAlert','Lorem ipsum dolor sit amet.');
+        alert()->question('QuestionAlert','Lorem ipsum dolor sit amet.');
+        toast('Success Toast','success');.
+        // example:
+        alert()->success('Post Created', '<strong>Successfully</strong>')->toHtml();
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->addImage('https://unsplash.it/400/200');
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->width('720px');
+        // example:
+        alert('Title','Lorem Lorem Lorem', 'success')->padding('50px');
+        */
+    // example:
+    //alert()->success('¡Éxito!',$mensaje)->persistent(true,false);
+    // example:
+    //alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.')->showConfirmButton('Confirm', '#3085d6');
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton('Cancel', '#aaa');
+    // example:
+    //toast('Post Updated','success','top-right')->showCloseButton();
+    // example:
+    //toast('Post Updated','success','top-right')->hideCloseButton();
+    // example:
+    /*alert()->question('Are you sure?','You won\'t be able to revert this!')
+        ->showConfirmButton('Yes! Delete it', '#3085d6')
+        ->showCancelButton('Cancel', '#aaa')->reverseButtons();*/
+
+    // example:
+    // alert()->error('Oops...', 'Something went wrong!')->footer('<a href="#">Why do I have this issue?</a>');
+    // example:
+    //alert()->success('Post Created', 'Successfully')->toToast();
+    // example:
+    //alert('Title','Lorem Lorem Lorem', 'success')->background('#2acc56');
+    // example:
+    //()->success('Post Created', 'Successfully')->buttonsStyling(false);
+    // example:
+    //alert()->success('Post Created', 'Successfully')->iconHtml('<i class="far fa-thumbs-up"></i>');
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusConfirm(true);
+    // example:
+    //alert()->question('Are you sure?','You won\'t be able to revert this!')->showCancelButton()->showConfirmButton()->focusCancel(true);
+    // example:
+    //toast('Signed in successfully','success')->timerProgressBar();
+
+}
+
 

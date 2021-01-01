@@ -263,8 +263,8 @@
                                                 @if (leerJson(Auth::user()->permisos, 'bloques.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="consultar" value="{{ true }}">
                                                     <input type="hidden" id="indice" value="{{ $bloque->id }}">
-                                                    <button type="button" class="btn btn-info show-alert-{{ $bloque->id }}"><i class="fas fa-trash"></i></button>
-                                                    <script>
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $bloque->id }}')" class="btn btn-info {{--show-alert-{{ $bloque->id }}--}}"><i class="fas fa-trash"></i></button>
+                                                    {{--<script>
                                                         $(document).on("click", ".show-alert-{{ $bloque->id }}", function(e) {
                                                             bootbox.confirm({
                                                                 size: "small",
@@ -287,7 +287,7 @@
                                                                 }
                                                             });
                                                         });
-                                                    </script>
+                                                    </script>--}}
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

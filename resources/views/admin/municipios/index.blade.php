@@ -121,8 +121,10 @@
                                                     {{--<a href="{{ route('usuarios.show', $municipio->id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>--}}
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'municipios.destroy') || Auth::user()->role == 100)
-                                                    <button type="button" class="btn btn-info show-alert-{{ $municipio->id }}"><i class="fas fa-trash"></i></button>
-                                                        <script>
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $municipio->id }}')" class="btn btn-info {{--show-alert-{{ $municipio->id }}--}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                        {{--<script>
                                                             $(document).on("click", ".show-alert-{{ $municipio->id }}", function(e) {
                                                                 bootbox.confirm({
                                                                     size: "small",
@@ -145,7 +147,7 @@
                                                                     }
                                                                 });
                                                             });
-                                                        </script>
+                                                        </script>--}}
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

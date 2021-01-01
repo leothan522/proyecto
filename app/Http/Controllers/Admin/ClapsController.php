@@ -90,7 +90,8 @@ class ClapsController extends Controller
         if ($request->buscar){
             if ($request->municipios_id == null && $request->parroquias_id == null && $request->bloques_id == null
                 && $request->nombre_clap == null && $request->codigo_sica == null && $request->cedula_lider == null){
-                flash('Debes definir al menos un parametro para la Buscqueda', 'warning')->important();
+                //flash('Debes definir al menos un parametro para la Buscqueda', 'warning')->important();
+                verSweetAlert2('Debes definir al menos un parametro para la Buscqueda', 'toast', 'warning');
                 $resultado = null;
             }else{
                 $id_municipio = $request->municipios_id;
@@ -395,8 +396,10 @@ class ClapsController extends Controller
     public function destroy($id)
     {
         $clap = Clap::find($id);
+        $nombre = strtoupper($clap->nombre_clap);
         $clap->delete();
-        flash('CLAP Eliminado Exitosamente', 'danger')->important();
+        //flash('CLAP Eliminado Exitosamente', 'danger')->important();
+        verSweetAlert2("Borrado el CLAP <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
         return back();
     }
 
@@ -447,7 +450,8 @@ class ClapsController extends Controller
 
         Excel::import(new ClapsImport($parametros->id), $request->file('excel'));
 
-        flash('Importado Exitosamente', 'success')->important();
+        //flash('Importado Exitosamente', 'success')->important();
+        verSweetAlert2('Data importada correctamente.');
         return redirect()->route('claps.get_import', $parametros->id);
     }
 
@@ -514,7 +518,8 @@ class ClapsController extends Controller
             $claps->import_id = $parametros->id;
             if ($claps->save()) {
                 $import->delete();
-                flash('CLAPS Guardado Correctamente', 'success')->important();
+                //flash('CLAPS Guardado Correctamente', 'success')->important();
+                verSweetAlert2('CLAP Guardado correctamente.');
             }
 
         } else {
@@ -523,10 +528,13 @@ class ClapsController extends Controller
                 foreach ($todos as $todo) {
                     $todo->delete();
                 }
-                flash('Todas las Filas han sido Eliminadas', 'danger')->important();
+                //flash('Todas las Filas han sido Eliminadas', 'danger')->important();
+                verSweetAlert2('Todas las Filas han sido Borradas.', 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
             } else {
+                $nombre = $import->nombre_clap;
                 $import->delete();
-                flash('Fila Eliminada', 'danger')->important();
+                //flash('Fila Eliminada', 'danger')->important();
+                verSweetAlert2("Borrada la fila <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
             }
 
 
@@ -606,6 +614,7 @@ class ClapsController extends Controller
         }
         //return view('admin.claps.exports.claps')->with('imports', $ver_resultados);
         $nombre = "Export_Clap_".$municipio."_".date('d-m-Y');
+        //verSweetAlert2('hola');
         return Excel::download(new ImportClapsExport($ver_resultados), "$nombre.xlsx");
 
     }

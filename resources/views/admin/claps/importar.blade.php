@@ -14,6 +14,7 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('js/importar_claps.js') }}"></script>
     <script>
         function cambiar(){
             var pdrs = document.getElementById('customFileLang').files[0].name;
@@ -42,7 +43,7 @@
                     </div>
                     <div class="card-body">
 
-                        {!! Form::open(['route' => 'claps.post_import', 'method' => 'post', 'files' => true]) !!}
+                        {!! Form::open(['route' => 'claps.post_import', 'method' => 'post', 'files' => true, 'id' => 'form_importar']) !!}
 
                         <div class="form-group">
                             <label for="name">Subir Archivo</label>

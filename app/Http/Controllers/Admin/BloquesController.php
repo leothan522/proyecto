@@ -50,7 +50,8 @@ class BloquesController extends Controller
     {
         $bloques = new Parametro($request->all());
         $bloques->save();
-        flash('Bloque Creado en ' . $bloques->municipios->nombre_corto, 'success')->important();
+        //flash('Bloque Creado en ' . $bloques->municipios->nombre_corto, 'success')->important();
+        verSweetAlert2("Bloque creado en &nbsp;<strong class='text-primary'> ".$bloques->municipios->nombre_corto."</strong>", 'toast', 'success');
         return back();
     }
 
@@ -136,9 +137,11 @@ class BloquesController extends Controller
         }
 
         if($mensaje_nombre || $mensaje_clap || $mensaje_familias){
-            flash('Bloque Modificado Exitosamente', 'primary')->important();
+            //flash('Bloque Modificado Exitosamente', 'primary')->important();
+            verSweetAlert2('Cambios guardados correctamente.');
         }else{
-            flash('Nose realizo ningun cambio', 'warning')->important();
+            //flash('No se realizo ningun cambio', 'warning')->important();
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
         }
 
         return back();
@@ -158,10 +161,14 @@ class BloquesController extends Controller
         if ($request->consultar){
 
             $bloque = Parametro::find($id);
+            $nombre = strtoupper($bloque->valor);
             $municipio = Municipio::find($bloque->tabla_id);
             $claps = Clap::where('bloques_id', $id)->count();
             if ($claps){
-                flash('El Bloque NO se puede eliminar porque tiene CLAPS vinculados', 'warning')->important();
+                //flash('El Bloque NO se puede eliminar porque tiene CLAPS vinculados', 'warning')->important();
+                verSweetAlert2('El bloque <strong>NO se puede eliminar</strong><br> 
+                                porque tiene CLAPS vinculados.', 'iconHtml', 'warning',
+                                '<i class="fa fa-exclamation"></i>', '¡Precaución!');
                 return back();
             }
 
@@ -176,7 +183,8 @@ class BloquesController extends Controller
             }
 
             $bloque->delete();
-            flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            //flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            verSweetAlert2("Borrado el bloque <strong class='text-danger'> ".$nombre."</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
             return redirect()->route('bloques.consultar', ['municipios_id' => $municipio->id]);
 
         }else{
@@ -189,7 +197,8 @@ class BloquesController extends Controller
                 return back();
             }
             $parametros->delete();
-            flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            //flash('Bloque Eliminado en ' . $municipio->nombre_corto, 'danger')->important();
+            verSweetAlert2("Bloque eliminado en &nbsp;<strong class='text-primary'> ".$municipio->nombre_corto."</strong>", 'toast', 'info');
             return back();
 
         }

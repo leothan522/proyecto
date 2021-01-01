@@ -56,7 +56,8 @@ class FamiliasController extends Controller
     {
         $parametros = Parametro::where('nombre', 'familias')->where('tabla_id', $request->tabla_id)->first();
         if ($parametros){
-            flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+            //flash('Parametro Repetido. No se pudo guardar.', 'warning')->important();
+            verSweetAlert2('Parametro Repetido. No se pudo guardar.', 'toast', 'error');
             return back()->withInput();
         }
         $familias = new Parametro($request->all());
@@ -65,7 +66,8 @@ class FamiliasController extends Controller
         $claps->nombre = $request->nombre_clap;
         $claps->valor = $request->valor_clap;
         $claps->save();
-        flash('Parametro Guardado Exitosamente', 'success')->important();
+        //flash('Parametro Guardado Exitosamente', 'success')->important();
+        verSweetAlert2('Parametro guardado correctamente.');
         return back();
     }
 
@@ -106,12 +108,14 @@ class FamiliasController extends Controller
         $mun = $familias->tabla_id;
         $valor = $familias->valor;
         if($mun == $request->tabla_id2 && $valor == $request->valor2 && $valor_clap == $request->valor_clap2){
-            flash('No se realizo ningun cambio', 'warning')->important();
+            //flash('No se realizo ningun cambio', 'warning')->important();
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
             return back();
         }
         $parametros = Parametro::where('nombre', 'familias')->where('tabla_id', $request->tabla_id2)->first();
         if ($parametros && $parametros->id != $id){
-            flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+            //flash('Parametro Repetido. No se pudo guardar.', 'warning')->important();
+            verSweetAlert2('Parametro Repetido. No se pudo guardar.', 'toast', 'error');
             return back();
         }
         $familias->tabla_id = $request->tabla_id2;
@@ -120,7 +124,8 @@ class FamiliasController extends Controller
         $claps->tabla_id = $request->tabla_id2;
         $claps->valor = $request->valor_clap2;
         $claps->update();
-        flash('Parametro Modificado Exitosamente', 'primary')->important();
+        //flash('Parametro Modificado Exitosamente.', 'primary')->important();
+        verSweetAlert2('Cambios guardados correctamente.');
         return back();
     }
 
@@ -130,13 +135,15 @@ class FamiliasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Request $request, $id)
+    public function destroy(Request $request, $id)
     {
         $familias = Parametro::find($id);
+        $municipio = $familias->municipios->nombre_corto;
         $familias->delete();
         $claps = Parametro::find($request->id_clap);
         $claps->delete();
-        flash('Parametro Eliminado Exitosamente', 'danger')->important();
+        //flash('Parametro Eliminado Exitosamente', 'danger')->important();
+        verSweetAlert2("Borrado el parametro del municipio <strong>$municipio</strong>",'iconHtml', 'error');
         return back();
     }
 }

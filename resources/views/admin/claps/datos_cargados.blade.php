@@ -20,12 +20,20 @@
             document.getElementById('info').innerHTML = pdrs;
         }
 
+        var btn_exportar = document.getElementById('btn_exportar');
+        var url = btn_exportar.getAttribute('href');
+        btn_exportar.addEventListener('click', function (e) {
+            e.preventDefault();
+            alertExport(url);
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             var detalles_import = document.getElementById('detalles_import');
             var boton_cerrar = document.getElementById('boton_cerrar');
             boton_cerrar.addEventListener('click', function () {
                 detalles_import.classList.add('d-none');
             });
+
         });
     </script>
 @endsection
@@ -49,7 +57,7 @@
                                 @if ($total_claps > 0)
                                     @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
                                         <span class="float-right">
-                                        <a href="{{ route('claps.export') }}" class="text-muted"><i
+                                        <a href="{{ route('claps.export') }}" id="btn_exportar" class="text-muted"><i
                                                 class="fas fa-cloud-download-alt"></i></a>
                                     </span>
                                     @endif

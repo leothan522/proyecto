@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        //verSweetAlert2("hola");
         return view('admin.dashboard');
     }
 }

@@ -239,8 +239,8 @@
                                                 @endif
                                                 @if (leerJson(Auth::user()->permisos, 'familias.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
-                                                    <button type="button" class="btn btn-info show-alert-{{ $familia->id }}"><i class="fas fa-trash"></i></button>
-                                                        <script>
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $familia->id }}')" class="btn btn-info {{--show-alert-{{ $familia->id }}--}}"><i class="fas fa-trash"></i></button>
+                                                        {{--<script>
                                                             $(document).on("click", ".show-alert-{{ $familia->id }}", function(e) {
                                                                 bootbox.confirm({
                                                                     size: "small",
@@ -263,7 +263,7 @@
                                                                     }
                                                                 });
                                                             });
-                                                        </script>
+                                                        </script>--}}
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}

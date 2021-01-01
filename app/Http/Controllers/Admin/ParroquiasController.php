@@ -48,7 +48,8 @@ class ParroquiasController extends Controller
     {
         $parroquia = new Parroquia($request->all());
         $parroquia->save();
-        flash('Parroquia Creado Correctamente', 'success')->important();
+        //flash('Parroquia Creado Correctamente', 'success')->important();
+        verSweetAlert2('Parroquia creada correctamente.');
         return back();
     }
 
@@ -88,7 +89,8 @@ class ParroquiasController extends Controller
         $nombre = $parroquia->nombre_completo;
         $abreviado = $parroquia->nombre_corto;
         if ($municipio == $request->municipios_id2 && $nombre == $request->nombre_completo2 && $abreviado == $request->nombre_corto2){
-            flash('No se realizo ningun cambio', 'warning')->important();
+            //flash('No se realizo ningun cambio', 'warning')->important();
+            verSweetAlert2('No se realizo ningun cambio.', 'toast', 'warning');
             return back();
         }else{
             $rules = [
@@ -101,14 +103,16 @@ class ParroquiasController extends Controller
             ];
             $validator = Validator::make($data, $rules);
             if ($validator->fails()){
-                flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+                //flash('Parametro Repetido. No se pudo guardar', 'warning')->important();
+                verSweetAlert2('Parametro Repetido. No se pudo guardar.', 'toast', 'error');
                 return back();
             }
             $parroquia->municipios_id = $request->municipios_id2;
             $parroquia->nombre_completo = $request->nombre_completo2;
             $parroquia->nombre_corto = $request->nombre_corto2;
             $parroquia->update();
-            flash('Modificado Exitosamente', 'primary')->important();
+            //flash('Modificado Exitosamente', 'primary')->important();
+            verSweetAlert2('Cambios guardados correctamente.');
             return back();
         }
     }
@@ -122,8 +126,10 @@ class ParroquiasController extends Controller
     public function destroy($id)
     {
         $parroqua = Parroquia::find($id);
+        $nombre = strtoupper($parroqua->nombre_completo);
         $parroqua->delete();
-        flash('Eliminado Exitosamente', 'danger')->important();
+        //flash('Eliminado Exitosamente', 'danger')->important();
+        verSweetAlert2("Borrada la parroquia <strong class='text-danger'>$nombre</strong>", 'iconHtml', 'error');
         return back();
     }
 }

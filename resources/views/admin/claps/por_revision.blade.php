@@ -25,6 +25,14 @@
                 theme: 'bootstrap4'
             })
         });
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn_exportar = document.getElementById('btn_exportar');
+            var url = btn_exportar.getAttribute('href');
+            btn_exportar.addEventListener('click', function (e) {
+                e.preventDefault();
+                alertExport(url);
+            });
+        });
     </script>
 @endsection
 
@@ -102,8 +110,8 @@
                                             <input type="hidden" name="delete" value="{{ true }}">
                                             <input type="hidden" name="todo" value="{{ false }}">
                                             <input type="hidden" name="id_clap" value="{{ $import->id }}">
-                                            <button type="button" class="btn btn-info" id="show-alert-{{ $import->id }}"><i class="fas fa-trash"></i></button>
-                                            <script>
+                                            <button type="button" onclick="alertaBorrar('form_delete_{{ $import->id }}')" class="btn btn-info" {{--id="show-alert-{{ $import->id }}"--}}><i class="fas fa-trash"></i></button>
+                                            {{--<script>
                                                 document.addEventListener('DOMContentLoaded', function () {
                                                     var boton = document.getElementById('show-alert-{{ $import->id }}');
                                                     boton.addEventListener('click', function () {
@@ -129,7 +137,7 @@
                                                         });
                                                     });
                                                 });
-                                            </script>
+                                            </script>--}}
                                         </div>
                                         {!! Form::close() !!}
 
@@ -213,15 +221,19 @@
                                 <input type="hidden" name="delete" value="{{ true }}">
                                 <input type="hidden" name="todo" value="{{ true }}">
                                 <input type="hidden" name="id_clap" value="{{ $import->id }}">
-                                <a href="{{ route('claps.get_revision_export', $parametro->id) }}" class="btn btn-sm bg-navy"><i class="fas fa-file-excel"></i> Generar Excel</a>
-                                <button type="button" class="btn btn-sm btn-danger" id="show-alert-todo"><i class="fas fa-trash"></i> Borrar todo</button>
-                                <script>
+                                <a href="{{ route('claps.get_revision_export', $parametro->id) }}" id="btn_exportar"
+                                   {{--onclick="alertExport('{{ route('claps.get_revision_export', $parametro->id) }}')"--}}
+                                   class="btn btn-sm bg-navy"><i class="fas fa-file-excel"></i>
+                                    Generar Excel
+                                </a>
+                                <button type="button" onclick="alertaBorrar('form_delete_todo')" class="btn btn-sm btn-danger" {{--id="show-alert-todo2"--}}><i class="fas fa-trash"></i> Borrar todo</button>
+                                {{--<script>
                                     document.addEventListener('DOMContentLoaded', function () {
-                                        var boton = document.getElementById('show-alert-todo');
+                                        var boton = document.getElementById('show-alert-todo2');
                                         boton.addEventListener('click', function () {
                                             bootbox.confirm({
                                                 size: "small",
-                                                message: "¿Eliminar Todo?",
+                                                message: "¿Eliminar Todo2?",
                                                 buttons: {
                                                     confirm: {
                                                         label: 'Si',
@@ -241,7 +253,7 @@
                                             });
                                         });
                                     });
-                                </script>
+                                </script>--}}
                             </div>
                             {!! Form::close() !!}
                         </div>
