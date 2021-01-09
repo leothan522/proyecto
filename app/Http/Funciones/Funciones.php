@@ -121,7 +121,7 @@ function colorBarra($porcentaje){
 }
 
 //Alertas de sweetAlert2
-function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash"></i>', $title = '¡Éxito!')
+function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i class="fa fa-trash-alt"></i>', $title = '¡Éxito!')
 {
     switch ($alert){
         default:
