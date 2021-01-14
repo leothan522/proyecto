@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use PHPUnit\Exception;
 use Validator;
 //use mysql_xdevapi\Exception;
 
@@ -450,9 +451,20 @@ class ClapsController extends Controller
 
         Excel::import(new ClapsImport($parametros->id), $request->file('excel'));
 
+        $validar = ImportClap::where('import_id', $parametros->id)->count();
+        if ($validar){
+            $message = "Data importada correctamente.";
+            verSweetAlert2($message);
+            return redirect()->route('claps.get_import', $parametros->id);
+        }else{
+            $parametros->delete();
+            $title = "¡Error!";
+            $message = "El archivo que intentas subir no cumple con el formato establecido para la carga de los CLAPS";
+            verSweetAlert2($message, 'iconHtml', 'error', '<i class="fa fa-ban"></i>', $title);
+            return back();
+        }
         //flash('Importado Exitosamente', 'success')->important();
-        verSweetAlert2('Data importada correctamente.');
-        return redirect()->route('claps.get_import', $parametros->id);
+        //return redirect()->route('claps.get_import', $parametros->id);
     }
 
     public function getRevision($id)
