@@ -65,27 +65,27 @@
                                 <!-- /.info-box-content -->
                             </div>
                         </div>
-                            <!-- /.info-box -->
-                            <div class="col-12 col-sm-6 col-md-12">
-                                <div class="info-box mb-3">
-                                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">N° Familias Estadal</span>
-                                        <span class="info-box-number">
-                                        {{ formatoMillares($estadal->valor, 0) }}
-                                        <span class="text-sm float-right">
-                                            @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
-                                                <button type="submit" class="btn btn-xs text-primary" data-toggle="modal" data-target="#modal-{{ $estadal->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            @endif
-                                        </span>
+                        <!-- /.info-box -->
+                        <div class="col-12 col-sm-6 col-md-12">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">N° Familias Estadal</span>
+                                    <span class="info-box-number">
+                                    {{ formatoMillares($estadal->valor, 0) }}
+                                    <span class="text-sm float-right">
+                                        @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
+                                            <button type="submit" class="btn btn-xs text-primary" data-toggle="modal" data-target="#modal-{{ $estadal->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        @endif
                                     </span>
-                                    </div>
-                                    <!-- /.info-box-content -->
+                                </span>
                                 </div>
-                                <!-- /.info-box -->
-                            <!-- Modal -->
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        <!-- Modal -->
                             <div class="modal fade" id="modal-{{ $estadal->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
