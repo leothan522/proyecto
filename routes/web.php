@@ -39,7 +39,12 @@ Route::get('/banned', function () {
 Route::prefix('/android')->group(function (){
 
     Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
+    //Modulo CLAP
     Route::get('/modulo/clap/{id}', 'Android\ProgramasController@moduloClap')->name('android.modulo_clap');
+    Route::get('/modulo/clap/{id}/{municipio}', 'Android\ProgramasController@moduloClapParroquias')->name('android.modulo_clap_parroquias');
+
+
+
     Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
     Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
     Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');

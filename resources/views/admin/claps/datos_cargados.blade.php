@@ -105,6 +105,7 @@
                                         <a href="{{ route('claps.export', ['municipios_id' => $municipio->id, 'parroquias_id' => null,
                                           'bloques_id' => null, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true, 'datos_cargados' => true]) }}"
                                            class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipio->nombre_completo }}</a>
+                                        <button type="button" onclick="alertaBorrar(null, '{{ route('claps.borrar', $municipio->id) }}')" class="btn btn-link btn-xs text-danger text-sm"><i class="fas fa-trash-alt"></i></button>
                                         @else
                                         <span class="text-muted">{{ $municipio->nombre_completo }}</span>
                                     @endif

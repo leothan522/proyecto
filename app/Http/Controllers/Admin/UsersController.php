@@ -160,7 +160,8 @@ class UsersController extends Controller
                     'claps.post_import'    => $request->input('claps_get_import'),
                     'claps.get_revision'    => $request->input('claps_get_import'),
                     'claps.post_revision'    => $request->input('claps_get_import'),
-                    'claps.get_revision_export'    => $request->input('claps_get_import')
+                    'claps.get_revision_export'    => $request->input('claps_get_import'),
+                    'claps.borrar'    => $request->input('claps_borrar')
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){

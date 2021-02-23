@@ -38,6 +38,11 @@
                        @if (leerJson($user->permisos, 'claps.get_import')) checked @endif>
                 <label for="GestionarClaps2" class="custom-control-label">Importar CLAPS</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input name="claps_borrar" value="true" class="custom-control-input" type="checkbox" id="GestionarClaps12"
+                       @if (leerJson($user->permisos, 'claps.borrar')) checked @endif>
+                <label for="GestionarClaps12" class="custom-control-label">Borrar CLAPS Municipio</label>
+            </div>
 
         </div>
     </div>

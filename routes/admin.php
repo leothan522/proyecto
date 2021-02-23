@@ -30,6 +30,7 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::post('/claps/importar/{id}/por-revision', 'Admin\ClapsController@postRevision')->name('claps.post_revision');
     Route::get('/claps/importar/{id}/por-revision/exportar', 'Admin\ClapsController@exportImportClaps')->name('claps.get_revision_export');
     Route::get('/claps/exportar/', 'Admin\ClapsController@exportClaps')->name('claps.export');
+    Route::get('/claps/borrar-municipio/{id}', 'Admin\ClapsController@borrarMunicipio')->name('claps.borrar');
     Route::resource('claps', 'Admin\ClapsController');
 
 });

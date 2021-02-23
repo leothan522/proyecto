@@ -1,15 +1,17 @@
 @extends("layouts.android.master")
 
 @section('content')
-    {{--<div class="col-md-12 text-center">
-        <h2>Estado Guárico</h2>
-    </div>--}}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>{{ strtoupper($municipio->nombre_corto) }}</h2>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">N° Claps Estadal</span>
+                    <span class="info-box-text">N° Claps</span>
                     <span class="info-box-number">
                         {{ formatoMillares($claps->valor, 0) }}
                     </span>
@@ -22,9 +24,9 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">N° Familias Estadal</span>
+                    <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                    {{ formatoMillares($estadal->valor, 0) }}
+                    {{ formatoMillares($familias->valor, 0) }}
                 </span>
                     </span>
                 </div>
@@ -37,7 +39,7 @@
         <div class="col-12">
             <div class="card card-navy">
                 <div class="card-header">
-                    <h3 class="card-title">N° por Municipios</h3>
+                    <h3 class="card-title">N° por Parroquias</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -46,13 +48,13 @@
                 </div>
                 <div class="card-body p-0" style="display: block;">
                     <ul class="nav nav-pills flex-column">
-                        @foreach ($municipios as $municipio)
+                        @foreach ($parroquias as $parroquia)
                         <li class="nav-item active">
-                            <a href="{{ route('android.modulo_clap_parroquias',[Auth::user()->id, $municipio->id]) }}" class="nav-link">
-                                {{--<i class="fas fa-flag"></i>--}} {{ $municipio->nombre_completo }}
+                            <a href="#" class="nav-link">
+                                {{--<i class="fas fa-flag"></i>--}} {{ $parroquia->nombre_completo }}
                                 <span class="float-right">
-                                    <span class="badge bg-success">{{ formatoMillares($municipio->claps, 0) }}</span>
-                                    <span class="badge bg-warning">{{ formatoMillares($municipio->familias, 0) }}</span>
+                                    <span class="badge bg-success">{{ formatoMillares($parroquia->claps, 0) }}</span>
+                                    {{--<span class="badge bg-warning">{{ formatoMillares($parroquia->familias, 0) }}</span>--}}
                                 </span>
 
                             </a>
@@ -63,31 +65,36 @@
                 <!-- /.card-body -->
             </div>
         </div>
-        {{--<div class="col-12">
+        <div class="col-12">
             <div class="card card-navy">
                 <div class="card-header">
-                    <h3 class="card-title">N° Familias por Municipios</h3>
+                    <h3 class="card-title">N° por Bloques</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
+                @if('$bloques')
                 <div class="card-body p-0" style="display: block;">
                     <ul class="nav nav-pills flex-column">
-                        @foreach ($municipios as $municipio)
+                        @foreach ($bloques as $bloque)
                         <li class="nav-item active">
                             <a href="#" class="nav-link">
-                                --}}{{--<i class="fas fa-flag"></i>--}}{{-- {{ $municipio->nombre_completo }}
-                                <span class="badge bg-warning float-right">12</span>
+                                <i class="fas fa-cubes"></i> {{ $bloque->valor }}
+                                <span class="float-right">
+                                    <span class="badge bg-success">{{ formatoMillares($bloque->claps, 0) }}</span>
+                                    <span class="badge bg-warning">{{ formatoMillares($bloque->familias, 0) }}</span>
+                                </span>
                             </a>
                         </li>
                         @endforeach
                     </ul>
                 </div>
+                @endif
                 <!-- /.card-body -->
             </div>
-        </div>--}}
+        </div>
     </div>
 
 

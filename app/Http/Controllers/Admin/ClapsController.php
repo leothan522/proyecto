@@ -631,5 +631,16 @@ class ClapsController extends Controller
 
     }
 
+    public function borrarMunicipio($id_municipio)
+    {
+        $municipio = Municipio::find($id_municipio);
+        $claps = Clap::where('municipios_id', $id_municipio)->get();
+        foreach ($claps as $clap){
+            $clap->delete();
+        }
+        verSweetAlert2("Borrados los CLAPS del Municipio <strong class='text-danger'>$municipio->nombre_completo</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
+        return back();
+    }
+
 
 }
