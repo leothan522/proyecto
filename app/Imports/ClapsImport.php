@@ -42,7 +42,7 @@ class ClapsImport implements ToModel, WithHeadingRow
                 'segundo_apellido_lider' => $row['segundo_apellido'],
                 'nacionalidad_lider' => $row['nacionalidad'],
                 'genero' => $row['genero'],
-                'fecha_nac_lider' => $row['fecha_de_nacimiento'],
+                'fecha_nac_lider' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject( $row['fecha_de_nacimiento']),
                 'profesion_lider' => $row['profesion'],
                 'trabajo_lider' => $row['trabajo'],
                 'telefono_1_lider' => $row['n_de_telefono_1'],
