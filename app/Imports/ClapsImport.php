@@ -65,7 +65,7 @@ class ClapsImport implements ToModel, WithHeadingRow
                 if ($data['bloques_id'] == "" || !is_numeric($data['bloques_id'])) {
                     $data['bloques_id'] = "BMS";
                 }
-                $bloque = Parametro::where('nombre', 'bloques')->where('valor', $data['bloques_id'])->first();
+                $bloque = Parametro::where('nombre', 'bloques')->where('tabla_id', $data['municipios_id'])->where('valor', $data['bloques_id'])->first();
                 if ($bloque) {
                     $data['bloques_id'] = $bloque->id;
                 } else {
