@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <link href="{{ asset('adminlte/fonts.googleapis.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+
     @yield('link')
 </head>
 <body class="hold-transition layout-top-nav pace-primary">

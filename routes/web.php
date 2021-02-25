@@ -41,7 +41,11 @@ Route::prefix('/android')->group(function (){
     Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
     //Modulo CLAP
     Route::get('/modulo/clap/{id}', 'Android\ProgramasController@moduloClap')->name('android.modulo_clap');
-    Route::get('/modulo/clap/{id}/{municipio}', 'Android\ProgramasController@moduloClapParroquias')->name('android.modulo_clap_parroquias');
+    Route::get('/modulo/clap/{id}/{municipio}', 'Android\ProgramasController@moduloClapMunicipio')->name('android.modulo_clap_municipio');
+    Route::get('/modulo/clap/{id}/{municipio}/{parroquia}', 'Android\ProgramasController@moduloClapParroquia')->name('android.modulo_clap_parroquia');
+    Route::get('/modulo/clap/bloque/{id}/{municipio}/{bloque}', 'Android\ProgramasController@moduloClapBloque')->name('android.modulo_clap_bloque');
+    Route::post('/modulo/clap/{id}/buscar', 'Android\ProgramasController@moduloClapBuscar')->name('android.modulo_clap_buscar');
+    Route::post('/modulo/clap/bloque/{id}/buscar', 'Android\ProgramasController@moduloClapBuscarBloque')->name('android.modulo_clap_buscar_bloque');
 
 
 

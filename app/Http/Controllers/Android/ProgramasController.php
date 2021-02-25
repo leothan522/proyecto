@@ -41,7 +41,7 @@ class ProgramasController extends Controller
             ->with('municipios', $municipios);
     }
 
-    public function moduloClapParroquias($id, $id_municipio)
+    public function moduloClapMunicipio($id, $id_municipio)
     {
         $autenticar = new AppController();
         $autenticar->autenticar($id);
@@ -83,12 +83,88 @@ class ProgramasController extends Controller
         });
 
 
-        return view('android.modulo_clap.parroquias')
+        return view('android.modulo_clap.municipio')
             ->with('familias', $familias)
             ->with('claps', $claps)
             ->with('municipio', $municipio)
             ->with('parroquias', $parroquias)
             ->with('bloques', $bloques);
+    }
+
+    public function moduloClapParroquia($id, $id_municipio, $id_parroquia)
+    {
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
+
+        $municipio = Municipio::find($id_municipio);
+        $parroquia = Parroquia::find($id_parroquia);
+        $claps = Clap::where('parroquias_id', $id_parroquia)->orderBy('nombre_clap', 'ASC')->get();
+
+
+
+        return view('android.modulo_clap.parroquia')
+            ->with('municipio', $municipio)
+            ->with('parroquia', $parroquia)
+            ->with('claps', $claps)
+            ->with('i', 0);
+    }
+
+    public function moduloClapBloque($id, $id_municipio, $id_bloque)
+    {
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
+
+        $municipio = Municipio::find($id_municipio);
+        $bloque = Parametro::find($id_bloque);
+        $claps = Clap::where('bloques_id', $id_bloque)->orderBy('nombre_clap', 'ASC')->get();
+
+
+
+        return view('android.modulo_clap.bloque')
+            ->with('municipio', $municipio)
+            ->with('bloque', $bloque)
+            ->with('claps', $claps)
+            ->with('i', 0);
+    }
+
+    public function moduloClapBuscar(Request $request, $id)
+    {
+        //dd($request->all());
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
+
+        $municipio = Municipio::find($request->id_municipio);
+        $parroquia = Parroquia::find($request->id_parroquia);
+        $claps = Clap::where('parroquias_id', $request->id_parroquia)->where('nombre_clap', 'LIKE', '%'.$request->buscar.'%')->orderBy('nombre_clap', 'ASC')->get();
+
+
+
+        return view('android.modulo_clap.buscar')
+            ->with('municipio', $municipio)
+            ->with('parroquia', $parroquia)
+            ->with('claps', $claps)
+            ->with('buscar', $request->buscar)
+            ->with('i', 0);
+    }
+
+    public function moduloClapBuscarBloque(Request $request, $id)
+    {
+        //dd($request->all());
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
+
+        $municipio = Municipio::find($request->id_municipio);
+        $bloque = Parametro::find($request->id_bloque);
+        $claps = Clap::where('bloques_id', $request->id_bloque)->where('nombre_clap', 'LIKE', '%'.$request->buscar.'%')->orderBy('nombre_clap', 'ASC')->get();
+
+
+
+        return view('android.modulo_clap.buscar_bloque')
+            ->with('municipio', $municipio)
+            ->with('bloque', $bloque)
+            ->with('claps', $claps)
+            ->with('buscar', $request->buscar)
+            ->with('i', 0);
     }
 
     public function feriasCampo($id)

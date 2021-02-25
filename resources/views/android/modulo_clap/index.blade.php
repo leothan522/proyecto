@@ -11,7 +11,11 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Claps Estadal</span>
                     <span class="info-box-number">
-                        {{ formatoMillares($claps->valor, 0) }}
+                        @if($claps)
+                            {{ formatoMillares($claps->valor, 0) }}
+                            @else
+                            0
+                        @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -24,7 +28,11 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias Estadal</span>
                     <span class="info-box-number">
-                    {{ formatoMillares($estadal->valor, 0) }}
+                        @if($estadal)
+                            {{ formatoMillares($estadal->valor, 0) }}
+                            @else
+                            0
+                        @endif
                 </span>
                     </span>
                 </div>
@@ -48,7 +56,7 @@
                     <ul class="nav nav-pills flex-column">
                         @foreach ($municipios as $municipio)
                         <li class="nav-item active">
-                            <a href="{{ route('android.modulo_clap_parroquias',[Auth::user()->id, $municipio->id]) }}" class="nav-link">
+                            <a href="{{ route('android.modulo_clap_municipio',[Auth::user()->id, $municipio->id]) }}" class="nav-link">
                                 {{--<i class="fas fa-flag"></i>--}} {{ $municipio->nombre_completo }}
                                 <span class="float-right">
                                     <span class="badge bg-success">{{ formatoMillares($municipio->claps, 0) }}</span>

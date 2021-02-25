@@ -13,7 +13,9 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Claps</span>
                     <span class="info-box-number">
-                        {{ formatoMillares($claps->valor, 0) }}
+                        @if($claps)
+                            {{ formatoMillares($claps->valor, 0) }}
+                        @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -26,7 +28,9 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                    {{ formatoMillares($familias->valor, 0) }}
+                        @if($familias)
+                            {{ formatoMillares($familias->valor, 0) }}
+                        @endif
                 </span>
                     </span>
                 </div>
@@ -50,7 +54,7 @@
                     <ul class="nav nav-pills flex-column">
                         @foreach ($parroquias as $parroquia)
                         <li class="nav-item active">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('android.modulo_clap_parroquia', [Auth::user()->id, $municipio->id, $parroquia->id]) }}" class="nav-link">
                                 {{--<i class="fas fa-flag"></i>--}} {{ $parroquia->nombre_completo }}
                                 <span class="float-right">
                                     <span class="badge bg-success">{{ formatoMillares($parroquia->claps, 0) }}</span>
@@ -80,7 +84,7 @@
                     <ul class="nav nav-pills flex-column">
                         @foreach ($bloques as $bloque)
                         <li class="nav-item active">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('android.modulo_clap_bloque', [Auth::user()->id, $municipio->id, $bloque->id]) }}" class="nav-link">
                                 <i class="fas fa-cubes"></i> {{ $bloque->valor }}
                                 <span class="float-right">
                                     <span class="badge bg-success">{{ formatoMillares($bloque->claps, 0) }}</span>
