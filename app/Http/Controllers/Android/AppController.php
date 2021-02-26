@@ -20,7 +20,7 @@ class AppController extends Controller
     public function usuariosRegistrados()
     {
         $carbon = new Carbon();
-        $users = User::paginate(30);
+        $users = User::where('status', 1)->paginate(30);
         return view('android.usuarios')
             ->with('users', $users)
             ->with('carbon', $carbon);

@@ -8,7 +8,11 @@
                 <div class="card-header">
                     <div class="user-block">
                         <a href="#" data-toggle="modal" data-target="#modal-default">
-                            <img class="img-circle img-bordered-sm" src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="user image">
+                            @if($user->plataforma == 0)
+                                <img class="{{--img-circle--}} {{--img-bordered-sm--}}" src="{{ asset('img/iconos_material/baseline_desktop_windows_black_48dp.png') }}" alt="user image">
+                            @else
+                                <img class="{{--img-circle--}} {{--img-bordered-sm--}}" src="{{ asset('img/iconos_material/baseline_phone_android_black_48dp.png') }}" alt="user image">
+                            @endif
                         </a>
                         <span class="username">
                             <a href="#" data-toggle="modal" data-target="#modal-default">{{ $user->name }}</a>
@@ -41,7 +45,7 @@
                             <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
                                     <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle" src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" alt="User profile picture">
+                                        <img class="profile-user-img img-fluid img-circle" src="{{ asset('img/user.png') }}" alt="User profile picture">
                                     </div>
 
                                     <h3 class="profile-username text-center">{{ $user->name }}</h3>
@@ -49,6 +53,18 @@
                                     <p class="text-muted text-center">{{ $user->email }}</p>
 
                                     <ul class="list-group list-group-unbordered mb-3">
+                                        {{--<li class="list-group-item">
+                                            <b>Plataforma</b>
+                                            @if($user->plataforma == 0)
+                                                <a class="float-right"><i class="fa fa-desktop"></i></a>
+                                            @else
+                                                <a class="float-right"><i class="fa fa-mobile-alt"></i></a>
+                                            @endif
+
+                                        </li>--}}
+                                        <li class="list-group-item">
+                                            <b>Teléfono</b> <a class="float-right">{{ $user->two_factor_secret }}</a>
+                                        </li>
                                         <li class="list-group-item">
                                             <b>Registrado</b> <a class="float-right">{{ $carbon->parse($user->created_at)->diffForHumans() }}</a>
                                         </li>
