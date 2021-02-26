@@ -20,9 +20,9 @@ class AppController extends Controller
     public function usuariosRegistrados()
     {
         $carbon = new Carbon();
-        $users = User::where('status', 1)->paginate(30);
+        $users = User::where('status', 1)->orderBy('created_at', 'DESC')->paginate(30);
         return view('android.usuarios')
-            ->with('users', $users)
+            ->with('usuarios', $users)
             ->with('carbon', $carbon);
     }
 }
