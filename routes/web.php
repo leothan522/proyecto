@@ -53,6 +53,7 @@ Route::prefix('/android')->group(function (){
     Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
     Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
     Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
+    Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tiendaMovil');
     Route::get('/buscar/clap/{id}', 'Android\ProgramasController@buscarClap')->name('android.buscarClap');
 
 });

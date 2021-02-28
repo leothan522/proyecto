@@ -195,6 +195,13 @@ class ProgramasController extends Controller
         return view('android.tienda_enlinea.index');
     }
 
+    public function tiendaMovil($id)
+    {
+        $autenticar = new AppController();
+        $autenticar->autenticar($id);
+        return view('android.tienda_movil.index');
+    }
+
     public function buscarClap($id)
     {
         $autenticar = new AppController();

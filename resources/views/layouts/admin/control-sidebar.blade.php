@@ -34,6 +34,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('android.tiendaMovil', Auth::user()->id) }}" class="nav-link" target="_blank">
+                {{--<i class="far fa-envelope"></i>--}} Tienda Movil
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('android.buscarClap', Auth::user()->id) }}" class="nav-link" target="_blank">
                 {{--<i class="far fa-envelope"></i>--}} Buscar
             </a>
