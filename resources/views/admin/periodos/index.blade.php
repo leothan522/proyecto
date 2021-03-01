@@ -176,7 +176,7 @@
                             <!-- /Modal -->
                         </div>
                     @endif--}}
-                    @if (leerJson(Auth::user()->permisos, 'familias.store') || Auth::user()->role == 100)
+                    @if (leerJson(Auth::user()->permisos, 'periodos.store') || Auth::user()->role == 100)
                     <div class="card card-navy">
                         <div class="card-header">
                             <h5 class="card-title">Ingresar Fecha de Atención</h5>

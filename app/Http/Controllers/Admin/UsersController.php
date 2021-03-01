@@ -161,7 +161,12 @@ class UsersController extends Controller
                     'claps.get_revision'    => $request->input('claps_get_import'),
                     'claps.post_revision'    => $request->input('claps_get_import'),
                     'claps.get_revision_export'    => $request->input('claps_get_import'),
-                    'claps.borrar'    => $request->input('claps_borrar')
+                    'claps.borrar'    => $request->input('claps_borrar'),
+                    'periodos.index'    => $request->input('periodos_index'),
+                    'periodos.store'    => $request->input('periodos_store'),
+                    'periodos.update'    => $request->input('periodos_update'),
+                    'periodos.destroy'    => $request->input('periodos_destroy'),
+
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -190,7 +195,7 @@ class UsersController extends Controller
                 }
 
                 //******************************************* Gestionar BLoques
-                if ($permisos['bloques.consultar']){
+                if ($permisos['bloques.consultar'] || $permisos['periodos.index']){
                     $permisos['gestionar_bloques'] = "true";
                 }else{
                     $permisos['gestionar_bloques'] = null;

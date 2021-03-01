@@ -71,6 +71,7 @@
                 <div class="col-md-3">
                     <label class="col-md-12">Gestionar Bloques</label>
                     @include('admin.usuarios.permisos.modulo_consultar_bloques')
+                    @include('admin.usuarios.permisos.modulo_periodo')
                 </div>
                 <div class="col-md-3">
                     <label class="col-md-12">Modulo CLAPS</label>

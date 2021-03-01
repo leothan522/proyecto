@@ -20,7 +20,7 @@
                     <a href="#" class="nav-link lkm-claps.get_import lkm-claps.index">
                         <i class="nav-icon fas fa-clone"></i>
                         <p>
-                            Gestionar CLAPS
+                            Modulos CLAPS
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -45,8 +45,8 @@
                 </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'gestionar_bloques') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-bloques.consultar {{--menu-open--}}">
-                <a href="#" class="nav-link lkm-bloques.consultar">
+                <li class="nav-item has-treeview lko-bloques.consultar lko-periodos.index {{--menu-open--}}">
+                <a href="#" class="nav-link lkm-bloques.consultar lkm-periodos.index">
                     <i class="nav-icon fas fa-cubes"></i>
                     <p>
                         Gestionar Bloques
@@ -62,12 +62,14 @@
                             </a>
                         </li>
                     @endif
-                    <li class="nav-item">
-                        <a href="{{ route('periodos.index') }}" class="nav-link lk-">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Periodos de Atención</p>
-                        </a>
-                    </li>
+                    @if (leerJson(Auth::user()->permisos, 'periodos.index') || Auth::user()->role == 100)
+                        <li class="nav-item">
+                            <a href="{{ route('periodos.index') }}" class="nav-link lk-periodos.index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Periodos de Atención</p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
             @endif
