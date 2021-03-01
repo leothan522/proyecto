@@ -31,4 +31,9 @@ class Parametro extends Model
         return $this->hasMany(Clap::class, 'bloques_id', 'id');
     }
 
+    public function periodos()
+    {
+        return $this->hasMany(Periodo::class, 'parametros_id', 'id');
+    }
+
 }

@@ -26,4 +26,9 @@ class Municipio extends Model
         return $this->hasMany(Clap::class, 'municipios_id', 'id');
     }
 
+    public function periodos()
+    {
+        return $this->hasMany(Periodo::class, 'municipios_id', 'id');
+    }
+
 }

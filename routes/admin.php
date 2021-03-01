@@ -32,5 +32,6 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::get('/claps/exportar/', 'Admin\ClapsController@exportClaps')->name('claps.export');
     Route::get('/claps/borrar-municipio/{id}', 'Admin\ClapsController@borrarMunicipio')->name('claps.borrar');
     Route::resource('claps', 'Admin\ClapsController');
+    Route::resource('/periodos', 'Admin\PeriodosController');
 
 });

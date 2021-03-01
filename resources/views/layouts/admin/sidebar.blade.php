@@ -63,9 +63,9 @@
                         </li>
                     @endif
                     <li class="nav-item">
-                        <a href="#" class="nav-link lk-">
+                        <a href="{{ route('periodos.index') }}" class="nav-link lk-">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Mover CLAPS</p>
+                            <p>Periodos de Atención</p>
                         </a>
                     </li>
                 </ul>
