@@ -238,9 +238,9 @@
             <div class="col-md-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Familias</h5>
+                        <h5 class="card-title">Fechas de Entrega</h5>
                         <div class="card-tools">
-                            <span class="btn btn-tool"><i class="fas fa-child"></i></span>
+                            <span class="btn btn-tool"><i class="fas fa-calendar-alt"></i></span>
                         </div>
                     </div>
                     <div class="card-body">
