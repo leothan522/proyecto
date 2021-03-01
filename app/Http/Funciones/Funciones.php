@@ -41,6 +41,14 @@ function fecha($fecha, $format = null){
     return $carbon->parse($fecha)->format($format);
 }
 
+function cuantosDias($fecha_inicio, $fecha_final){
+    $carbon = new Carbon();
+    $fechaEmision = $carbon->parse($fecha_inicio);
+    $fechaExpiracion = $carbon->parse($fecha_final);
+    $diasDiferencia = $fechaExpiracion->diffInDays($fechaEmision);
+    return $diasDiferencia;
+}
+
 function iconoPlataforma($plataforma){
     if ($plataforma == 0){
         return '<i class="fas fa-desktop"></i>';

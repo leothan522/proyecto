@@ -106,34 +106,70 @@ class ClapsController extends Controller
                 $resultado = true;
 
                 if ($codigo_sica && $cedula_lider){
-                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
-                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                    $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                        return $ver_resultados->where('municipios_id', $id_municipio);
+                    })
+                        ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                        return $ver_resultados->where('parroquias_id', $id_parroquia);
+                    })
+                        ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        /*where('municipios_id', 'LIKE', $id_municipio)*/
+                        /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
+                        /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                         ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                         ->get();
                 }
                 if (!$codigo_sica && $cedula_lider){
-                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
-                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                    $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                        return $ver_resultados->where('municipios_id', $id_municipio);
+                    })
+                        ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                            return $ver_resultados->where('parroquias_id', $id_parroquia);
+                        })
+                        ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        /*where('municipios_id', 'LIKE', $id_municipio)*/
+                        /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
+                        /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                         ->get();
                 }
                 if ($codigo_sica && !$cedula_lider){
-                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
-                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                    $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                        return $ver_resultados->where('municipios_id', $id_municipio);
+                    })
+                        ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                            return $ver_resultados->where('parroquias_id', $id_parroquia);
+                        })
+                        ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')*/
+                        /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
+                        /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                         ->get();
                 }
                 if (!$codigo_sica && !$cedula_lider){
-                    $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
-                        ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                        ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                    $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                        return $ver_resultados->where('municipios_id', $id_municipio);
+                    })
+                        ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                            return $ver_resultados->where('parroquias_id', $id_parroquia);
+                        })
+                        ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        /*->where('municipios_id', 'LIKE', '%'.$id_municipio.'%')*/
+                        /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
+                        /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->get();
                 }
@@ -597,34 +633,66 @@ class ClapsController extends Controller
         $municipio = null;
 
         if ($codigo_sica && $cedula_lider){
-            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+            $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                return $ver_resultados->where('municipios_id', $id_municipio);
+            })
+                ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                    return $ver_resultados->where('parroquias_id', $id_parroquia);
+                })
+                ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('bloques_id', $id_bloque);
+                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                 ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                 ->get();
         }
         if (!$codigo_sica && $cedula_lider){
-            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+            $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                return $ver_resultados->where('municipios_id', $id_municipio);
+            })
+                ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                    return $ver_resultados->where('parroquias_id', $id_parroquia);
+                })
+                ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('bloques_id', $id_bloque);
+                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->where('cedula_lider', 'LIKE', '%'.$cedula_lider.'%')
                 ->get();
         }
         if ($codigo_sica && !$cedula_lider){
-            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+            $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                return $ver_resultados->where('municipios_id', $id_municipio);
+            })
+                ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                    return $ver_resultados->where('parroquias_id', $id_parroquia);
+                })
+                ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('bloques_id', $id_bloque);
+                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->where('codigo_sica', 'LIKE', '%'.$codigo_sica.'%')
                 ->get();
         }
         if (!$codigo_sica && !$cedula_lider){
-            $ver_resultados = Clap::where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+            $ver_resultados = Clap::when($request->municipios_id, function ($ver_resultados) use ($id_municipio) {
+                return $ver_resultados->where('municipios_id', $id_municipio);
+            })
+                ->when($request->parroquias_id, function ($ver_resultados) use ($id_parroquia) {
+                    return $ver_resultados->where('parroquias_id', $id_parroquia);
+                })
+                ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('bloques_id', $id_bloque);
+                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
-                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')
+                ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                 ->get();
         }

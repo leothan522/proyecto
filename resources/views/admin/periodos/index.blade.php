@@ -16,17 +16,14 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <script>
-
-        // bloques
         var bloques_nombres = [];
         var bloques_id = [];
-        @foreach($json_bloques_valor as $valor)
+        @foreach($json_bloque_valor as $valor)
         bloques_nombres.push(@json($valor))
         @endforeach
-        @foreach($json_bloques_id as $valor)
+        @foreach($json_bloque_id as $valor)
         bloques_id.push(@json($valor))
         @endforeach
-
     </script>
 @endsection
 
@@ -187,7 +184,7 @@
                         </div>
                         <div class="card-body">
 
-                            {!! Form::open(['route' => 'familias.store', 'method' => 'post', 'name' => 'f1']) !!}
+                            {!! Form::open(['route' => 'periodos.store', 'method' => 'post', 'name' => 'f1']) !!}
 
                             <div class="form-group">
                                 <label for="name">Municipio</label>
@@ -195,7 +192,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     </div>
-                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'onchange'=> 'select_bloques()', 'required']) !!}
+                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_bloques()']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -204,7 +201,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                     </div>
-                                    {!! Form::select('bloques_id', $bloques, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
+                                    {!! Form::select('bloques_id', $mun_bloques, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,7 +210,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                     </div>
-                                    {!! Form::date('valor', null, ['class' => 'form-control', 'required']) !!}
+                                    {!! Form::date('fecha_atencion', null, ['class' => 'form-control', 'required']) !!}
                                 </div>
                             </div>
                             @if ($errors->any())
@@ -238,7 +235,7 @@
                     </div>
                     @endif
                 </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h5 class="card-title">Familias</h5>
@@ -256,57 +253,35 @@
                                     <th scope="col">Municipios</th>
                                     <th scope="col" class="text-center">Bloques</th>
                                     <th scope="col" class="text-center">Fecha de Atención</th>
+                                    <th scope="col" class="text-center">Nº de Días</th>
                                     <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--@foreach ($familias as $familia)
+                                @foreach ($periodos as $periodo)
                                     <tr>
                                         <th scope="row" class="text-center">{{ $i++ }}</th>
-                                        <td>{{ $familia->municipios->nombre_corto }}</td>
-                                        <td class="text-center">{{ formatoMillares($familia->claps, 0) }}</td>
-                                        <td class="text-center">{{ formatoMillares($familia->valor, 0) }}</td>
+                                        <td>{{ $periodo->municipios->nombre_corto }}</td>
+                                        <td class="text-center">BLOQUE {{ $periodo->parametros->valor }}</td>
+                                        <td class="text-center">{{ fecha($periodo->fecha_atencion)  }}</td>
+                                        <td class="text-center">{{ cuantosDias($periodo->fecha_atencion, date('Y-m-d'))  }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['familias.destroy', $familia->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$familia->id]) !!}
+                                            {!! Form::open(['route' => ['periodos.destroy', $periodo->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$periodo->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'familias.update') || Auth::user()->role == 100)
-                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $familia->id }}">
+                                                @if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $periodo->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 @endif
-                                                @if (leerJson(Auth::user()->permisos, 'familias.destroy') || Auth::user()->role == 100)
-                                                    <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
-                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $familia->id }}')" class="btn btn-info --}}{{--show-alert-{{ $familia->id }}--}}{{--"><i class="fas fa-trash"></i></button>
-                                                        --}}{{--<script>
-                                                            $(document).on("click", ".show-alert-{{ $familia->id }}", function(e) {
-                                                                bootbox.confirm({
-                                                                    size: "small",
-                                                                    message: "¿Esta seguro que desea Eliminar?",
-                                                                    buttons: {
-                                                                        confirm: {
-                                                                            label: 'Si',
-                                                                            className: 'btn-success'
-                                                                        },
-                                                                        cancel: {
-                                                                            label: 'No',
-                                                                            className: 'btn-danger'
-                                                                        }
-                                                                    },
-                                                                    callback: function(result){
-                                                                        /* result is a boolean; true = OK, false = Cancel*/
-                                                                        if (result){
-                                                                            document.getElementById('form_delete_{{ $familia->id }}').submit();
-                                                                        }
-                                                                    }
-                                                                });
-                                                            });
-                                                        </script>--}}{{--
+                                                @if (leerJson(Auth::user()->permisos, 'periodos.destroy') || Auth::user()->role == 100)
+                                                    <input type="hidden" name="id_clap" value="{{ $periodo->id_clap }}">
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $periodo->id }}')" class="btn btn-info show-alert-{{ $periodo->id }}"><i class="fas fa-trash"></i></button>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}
 
                                         <!-- Modal -->
-                                            <div class="modal fade" id="modal-{{ $familia->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="modal-{{ $periodo->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -317,9 +292,9 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {!! Form::open(['route' => ['familias.update', $familia->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['periodos.update', $periodo->id], 'method' => 'PUT']) !!}
 
-                                                            <input type="hidden" name="nombre" value="familias">
+                                                            <input type="hidden" name="nombre" value="periodos">
                                                             <input type="hidden" name="nombre_clap" value="claps">
                                                             <div class="form-group">
                                                                 <label for="name">Municipio</label>
@@ -327,7 +302,7 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                                                     </div>
-                                                                    {!! Form::select('tabla_id2', $municipios, $familia->tabla_id, ['class' => 'custom-select']) !!}
+                                                                    {!! Form::select('tabla_id2', $municipios, $periodo->tabla_id, ['class' => 'custom-select']) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -336,17 +311,17 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-clone"></i></span>
                                                                     </div>
-                                                                    {!! Form::number('valor_clap2', $familia->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
-                                                                    <input type="hidden" name="id_clap" value="{{ $familia->id_clap }}">
+                                                                    {!! Form::number('valor_clap2', $periodo->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    <input type="hidden" name="id_clap" value="{{ $periodo->id_clap }}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="name">N° Familias</label>
+                                                                <label for="name">N° periodos</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-child"></i></span>
                                                                     </div>
-                                                                    {!! Form::number('valor2', $familia->valor, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    {!! Form::number('valor2', $periodo->valor, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-right">
@@ -363,7 +338,7 @@
 
                                         </td>
                                     </tr>
-                                @endforeach--}}
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -371,7 +346,7 @@
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">
                                 <span>
-                                {{--{{ $familias->render() }}--}}
+                                {{ $periodos->render() }}
                                 </span>
                             </div>
                         </div>

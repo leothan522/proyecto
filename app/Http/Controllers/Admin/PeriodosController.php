@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Municipio;
 use App\Models\Parametro;
+use App\Models\Periodo;
 use Illuminate\Http\Request;
 
 class PeriodosController extends Controller
@@ -16,32 +17,37 @@ class PeriodosController extends Controller
      */
     public function index()
     {
-        $bloques = [];
-        $municipios = Municipio::orderBy('nombre_completo', 'ASC')->get();
-
-        //JSON Bloques
+        $mun_bloques = [];
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+        $municipios = Municipio::all();
+        $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
         $i = 0;
-        $json_bloques_valor[] = null;
-        $json_bloques_id[] = null;
+        $json_bloque_valor[] = null;
+        $json_bloque_id[] = null;
         foreach ($municipios as $municipio) {
             $i++;
             $array_valor[] = "Seleccione";
             $array_id[] = "";
-            $items = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->get();
-            foreach ($items as $item) {
-                array_push($array_valor, $item->valor);
-                array_push($array_id, $item->id);
+            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
+            foreach ($bloques as $bloque) {
+                array_push($array_valor, $bloque->valor);
+                array_push($array_id, $bloque->id);
             }
-            $json_bloques_valor[$i] = $array_valor;
-            $json_bloques_id[$i] = $array_id;
+            $json_bloque_valor[$i] = $array_valor;
+            $json_bloque_id[$i] = $array_id;
             unset($array_valor);
             unset($array_id);
         }
+
+
         return view('admin.periodos.index')
-            ->with('municipios', $municipios->pluck('nombre_completo', 'id'))
-            ->with('json_bloques_valor', $json_bloques_valor)
-            ->with('json_bloques_id', $json_bloques_id)
-            ->with('bloques', $bloques);
+            ->with('municipios', $select_municipios)
+            ->with('json_bloque_valor', $json_bloque_valor)
+            ->with('json_bloque_id', $json_bloque_id)
+            ->with('mun_bloques', $mun_bloques)
+            ->with('periodos', $periodos)
+            ->with('i', 1)
+            ;
     }
 
     /**
@@ -62,7 +68,11 @@ class PeriodosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $periodo = new Periodo($request->all());
+        $periodo->parametros_id = $request->bloques_id;
+        $periodo->save();
+        verSweetAlert2('Fecha de atencion cargada correctamente');
+        return back();
     }
 
     /**
