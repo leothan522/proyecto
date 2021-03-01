@@ -75,6 +75,8 @@
             //marco como seleccionada la opción primera de bloques_id
             document.f1.bloques_id.options[0].selected = true;
         }
+
+
     </script>
 @endsection
 
@@ -294,38 +296,35 @@
 
                                                             {!! Form::open(['route' => ['periodos.update', $periodo->id], 'method' => 'PUT']) !!}
 
-                                                            <input type="hidden" name="nombre" value="periodos">
-                                                            <input type="hidden" name="nombre_clap" value="claps">
                                                             <div class="form-group">
                                                                 <label for="name">Municipio</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                                                     </div>
-                                                                    {!! Form::select('tabla_id2', $municipios, $periodo->tabla_id, ['class' => 'custom-select']) !!}
+                                                                    <label class="form-control">{{ $periodo->municipios->nombre_corto }}</label>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Bloque</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                                    </div>
+                                                                    <label class="form-control">BLOQUE {{ $periodo->parametros->valor }}</label>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="name">N° CLAPS</label>
+                                                                <label for="name">Fecha</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                                     </div>
-                                                                    {!! Form::number('valor_clap2', $periodo->claps, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
-                                                                    <input type="hidden" name="id_clap" value="{{ $periodo->id_clap }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="name">N° periodos</label>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-child"></i></span>
-                                                                    </div>
-                                                                    {!! Form::number('valor2', $periodo->valor, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                                                    {!! Form::date('fecha_atencion', $periodo->fecha_atencion, ['class' => 'form-control', 'required']) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-right">
-                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar Cambios">
+                                                                <input type="submit" class="btn btn-block btn-primary" value="Guardar">
                                                             </div>
 
                                                             {!! Form::close() !!}

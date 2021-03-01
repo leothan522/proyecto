@@ -106,7 +106,11 @@ class PeriodosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $periodo = Periodo::find($id);
+        $periodo->fecha_atencion = $request->fecha_atencion;
+        $periodo->update();
+        verSweetAlert2('Fecha Actualizada', 'toast');
+        return back();
     }
 
     /**
@@ -117,6 +121,9 @@ class PeriodosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $periodo = Periodo::find($id);
+        $periodo->delete();
+        verSweetAlert2("Fecha Borrada Correctamente",'toast');
+        return back();
     }
 }
