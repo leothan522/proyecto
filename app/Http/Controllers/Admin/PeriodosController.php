@@ -19,7 +19,7 @@ class PeriodosController extends Controller
     {
         $mun_bloques = [];
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
-        $municipios = Municipio::all();
+        $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
         $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
         $i = 0;
         $json_bloque_valor[] = null;
@@ -46,6 +46,7 @@ class PeriodosController extends Controller
             ->with('json_bloque_id', $json_bloque_id)
             ->with('mun_bloques', $mun_bloques)
             ->with('periodos', $periodos)
+            ->with('filtrar', $municipios)
             ->with('i', 1)
             ;
     }
@@ -83,7 +84,38 @@ class PeriodosController extends Controller
      */
     public function show($id)
     {
-        //
+        $mun_bloques = [];
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+        $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
+        $periodos = Periodo::where('municipios_id', $id)->orderBy('fecha_atencion', 'ASC')->paginate(30);
+        $i = 0;
+        $json_bloque_valor[] = null;
+        $json_bloque_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
+            foreach ($bloques as $bloque) {
+                array_push($array_valor, $bloque->valor);
+                array_push($array_id, $bloque->id);
+            }
+            $json_bloque_valor[$i] = $array_valor;
+            $json_bloque_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
+        }
+
+
+        return view('admin.periodos.index')
+            ->with('municipios', $select_municipios)
+            ->with('json_bloque_valor', $json_bloque_valor)
+            ->with('json_bloque_id', $json_bloque_id)
+            ->with('mun_bloques', $mun_bloques)
+            ->with('periodos', $periodos)
+            ->with('filtrar', $municipios)
+            ->with('i', 1)
+            ;
     }
 
     /**

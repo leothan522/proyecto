@@ -80,6 +80,7 @@
     </script>
 @endsection
 
+
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -242,6 +243,21 @@
                     <div class="card-header">
                         <h5 class="card-title">Fechas de Entrega</h5>
                         <div class="card-tools">
+                            <ul class="btn btn-tool">
+
+                                <li class="dropdown open">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                                        Municipios <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @foreach($filtrar as $municipio)
+                                        <li class=""><a href="{{ route('periodos.show', $municipio->id) }}">{{ $municipio->nombre_corto }}</a></li>
+                                        @endforeach
+                                        <li class=""><a href="{{ route('periodos.index') }}">Ver todo</a></li>
+
+                                    </ul>
+                                </li>
+                            </ul>
                             <span class="btn btn-tool"><i class="fas fa-calendar-alt"></i></span>
                         </div>
                     </div>
