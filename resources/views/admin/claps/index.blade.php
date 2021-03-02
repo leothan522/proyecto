@@ -357,7 +357,7 @@
                                         <td class="text-center">{{ $clap->municipios->nombre_corto }}</td>
                                         <td class="text-center">{{ $clap->parroquias->nombre_completo }}</td>
                                         <td class="text-center">{{ strtoupper($clap->parametros->valor) }}</td>
-                                        <td class="text-center">@if ($clap->nacionalidad_lider == "VENEZOLANA")V- @endif{{ formatoMillares($clap->cedula_lider, 0) }}</td>
+                                        <td class="text-center">@if ($clap->cedula_lider) V-{{ formatoMillares($clap->cedula_lider, 0) }} @else S/D @endif</td>
                                         <td>
 
                                             {!! Form::open(['route' => ['claps.destroy', $clap->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$clap->id]) !!}

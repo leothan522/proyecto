@@ -154,6 +154,13 @@ class ClapsImport implements ToModel, WithHeadingRow
                 $data['google_maps'] = null;
             }
 
+            //CEDULA
+            if ($row['cedula']){
+                $data['cedula_lider'] = trim($row['cedula']);
+            }else{
+                $data['cedula_lider'] = null;
+            }
+
 
 
             $municipio = Municipio::where('nombre_completo', $data['municipios_id'])->first();
