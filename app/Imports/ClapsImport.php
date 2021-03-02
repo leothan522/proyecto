@@ -25,6 +25,7 @@ class ClapsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+        //dd($row);
         try {
             $data = [
                 'programa' => trim($row['programa']),
@@ -159,6 +160,41 @@ class ClapsImport implements ToModel, WithHeadingRow
                 $data['cedula_lider'] = trim($row['cedula']);
             }else{
                 $data['cedula_lider'] = null;
+            }
+
+            //PRODUCTIVO
+            if ($row['esta_produciendo']){
+                $data['productivo'] = trim($row['esta_produciendo']);
+            }else{
+                $data['productivo'] = null;
+            }
+
+            //TIPO_PRODUCCION
+            if ($row['tipo_de_produccion']){
+                $data['tipo_produccion'] = trim($row['tipo_de_produccion']);
+            }else{
+                $data['tipo_produccion'] = null;
+            }
+
+            //DETALLES_PRODUCCION
+            if ($row['especifique']){
+                $data['detalles_produccion'] = trim($row['especifique']);
+            }else{
+                $data['detalles_produccion'] = null;
+            }
+
+            //NUM_FAMILIAS
+            if ($row['numero_de_familias']){
+                $data['num_familias'] = trim($row['numero_de_familias']);
+            }else{
+                $data['num_familias'] = null;
+            }
+
+            //NUM_LIDERES
+            if ($row['numero_de_lideres_de_calle']){
+                $data['num_lideres'] = trim($row['numero_de_lideres_de_calle']);
+            }else{
+                $data['num_lideres'] = null;
             }
 
 

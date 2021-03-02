@@ -39,7 +39,12 @@ class Clap extends Model
         'latitud',
         'google_maps',
         'observaciones',
-        'import_id'
+        'productivo',
+        'tipo_produccion',
+        'detalles_produccion',
+        'num_familias',
+        'num_lideres',
+        'import_id',
     ];
 
     public function municipios()

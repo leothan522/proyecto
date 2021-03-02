@@ -452,37 +452,37 @@
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">{{ $import->google_maps }}</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">{{ $import->productivo }}</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">{{ $import->tipo_produccion }}</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">{{ $import->detalles_produccion }}</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">@if($import->num_familias) {{ formatoMillares($import->num_familias, 0) }} @endif </td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        "></td>
+        ">@if($import->num_lideres) {{ formatoMillares($import->num_lideres, 0) }} @endif </td>
         </tr>
     @endforeach
 </table>
