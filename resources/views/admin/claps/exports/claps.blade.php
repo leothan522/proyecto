@@ -346,8 +346,8 @@
         border: 1px solid #000000;
         font-family: Calibri;
         font-size: 11px;
-        text-align: center;
-        ">{{ fecha($import->fecha_nac_lider, 'Y-m-d') }}</td>
+        text-align: left;
+        ">{{ fecha($import->fecha_nac_lider) }}</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;

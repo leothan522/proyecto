@@ -176,7 +176,8 @@
                                                             </li>
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                 <span class="text-bold">Bloque</span>
-                                                                <span class="text-sm"><i>{{ $import->bloques_id }}</i></span>
+                                                                <span class="text-sm @if (leerJson($import->observaciones, 'bloque')) text-danger @endif">
+                                                                    <i>@if (leerJson($import->observaciones, 'bloque')) * @endif{{ $import->bloques_id }}</i></span>
                                                             </li>
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                 <span class="text-bold">Codigo SPDA</span>

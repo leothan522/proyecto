@@ -37,7 +37,7 @@ function haceCuanto($fecha){
 
 function fecha($fecha, $format = null){
     $carbon = new Carbon();
-    if ($format == null){ $format = "d-m-Y"; }
+    if ($format == null){ $format = "j/n/Y"; }
     return $carbon->parse($fecha)->format($format);
 }
 
