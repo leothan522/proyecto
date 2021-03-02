@@ -5,9 +5,11 @@ namespace App\Exports;
 use App\Models\ImportClap;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ImportClapsExport implements FromView, WithTitle
+class ImportClapsExport implements FromView, WithTitle, WithColumnFormatting
 {
     public function __construct($imports, $revision = false)
     {
@@ -35,6 +37,13 @@ class ImportClapsExport implements FromView, WithTitle
             return "Lista de CLAPS";
         }
 
+    }
+    public function columnFormats(): array
+    {
+        // TODO: Implement columnFormats() method.
+        return [
+            'P' => NumberFormat::FORMAT_DATE_DMYSLASH,
+        ];
     }
 
 }
