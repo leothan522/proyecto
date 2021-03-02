@@ -33,25 +33,25 @@ class ClapsImport implements ToModel, WithHeadingRow
                 'comunidad' => trim($row['comunidad']),
                 'nombre_clap' => trim($row['nombre_clap']),
                 //'codigo_spda' => trim($row['codigo_spda']),
-                'codigo_sica' => trim($row['codigo_sica']),
+                //'codigo_sica' => trim($row['codigo_sica']),
                 'bloques_id' => trim($row['bloque']),
                 'cedula_lider' => trim($row['cedula']),
                 'primer_nombre_lider' => trim($row['primer_nombre']),
-                'segundo_nombre_lider' => trim($row['segundo_nombre']),
+                //'segundo_nombre_lider' => trim($row['segundo_nombre']),
                 'primer_apellido_lider' => trim($row['primer_apellido']),
-                'segundo_apellido_lider' => trim($row['segundo_apellido']),
+                //'segundo_apellido_lider' => trim($row['segundo_apellido']),
                 'nacionalidad_lider' => trim($row['nacionalidad']),
                 'genero' => trim($row['genero']),
                 //'fecha_nac_lider' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($row['fecha_de_nacimiento'])),
-                'profesion_lider' => trim($row['profesion']),
-                'trabajo_lider' => trim($row['trabajo']),
-                'telefono_1_lider' => trim($row['n_de_telefono_1']),
-                'telefono_2_lider' => trim($row['n_de_telefono_2']),
-                'email_lider' => trim($row['correo']),
+                //'profesion_lider' => trim($row['profesion']),
+                //'trabajo_lider' => trim($row['trabajo']),
+                //'telefono_1_lider' => trim($row['n_de_telefono_1']),
+                //'telefono_2_lider' => trim($row['n_de_telefono_2']),
+                //'email_lider' => trim($row['correo']),
                 'estatus_lider' => trim($row['estatus_responsable']),
-                'direccion' => trim($row['direccion']),
-                'longitud' => trim($row['longitud']),
-                'latitud' => trim($row['latitud']),
+                //'direccion' => trim($row['direccion']),
+                //'longitud' => trim($row['longitud']),
+                //'latitud' => trim($row['latitud']),
                 'google_maps' => trim($row['google_maps']),
                 'import_id' => $this->id_import
             ];
@@ -89,6 +89,69 @@ class ClapsImport implements ToModel, WithHeadingRow
                 $data['segundo_apellido_lider'] = trim($row['segundo_apellido']);
             }else{
                 $data['segundo_apellido_lider'] = null;
+            }
+
+            //SEGUNDO PROFESION
+            if ($row['profesion']){
+                $data['profesion_lider'] = trim($row['profesion']);
+            }else{
+                $data['profesion_lider'] = null;
+            }
+
+            //TRABAJO
+            if ($row['trabajo']){
+                $data['trabajo_lider'] = trim($row['trabajo']);
+            }else{
+                $data['trabajo_lider'] = null;
+            }
+
+            //TELEFONO 1
+            if ($row['n_de_telefono_1']){
+                $data['telefono_1_lider'] = trim($row['n_de_telefono_1']);
+            }else{
+                $data['telefono_1_lider'] = null;
+            }
+
+            //TELEFONO 2
+            if ($row['n_de_telefono_2']){
+                $data['telefono_2_lider'] = trim($row['n_de_telefono_2']);
+            }else{
+                $data['telefono_2_lider'] = null;
+            }
+
+            //CORREO
+            if ($row['correo']){
+                $data['email_lider'] = trim($row['correo']);
+            }else{
+                $data['email_lider'] = null;
+            }
+
+            //DIRECCION
+            if ($row['direccion']){
+                $data['direccion'] = trim($row['direccion']);
+            }else{
+                $data['direccion'] = null;
+            }
+
+            //LONGITUD
+            if ($row['longitud']){
+                $data['longitud'] = trim($row['longitud']);
+            }else{
+                $data['longitud'] = null;
+            }
+
+            //LATITUD
+            if ($row['latitud']){
+                $data['latitud'] = trim($row['latitud']);
+            }else{
+                $data['latitud'] = null;
+            }
+
+            //GOOGLE MAPS
+            if ($row['google_maps']){
+                $data['google_maps'] = trim($row['google_maps']);
+            }else{
+                $data['google_maps'] = null;
             }
 
 

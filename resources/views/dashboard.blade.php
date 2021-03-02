@@ -18,7 +18,7 @@
     @php($cadena = " frase frase frase ")
     @php($cadena_formateada = trim($cadena))
 
-    La cadena original es esta:{{ $cadena }} y la formateada es esta otra: {{ $cadena_formateada }}
+    {{--La cadena original es esta:{{ $cadena }} y la formateada es esta otra: {{ $cadena_formateada }}--}}
     {{--<x-app-layout>
         --}}{{--<x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
