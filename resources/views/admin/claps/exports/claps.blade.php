@@ -1,6 +1,6 @@
 <table border=0 cellpadding=0 cellspacing=0>
     <tr>
-        <td colspan=26 style="
+        <td colspan=31 style="
         background-color: #C00000;
         height: 26px;
         color: #ffffff;
@@ -245,6 +245,51 @@
         font-weight: bold;
         text-align: center;
         ">GOOGLE MAPS</td>
+        <td style="
+        width: 25px;
+        border: 1px solid #000000;
+        background-color: #D0CECE;
+        font-family: Calibri;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        ">ESTA PRODUCIENDO</td>
+        <td style="
+        width: 25px;
+        border: 1px solid #000000;
+        background-color: #D0CECE;
+        font-family: Calibri;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        ">TIPO DE PRODUCCION</td>
+        <td style="
+        width: 25px;
+        border: 1px solid #000000;
+        background-color: #D0CECE;
+        font-family: Calibri;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        ">ESPECIFIQUE</td>
+        <td style="
+        width: 25px;
+        border: 1px solid #000000;
+        background-color: #D0CECE;
+        font-family: Calibri;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        ">NUMERO DE FAMILIAS</td>
+        <td style="
+        width: 30px;
+        border: 1px solid #000000;
+        background-color: #D0CECE;
+        font-family: Calibri;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        ">NUMERO DE LIDERES DE CALLE</td>
     </tr>
     @foreach ($imports as $import)
         <tr>
@@ -347,7 +392,7 @@
         font-family: Calibri;
         font-size: 11px;
         text-align: left;
-        ">{{ fecha($import->fecha_nac_lider) }}</td>
+        ">@if($import->fecha_nac_lider) {{ fecha($import->fecha_nac_lider) }} @endif</td>
             <td style="
         border: 1px solid #000000;
         font-family: Calibri;
@@ -407,7 +452,37 @@
         font-family: Calibri;
         font-size: 11px;
         text-align: center;
-        ">{{ strtoupper($import->google_maps) }}</td>
+        "></td>
+            <td style="
+        border: 1px solid #000000;
+        font-family: Calibri;
+        font-size: 11px;
+        text-align: center;
+        "></td>
+            <td style="
+        border: 1px solid #000000;
+        font-family: Calibri;
+        font-size: 11px;
+        text-align: center;
+        "></td>
+            <td style="
+        border: 1px solid #000000;
+        font-family: Calibri;
+        font-size: 11px;
+        text-align: center;
+        "></td>
+            <td style="
+        border: 1px solid #000000;
+        font-family: Calibri;
+        font-size: 11px;
+        text-align: center;
+        "></td>
+            <td style="
+        border: 1px solid #000000;
+        font-family: Calibri;
+        font-size: 11px;
+        text-align: center;
+        "></td>
         </tr>
     @endforeach
 </table>
