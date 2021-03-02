@@ -202,6 +202,15 @@
                                         {!! Form::select('bloques_id', $bloques , $clap->bloques_id , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="name">Nº Familias</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                        </div>
+                                        {!! Form::text('num_familias', strtoupper($clap->num_familias), ['class' => 'form-control', 'placeholder' => 'Ingrese Numero']) !!}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="col-md-12">
@@ -240,63 +249,66 @@
                                         {!! Form::text('codigo_spda', strtoupper($clap->codigo_spda), ['class' => 'form-control', 'placeholder' => 'Ingrese Codigo SPDA']) !!}
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="name">Nº Lideres</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                        </div>
+                                        {!! Form::text('num_lideres', strtoupper($clap->num_lideres), ['class' => 'form-control', 'placeholder' => 'Ingrese Numero']) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
+
                 <!-- Default box -->
                 <div class="card card-navy collapsed-card">
                     <div class="card-header">
-                        <h3 class="card-title">Geolocalización</h3>
+                        <h3 class="card-title">Datos de Producción</h3>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-globe-americas"></i>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-product-hunt"></i>
                             </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-12">
-                                    <label for="name">Longitud</label>
+
+                                <div class="col-md-6">
+                                    <label for="name">CLAP Productivo</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                            <span class="input-group-text"><i class="fa fa-product-hunt"></i></span>
                                         </div>
-                                        {!! Form::text('longitud', strtoupper($clap->longitud), ['class' => 'form-control', 'placeholder' => 'Ingrese Longitud']) !!}
+                                        {!! Form::select('productivo', ['SI' => 'SI', 'NO' => 'NO'] , $clap->productivo , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="name">Latitud</label>
+                                <div class="col-md-6">
+                                    <label for="name">Tipo de Producción</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                            <span class="input-group-text"><i class="fa fa-cogs"></i></span>
                                         </div>
-                                        {!! Form::text('latitud', strtoupper($clap->latitud), ['class' => 'form-control', 'placeholder' => 'Ingrese Latitud']) !!}
+                                        {!! Form::text('tipo_produccion', strtoupper($clap->tipo_produccion), ['class' => 'form-control', 'placeholder' => 'Ingrese Texto']) !!}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+
+                        </div>
+                        <div class="row">
+
                                 <div class="col-md-12">
-                                    <label for="name">Google Maps</label>
+                                    <label for="name">Detalles de Producción</label>
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
-                                        </div>
-                                        {!! Form::text('google_maps', strtoupper($clap->google_maps), ['class' => 'form-control', 'placeholder' => 'Ingrese Google Maps']) !!}
+
+                                        <textarea name="detalles_produccion" cols="30" rows="4" class="form-control">
+                                            {{ strtoupper($clap->detalles_produccion) }}
+                                        </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="name">Dirección</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
-                                        </div>
-                                        {!! Form::text('direccion', strtoupper($clap->direccion), ['class' => 'form-control', 'placeholder' => 'Ingrese Dirección']) !!}
-                                    </div>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
@@ -308,7 +320,7 @@
                 <!-- Default box -->
                 <div class="card card-navy collapsed-card">
                     <div class="card-header">
-                        <h3 class="card-title">Datos del Responsable</h3>
+                        <h3 class="card-title">Jefe de Comunidad</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-user"></i>
                             </button>
@@ -446,6 +458,63 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- Default box -->
+                <div class="card card-navy collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Geolocalización</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-globe-americas"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <label for="name">Longitud</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                        </div>
+                                        {!! Form::text('longitud', strtoupper($clap->longitud), ['class' => 'form-control', 'placeholder' => 'Ingrese Longitud']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="name">Latitud</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                        </div>
+                                        {!! Form::text('latitud', strtoupper($clap->latitud), ['class' => 'form-control', 'placeholder' => 'Ingrese Latitud']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <label for="name">Google Maps</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                        </div>
+                                        {!! Form::text('google_maps', strtoupper($clap->google_maps), ['class' => 'form-control', 'placeholder' => 'Ingrese Google Maps']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="name">Dirección</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                        </div>
+                                        {!! Form::text('direccion', strtoupper($clap->direccion), ['class' => 'form-control', 'placeholder' => 'Ingrese Dirección']) !!}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <!-- /.card-body -->

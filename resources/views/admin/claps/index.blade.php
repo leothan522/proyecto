@@ -461,12 +461,12 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-2">
-                                                                                    <label for="name">Codigo SPDA</label>
+                                                                                    <label for="name">Nº Familias</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
                                                                                             <span class="input-group-text"><i class="fas fa-code"></i></span>
                                                                                         </div>
-                                                                                        <span class="form-control">{{ strtoupper($clap->codigo_spda) }}</span>
+                                                                                        <span class="form-control">{{ strtoupper($clap->num_familias) }}</span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-3">
@@ -487,13 +487,22 @@
                                                                                         <span class="form-control">{{ strtoupper($clap->comunidad) }}</span>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-md-5">
-                                                                                    <label for="name">Nombre del CLAP</label>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="name">Codigo SPDA</label>
                                                                                     <div class="input-group mb-3">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i class="fas fa-clone"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
                                                                                         </div>
-                                                                                        <span class="form-control">{{ strtoupper($clap->nombre_clap) }}</span>
+                                                                                        <span class="form-control">{{ strtoupper($clap->codigo_spda) }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                    <label for="name">Nº Lideres</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ strtoupper($clap->num_lideres) }}</span>
                                                                                     </div>
                                                                                 </div>
 
@@ -509,7 +518,7 @@
                                                                     <!-- Default box -->
                                                                     <div class="card card-navy">
                                                                         <div class="card-header">
-                                                                            <h3 class="card-title">Datos del Responsable</h3>
+                                                                            <h3 class="card-title">Jefe de Comunidad</h3>
                                                                         </div>
                                                                         <div class="card-body fondo">
                                                                             <div class="row">
