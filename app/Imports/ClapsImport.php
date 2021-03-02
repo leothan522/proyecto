@@ -32,7 +32,7 @@ class ClapsImport implements ToModel, WithHeadingRow
                 'parroquias_id' => trim($row['parroquia']),
                 'comunidad' => trim($row['comunidad']),
                 'nombre_clap' => trim($row['nombre_clap']),
-                'codigo_spda' => trim($row['codigo_spda']),
+                //'codigo_spda' => trim($row['codigo_spda']),
                 'codigo_sica' => trim($row['codigo_sica']),
                 'bloques_id' => trim($row['bloque']),
                 'cedula_lider' => trim($row['cedula']),
@@ -42,7 +42,7 @@ class ClapsImport implements ToModel, WithHeadingRow
                 'segundo_apellido_lider' => trim($row['segundo_apellido']),
                 'nacionalidad_lider' => trim($row['nacionalidad']),
                 'genero' => trim($row['genero']),
-                'fecha_nac_lider' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($row['fecha_de_nacimiento'])),
+                //'fecha_nac_lider' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($row['fecha_de_nacimiento'])),
                 'profesion_lider' => trim($row['profesion']),
                 'trabajo_lider' => trim($row['trabajo']),
                 'telefono_1_lider' => trim($row['n_de_telefono_1']),
@@ -55,6 +55,43 @@ class ClapsImport implements ToModel, WithHeadingRow
                 'google_maps' => trim($row['google_maps']),
                 'import_id' => $this->id_import
             ];
+
+            //FECHA DE NACIMIENTO
+            if ($row['fecha_de_nacimiento']){
+                $data['fecha_nac_lider'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(trim($row['fecha_de_nacimiento']));
+            }else{
+                $data['fecha_nac_lider'] = null;
+            }
+
+            //CODIGO SPDA
+            if ($row['codigo_spda']){
+                $data['codigo_spda'] = trim($row['codigo_spda']);
+            }else{
+                $data['codigo_spda'] = null;
+            }
+
+            //CODIGO SICA
+            if ($row['codigo_sica']){
+                $data['codigo_sica'] = trim($row['codigo_sica']);
+            }else{
+                $data['codigo_sica'] = null;
+            }
+
+            //SEGUNDO NOMBRE
+            if ($row['segundo_nombre']){
+                $data['segundo_nombre_lider'] = trim($row['segundo_nombre']);
+            }else{
+                $data['segundo_nombre_lider'] = null;
+            }
+
+            //SEGUNDO APELLIDO
+            if ($row['segundo_apellido']){
+                $data['segundo_apellido_lider'] = trim($row['segundo_apellido']);
+            }else{
+                $data['segundo_apellido_lider'] = null;
+            }
+
+
 
             $municipio = Municipio::where('nombre_completo', $data['municipios_id'])->first();
             $parroquia = Parroquia::where('nombre_completo', $data['parroquias_id'])->first();
