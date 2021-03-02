@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clap;
 use App\Models\Municipio;
 use App\Models\Parametro;
 use App\Models\Periodo;
@@ -17,7 +18,8 @@ class PeriodosController extends Controller
      */
     public function index()
     {
-        $mun_bloques = [];
+        $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
+        /*$mun_bloques = [];
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
         $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
@@ -37,7 +39,39 @@ class PeriodosController extends Controller
             $json_bloque_id[$i] = $array_id;
             unset($array_valor);
             unset($array_id);
+        }*/
+
+        $total_claps = null;
+        $total_familias = null;
+        $mun_claps = null;
+        $mun_familias = null;
+        $claps_cargados = null;
+
+        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
+        $municipios = Municipio::all();
+        $total = Parametro::where('nombre', 'bloques')->count();
+
+
+        $i = 0;
+        $json_bloque_valor[] = null;
+        $json_bloque_id[] = null;
+        foreach ($municipios as $municipio) {
+            $i++;
+            $array_valor[] = "Seleccione";
+            $array_id[] = "";
+            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
+            foreach ($bloques as $bloque) {
+                array_push($array_valor, $bloque->valor);
+                array_push($array_id, $bloque->id);
+            }
+            $json_bloque_valor[$i] = $array_valor;
+            $json_bloque_id[$i] = $array_id;
+            unset($array_valor);
+            unset($array_id);
         }
+
+        $id_bloque = null;
+        $mun_bloques = [];
 
 
         return view('admin.periodos.index')
