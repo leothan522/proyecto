@@ -7,6 +7,7 @@ use App\Models\Clap;
 use App\Models\Municipio;
 use App\Models\Parametro;
 use App\Models\Parroquia;
+use App\Models\Periodo;
 use Illuminate\Http\Request;
 
 class ModuloClapController extends Controller
@@ -99,6 +100,15 @@ class ModuloClapController extends Controller
         $municipio = Municipio::find($id_municipio);
         $parroquia = Parroquia::find($id_parroquia);
         $claps = Clap::where('parroquias_id', $id_parroquia)->orderBy('nombre_clap', 'ASC')->get();
+        $claps->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
+
+        });
 
 
 
@@ -117,8 +127,15 @@ class ModuloClapController extends Controller
         $municipio = Municipio::find($id_municipio);
         $bloque = Parametro::find($id_bloque);
         $claps = Clap::where('bloques_id', $id_bloque)->orderBy('nombre_clap', 'ASC')->get();
+        $claps->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
 
-
+        });
 
         return view('android.modulo_clap.bloque')
             ->with('municipio', $municipio)

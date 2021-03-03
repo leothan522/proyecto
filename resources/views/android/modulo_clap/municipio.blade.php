@@ -56,7 +56,7 @@
                         <li class="nav-item active">
                             <a href="{{ route('android.modulo_clap_parroquia', [Auth::user()->id, $municipio->id, $parroquia->id]) }}" class="nav-link" onclick="verCargando()">
                                 {{--<i class="fas fa-flag"></i>--}} {{ $parroquia->nombre_completo }}
-                                <span class="float-right justify-content-center row col-4">
+                                <span class="float-right justify-content-center row col-5">
                                     <span class="badge bg-success col-5">{{ formatoMillares($parroquia->claps, 0) }}</span>
                                     <span class="col-2"></span>
                                     <span class="badge bg-warning col-5">{{ formatoMillares(0, 0) }}</span>
@@ -86,7 +86,7 @@
                         <li class="nav-item active">
                             <a href="{{ route('android.modulo_clap_bloque', [Auth::user()->id, $municipio->id, $bloque->id]) }}" class="nav-link" onclick="verCargando()">
                                 <i class="fas fa-cubes"></i> {{ $bloque->valor }}
-                                <span class="float-right justify-content-center row col-4">
+                                <span class="float-right justify-content-center row col-5">
                                     <span class="badge bg-success col-5">{{ formatoMillares($bloque->claps, 0) }}</span>
                                     <span class="col-2"></span>
                                     <span class="badge bg-warning col-5">{{ formatoMillares($bloque->familias, 0) }}</span>

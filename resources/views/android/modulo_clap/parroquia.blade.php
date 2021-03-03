@@ -96,7 +96,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-md-2">
+                                                @if($clap->programa == "BMS")
+                                                    <div class="col-md-2">
                                                     <label for="name">Programa</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -105,7 +106,9 @@
                                                         <span class="form-control">{{ $clap->programa }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                @endif
+                                                @if($clap->programa == "CLAP")
+                                                    <div class="col-md-2">
                                                     <label for="name">Bloque</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -114,16 +117,57 @@
                                                         <span class="form-control">{{ $clap->parametros->valor }}</span>
                                                     </div>
                                                 </div>
+                                                @endif
+                                                    <div class="col-md-2">
+                                                        <label for="name">Nº Familias</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                            </div>
+                                                            <span class="form-control">{{ formatoMillares($clap->num_familias, 0) }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="name">Nº Lideres de Calle</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                            </div>
+                                                            <span class="form-control">{{ formatoMillares($clap->num_lideres, 0) }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="name">Periodo de Atención</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                            </div>
+                                                            <span class="form-control">
+                                                                @if($clap->periodo)
+                                                                    {{ fecha($clap->periodo) }}
+                                                                    <span class="badge badge-warning">{{ cuantosDias($clap->periodo, date('Y-m-d')) }} Días</span>
+                                                                @else
+                                                                    No registrado
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <!-- Default box -->
-                                                    <div class="card card-navy">
+                                                    <div class="card card-navy collapsed-card">
                                                         <div class="card-header">
-                                                            <h3 class="card-title">Datos del Responsable</h3>
+                                                            <h3 class="card-title">Jefe de Comunidad</h3>
+
+                                                            <div class="card-tools">
+                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                            <!-- /.card-tools -->
                                                         </div>
-                                                        <div class="card-body fondo">
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body" style="display: none;">
                                                             <div class="row">
                                                                 <div class="col-md-3">
                                                                     <label for="name">Cedula</label>
@@ -189,17 +233,71 @@
                                                         </div>
                                                         <!-- /.card-body -->
                                                     </div>
-                                                    <!-- /.card -->
                                                 </div>
                                             </div>
+                                            @if($clap->productivo == "SI")
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <!-- Default box -->
-                                                    <div class="card card-navy">
+                                                    <div class="card card-navy collapsed-card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Datos Productivos</h3>
+
+                                                            <div class="card-tools">
+                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                            <!-- /.card-tools -->
+                                                        </div>
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body" style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label for="name">CLAP Productivo</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text"><i class="fa fa-product-hunt"></i></span>
+                                                                        </div>
+                                                                        <span class="form-control">{{ strtoupper($clap->productivo) }}</span>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="name">Tipo de Producción</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text"><i class="fa fa-cogs"></i></span>
+                                                                        </div>
+                                                                        <span class="form-control">{{ strtoupper($clap->tipo_produccion) }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <label for="name">Detalles de Producción</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <p class="form-control">{{ strtoupper(trim($clap->detalles_produccion)) }}</p>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card card-navy collapsed-card">
                                                         <div class="card-header">
                                                             <h3 class="card-title">Geolocalización</h3>
+
+                                                            <div class="card-tools">
+                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                            <!-- /.card-tools -->
                                                         </div>
-                                                        <div class="card-body fondo">
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body" style="display: none;">
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <label for="name">Longitud</label>
@@ -231,10 +329,7 @@
                                                                 <div class="col-md-12">
                                                                     <label for="name">Dirección</label>
                                                                     <div class="input-group mb-3">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
-                                                                        </div>
-                                                                        <span class="form-control">{{ strtoupper($clap->direccion) }}</span>
+                                                                        <p class="form-control">{{ strtoupper(trim($clap->direccion)) }}</p>
                                                                     </div>
                                                                 </div>
 
@@ -242,9 +337,9 @@
                                                         </div>
                                                         <!-- /.card-body -->
                                                     </div>
-                                                    <!-- /.card -->
                                                 </div>
                                             </div>
+                                            <br>
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
