@@ -15,7 +15,7 @@
             <div class="input-group input-group-sm">
                 <input class="form-control form-control-navbar" type="text" placeholder="Ingrese numero" aria-label="Buscar" required>
                 <div class="input-group-append">
-                    <button class="btn btn-navbar bg-white" type="submit">
+                    <button class="btn btn-navbar" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
