@@ -53,69 +53,73 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                @if($clap->programa == "BMS")
-                                                    <div class="col-md-2">
-                                                        <label for="name">Programa</label>
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-cog"></i></span>
-                                                            </div>
-                                                            <span class="form-control">{{ $clap->programa }}</span>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                                @if($clap->programa == "CLAP")
-                                                    <div class="col-md-2">
-                                                        <label for="name">Bloque</label>
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-cubes"></i></span>
-                                                            </div>
-                                                            <span class="form-control">{{ $clap->parametros->valor }}</span>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                                <div class="col-md-2">
-                                                    <label for="name">Nº Familias</label>
+                                                <div class="col-md-3">
+                                                    <label for="name">Cedula</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                                         </div>
-                                                        <span class="form-control">{{ formatoMillares($clap->num_familias, 0) }}</span>
+                                                        <span class="form-control">{{ formatoMillares($clap->cedula_lider, 0) }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <label for="name">Nº Lideres de Calle</label>
+                                                <div class="col-md-6">
+                                                    <label for="name">Nombre del Responsable</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <span class="form-control">{{ formatoMillares($clap->num_lideres, 0) }}</span>
+                                                        <span class="form-control text-sm">
+                                                                            {{ strtoupper($clap->primer_nombre_lider) }}
+                                                            {{ strtoupper($clap->segundo_nombre_lider) }}
+                                                            {{ strtoupper($clap->primer_apellido_lider) }}
+                                                            {{ strtoupper($clap->segundo_apellido_lider) }}
+                                                                        </span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <label for="name">Periodo de Atención</label>
+                                                <div class="col-md-3">
+                                                    <label for="name">N° DE TELEFONO 1</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                        </div>
+                                                        <span class="form-control">{{ strtoupper($clap->telefono_1_lider) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="name">Email</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                        </div>
+                                                        <span class="form-control text-sm">{{ strtolower($clap->email_lider) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="name">Fecha de Nacimiento</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                         </div>
-                                                        <span class="form-control">
-                                                            @if($clap->periodo)
-                                                                {{ fecha($clap->periodo) }}
-                                                                <span class="badge badge-warning">{{ cuantosDias($clap->periodo, date('Y-m-d')) }} Días</span>
-                                                            @else
-                                                                No registrado
-                                                            @endif
-                                                        </span>
+                                                        <span class="form-control">{{ fecha($clap->fecha_nac_lider, 'd-m-Y') }} ({{ str_replace('hace ', '', haceCuanto($clap->fecha_nac_lider)) }})</span>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <label for="name">Profesión</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                                                        </div>
+                                                        <span class="form-control">{{ strtoupper($clap->profesion_lider) }}</span>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="card card-navy collapsed-card">
                                                         <div class="card-header">
-                                                            <h3 class="card-title">Jefe de Comunidad</h3>
+                                                            <h3 class="card-title">Datos del CLAP</h3>
 
                                                             <div class="card-tools">
                                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
@@ -126,66 +130,80 @@
                                                         <!-- /.card-header -->
                                                         <div class="card-body" style="display: none;">
                                                             <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <label for="name">Cedula</label>
+                                                                <div class="col-md-2">
+                                                                    <label for="name">Municipio</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                                                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                                                         </div>
-                                                                        <span class="form-control">{{ formatoMillares($clap->cedula_lider, 0) }}</span>
+                                                                        <span class="form-control">{{ $clap->municipios->nombre_completo }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <label for="name">Nombre del Responsable</label>
+                                                                <div class="col-md-2">
+                                                                    <label for="name">Parroquia</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                                                         </div>
-                                                                        <span class="form-control text-sm">
-                                                                            {{ strtoupper($clap->primer_nombre_lider) }}
-                                                                            {{ strtoupper($clap->segundo_nombre_lider) }}
-                                                                            {{ strtoupper($clap->primer_apellido_lider) }}
-                                                                            {{ strtoupper($clap->segundo_apellido_lider) }}
-                                                                        </span>
+                                                                        <span class="form-control">{{ $clap->parroquias->nombre_completo }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="name">N° DE TELEFONO 1</label>
+                                                                @if($clap->programa == "BMS")
+                                                                    <div class="col-md-2">
+                                                                        <label for="name">Programa</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="fas fa-cog"></i></span>
+                                                                            </div>
+                                                                            <span class="form-control">{{ $clap->programa }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                                @if($clap->programa == "CLAP")
+                                                                    <div class="col-md-2">
+                                                                        <label for="name">Bloque</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                                            </div>
+                                                                            <span class="form-control">{{ $clap->parametros->valor }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                                <div class="col-md-2">
+                                                                    <label for="name">Nº Familias</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                                            <span class="input-group-text"><i class="fas fa-child"></i></span>
                                                                         </div>
-                                                                        <span class="form-control">{{ strtoupper($clap->telefono_1_lider) }}</span>
+                                                                        <span class="form-control">{{ formatoMillares($clap->num_familias, 0) }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <label for="name">Email</label>
+                                                                <div class="col-md-2">
+                                                                    <label for="name">Nº Lideres de Calle</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                                            <span class="input-group-text"><i class="fas fa-users"></i></span>
                                                                         </div>
-                                                                        <span class="form-control text-sm">{{ strtolower($clap->email_lider) }}</span>
+                                                                        <span class="form-control">{{ formatoMillares($clap->num_lideres, 0) }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="name">Fecha de Nacimiento</label>
+                                                                <div class="col-md-2">
+                                                                    <label for="name">Periodo de Atención</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                                         </div>
-                                                                        <span class="form-control">{{ fecha($clap->fecha_nac_lider, 'd-m-Y') }} ({{ str_replace('hace ', '', haceCuanto($clap->fecha_nac_lider)) }})</span>
+                                                                        <span class="form-control">
+                                                            @if($clap->periodo)
+                                                                                {{ fecha($clap->periodo) }}
+                                                                                <span class="badge badge-warning">{{ cuantosDias($clap->periodo, date('Y-m-d')) }} Días</span>
+                                                                            @else
+                                                                                No registrado
+                                                                            @endif
+                                                        </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="name">Profesión</label>
-                                                                    <div class="input-group mb-3">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
-                                                                        </div>
-                                                                        <span class="form-control">{{ strtoupper($clap->profesion_lider) }}</span>
-                                                                    </div>
-                                                                </div>
-
                                                             </div>
                                                         </div>
                                                         <!-- /.card-body -->
