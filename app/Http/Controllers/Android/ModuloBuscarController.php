@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Android;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clap;
+use App\Models\Periodo;
 use Illuminate\Http\Request;
 
 class ModuloBuscarController extends Controller
@@ -19,6 +20,15 @@ class ModuloBuscarController extends Controller
     public function buscarCedula(Request $request)
     {
         $claps = Clap::where('cedula_lider', 'LIKE', '%'.$request->buscar.'%')->get();
+        $claps->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
+
+        });
         return view('android.buscar_clap.buscar_cedula')
             ->with('resultados', $claps)
             ->with('buscar', $request->buscar)
