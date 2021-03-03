@@ -52,12 +52,12 @@ class ProgramasController extends Controller
         return view('android.prueba');
     }
 
-    public function buscarClap($id)
+    /*public function buscarClap($id)
     {
         $autenticar = new AppController();
         $autenticar->autenticar($id);
         return view('android.buscar_clap.index');
         //return view('android.prueba');
-    }
+    }*/
 
 }

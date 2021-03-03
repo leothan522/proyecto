@@ -48,6 +48,10 @@ Route::prefix('/android')->group(function (){
     Route::post('/modulo/clap/{id}/buscar', 'Android\ModuloClapController@buscarEnParroquia')->name('android.modulo_clap_buscar');
     Route::post('/modulo/clap/bloque/{id}/buscar', 'Android\ModuloClapController@buscarEnBloque')->name('android.modulo_clap_buscar_bloque');
 
+    //Modulo Buscar
+    Route::get('/buscar/clap/{id}', 'Android\ModuloBuscarController@index')->name('android.buscarClap');
+    Route::post('/buscar/clap/{id}/cedula', 'Android\ModuloBuscarController@buscarCedula')->name('android.buscar_cedula');
+
 
 
     Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
@@ -55,7 +59,8 @@ Route::prefix('/android')->group(function (){
     Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
     Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
     Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tiendaMovil');
-    Route::get('/buscar/clap/{id}', 'Android\ProgramasController@buscarClap')->name('android.buscarClap');
+
+
 
 });
 
