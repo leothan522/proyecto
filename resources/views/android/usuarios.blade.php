@@ -17,10 +17,13 @@
                         <span class="username">
                             <a href="#" data-toggle="modal" data-target="#exampleModal-{{ $usuario->id }}">{{ $usuario->name }}</a>
                         </span>
-                        <span class="description"><small>{{ $usuario->email }}</small></span>
+                        <span class="description">
+                            <small>{{ $usuario->email }}</small>
+                            <small class="text-danger">{{ haceCuanto($usuario->created_at) }}</small>
+                        </span>
                     </div>
                     <div class="card-tools">
-                        <span class="btn btn-tool">{{ $usuario->id }}</span>
+                        {{--<span class="btn btn-tool">{{ $usuario->id }}</span>--}}
                         <button type="button" class="btn btn-tool" data-card-widget="remove">
                             <i class="fas fa-times"></i>
                         </button>

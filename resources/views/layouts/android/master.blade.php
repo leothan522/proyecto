@@ -13,7 +13,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('adminlte/ionicons.min.css') }}">
     <!-- pace-progress -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/pace-progress/themes/blue/pace-theme-flat-top.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/pace-progress/themes/blue/pace-theme-flash.css') }}">
     <!-- adminlte-->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <link href="{{ asset('adminlte/fonts.googleapis.css') }}" rel="stylesheet">
