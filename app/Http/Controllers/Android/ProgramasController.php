@@ -56,8 +56,8 @@ class ProgramasController extends Controller
     {
         $autenticar = new AppController();
         $autenticar->autenticar($id);
-        //return view('android.buscar_clap.index');
-        return view('android.prueba');
+        return view('android.buscar_clap.index');
+        //return view('android.prueba');
     }
 
 }
