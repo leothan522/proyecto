@@ -48,7 +48,7 @@
                 <input type="hidden" name="id_municipio" value="{{ $municipio->id }}">
                 <input type="hidden" name="id_parroquia" value="{{ $parroquia->id }}">
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary btn-flat" onclick="verCargando()"><i class="fa fa-search"></i></button>
                 </span>
             </div>
             {!! Form::close() !!}
@@ -71,9 +71,15 @@
                         <li class="nav-item active">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
                                 {{--<i class="fas fa-flag"></i>--}}{{ $i }}.- {{ $clap->nombre_clap }}
-                                <span class="float-right">
-                                    {{--<span class="badge bg-success">{{ formatoMillares($parroquia->claps, 0) }}</span>--}}
-                                    <span class="badge bg-warning">0{{--{{ formatoMillares($parroquia->familias, 0) }}--}}</span>
+                                {{--<span class="float-right">
+                                    --}}{{--<span class="badge bg-success">{{ formatoMillares($parroquia->claps, 0) }}</span>--}}{{--
+                                    <span class="badge bg-warning">0--}}{{--{{ formatoMillares($parroquia->familias, 0) }}--}}{{--</span>
+                                </span>--}}
+
+                                <span class="float-right justify-content-center row col-3">
+                                    <span class="col-1">@if($clap->productivo == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
+                                    <span class="col-1"></span>
+                                    <span class="badge bg-warning col-6">{{ formatoMillares($clap->num_familias, 0) }}</span>
                                 </span>
 
                             </a>

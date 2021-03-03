@@ -9,6 +9,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/v4-shims.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('adminlte/ionicons.min.css') }}">
     <!-- pace-progress -->
@@ -18,6 +19,8 @@
     <link href="{{ asset('adminlte/fonts.googleapis.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+
+    <script src="{{ asset('js/master_android.js') }}"></script>
 
     @yield('link')
 </head>
@@ -71,6 +74,9 @@
         $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
+
+<!-- Sweetalert2-->
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 @yield('script')
 </body>
