@@ -56,12 +56,8 @@ class ModuloClapController extends Controller
             } else {
                 $parroquia->claps = 0;
             }
-            /*$familias = Parametro::where('nombre', 'bloque_familias')->where('tabla_id', $parroquia->id)->first();
-            if ($familias) {
-                $parroquia->familias = $familias->valor;
-            } else {
-                $parroquia->familias = 0;
-            }*/
+            $familias = Clap::where('parroquias_id', $parroquia->id)->sum('num_familias');
+            $parroquia->familias = $familias;
 
         });
         $familias = Parametro::where('nombre', 'familias')->where('tabla_id', $id_municipio)->first();
@@ -107,8 +103,9 @@ class ModuloClapController extends Controller
             }else{
                 $clap->periodo = null;
             }
-
         });
+
+        $familias = Clap::where('parroquias_id', $parroquia->id)->sum('num_familias');
 
 
 
@@ -116,6 +113,7 @@ class ModuloClapController extends Controller
             ->with('municipio', $municipio)
             ->with('parroquia', $parroquia)
             ->with('claps', $claps)
+            ->with('familias', $familias)
             ->with('i', 0);
     }
 
@@ -137,10 +135,13 @@ class ModuloClapController extends Controller
 
         });
 
+        $familias = Clap::where('bloques_id', $bloque->id)->sum('num_familias');
+
         return view('android.modulo_clap.bloque')
             ->with('municipio', $municipio)
             ->with('bloque', $bloque)
             ->with('claps', $claps)
+            ->with('familias', $familias)
             ->with('i', 0);
     }
 

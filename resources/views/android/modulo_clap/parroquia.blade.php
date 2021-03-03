@@ -29,10 +29,9 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                        {{--@if($familias)
-                            {{ formatoMillares($familias->valor, 0) }}
-                        @endif--}}
-                        0
+                        @if($familias)
+                            {{ formatoMillares($familias, 0) }}
+                        @endif
                 </span>
                     </span>
                 </div>
@@ -122,7 +121,7 @@
                                                         <label for="name">Nº Familias</label>
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-child"></i></span>
+                                                                <span class="input-group-text"><i class="fas fa-users"></i></span>
                                                             </div>
                                                             <span class="form-control">{{ formatoMillares($clap->num_familias, 0) }}</span>
                                                         </div>
@@ -131,7 +130,7 @@
                                                         <label for="name">Nº Lideres de Calle</label>
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                                <span class="input-group-text"><i class="fas fa-child"></i></span>
                                                             </div>
                                                             <span class="form-control">{{ formatoMillares($clap->num_lideres, 0) }}</span>
                                                         </div>

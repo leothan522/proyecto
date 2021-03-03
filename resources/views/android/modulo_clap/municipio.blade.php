@@ -59,7 +59,7 @@
                                 <span class="float-right justify-content-center row col-5">
                                     <span class="badge bg-success col-5">{{ formatoMillares($parroquia->claps, 0) }}</span>
                                     <span class="col-2"></span>
-                                    <span class="badge bg-warning col-5">{{ formatoMillares(0, 0) }}</span>
+                                    <span class="badge bg-warning col-5">{{ formatoMillares($parroquia->familias, 0) }}</span>
                                 </span>
                             </a>
                         </li>
