@@ -166,6 +166,7 @@ class UsersController extends Controller
                     'periodos.store'    => $request->input('periodos_store'),
                     'periodos.update'    => $request->input('periodos_update'),
                     'periodos.destroy'    => $request->input('periodos_destroy'),
+                    'periodos.show'    => $request->input('periodos_show'),
 
                 ];
                 //******************************************** configuracion SIDEBAR

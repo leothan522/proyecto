@@ -28,6 +28,11 @@
                        @if (leerJson($user->permisos, 'periodos.destroy')) checked @endif>
                 <label for="periodos4" class="custom-control-label">Eliminar Parametro</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input name="periodos_show" value="true" class="custom-control-input" type="checkbox" id="periodos5"
+                       @if (leerJson($user->permisos, 'periodos.show')) checked @endif>
+                <label for="periodos5" class="custom-control-label">Filtrar Parametro</label>
+            </div>
 
         </div>
     </div>

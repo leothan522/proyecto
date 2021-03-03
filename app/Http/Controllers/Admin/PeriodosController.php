@@ -50,6 +50,7 @@ class PeriodosController extends Controller
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::all();
         $total = Parametro::where('nombre', 'bloques')->count();
+        $filtrar = Municipio::orderBy('nombre_corto', 'ASC')->get();
 
 
         $i = 0;
@@ -80,7 +81,7 @@ class PeriodosController extends Controller
             ->with('json_bloque_id', $json_bloque_id)
             ->with('mun_bloques', $mun_bloques)
             ->with('periodos', $periodos)
-            ->with('filtrar', $municipios)
+            ->with('filtrar', $filtrar)
             ->with('i', 1)
             ;
     }

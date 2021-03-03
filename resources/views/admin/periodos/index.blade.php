@@ -243,22 +243,20 @@
                     <div class="card-header">
                         <h5 class="card-title">Fechas de Entrega</h5>
                         <div class="card-tools">
-                            <ul class="btn btn-tool">
-
-                                <li class="dropdown open">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                                        Municipios <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @foreach($filtrar as $municipio)
-                                        <li class=""><a href="{{ route('periodos.show', $municipio->id) }}">{{ $municipio->nombre_corto }}</a></li>
-                                        @endforeach
-                                        <li class=""><a href="{{ route('periodos.index') }}">Ver todo</a></li>
-
-                                    </ul>
-                                </li>
-                            </ul>
+                            @if (leerJson(Auth::user()->permisos, 'periodos.show') || Auth::user()->role == 100)
+                            <div class="btn-group show">
+                                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" data-offset="-52" aria-expanded="true">
+                                    <i class="fas fa-filter"></i> Filtrar </button>
+                                <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-52px, 31px, 0px);">
+                                    @foreach($filtrar as $municipio)
+                                        <a href="{{ route('periodos.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_corto }}</a>
+                                    @endforeach
+                                        <div class="dropdown-divider"></div>
+                                    <a href="{{ route('periodos.index') }}" class="dropdown-item">Ver Todo</a>
+                                </div>
+                            </div>
                             <span class="btn btn-tool"><i class="fas fa-calendar-alt"></i></span>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
