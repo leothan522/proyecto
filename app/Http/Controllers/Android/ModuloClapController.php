@@ -154,8 +154,15 @@ class ModuloClapController extends Controller
         $municipio = Municipio::find($request->id_municipio);
         $parroquia = Parroquia::find($request->id_parroquia);
         $claps = Clap::where('parroquias_id', $request->id_parroquia)->where('nombre_clap', 'LIKE', '%'.$request->buscar.'%')->orderBy('nombre_clap', 'ASC')->get();
+        $claps->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
 
-
+        });
 
         return view('android.modulo_clap.buscar')
             ->with('municipio', $municipio)
@@ -175,8 +182,15 @@ class ModuloClapController extends Controller
         $municipio = Municipio::find($request->id_municipio);
         $bloque = Parametro::find($request->id_bloque);
         $claps = Clap::where('bloques_id', $request->id_bloque)->where('nombre_clap', 'LIKE', '%'.$request->buscar.'%')->orderBy('nombre_clap', 'ASC')->get();
+        $claps->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
 
-
+        });
 
         return view('android.modulo_clap.buscar_bloque')
             ->with('municipio', $municipio)
