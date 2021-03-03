@@ -3,7 +3,11 @@
 
 @section('content')
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="row justify-content-center">
+        <img src="{{ asset('img/webview/en_construcccion.jpg') }}" class="img-thumbnail col-10">
+    </div>
+
+    {{--<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="{{ asset('adminlte/dist/img/prod-1.jpg') }}" class="img-thumbnail" alt="...">
@@ -134,6 +138,6 @@
             <span class="badge bg-danger">531</span>
             <i class="fas fa-heart"></i> Likes
         </a>
-    </div>
+    </div>--}}
 
 @endsection
