@@ -46,8 +46,8 @@
                 <input type="text" name="buscar" placeholder="Buscar CLAP" class="form-control" required>
                 <input type="hidden" name="id_municipio" value="{{ $municipio->id }}">
                 <input type="hidden" name="id_bloque" value="{{ $bloque->id }}">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary btn-flat" onclick="verCargando()"><i class="fa fa-search"></i></button>
+                <span class="input-group-append {{--input-group-btn--}}">
+                    <button type="submit" class="btn btn-primary" onclick="verCargando()"><i class="fa fa-search"></i></button>
                 </span>
             </div>
             {!! Form::close() !!}
