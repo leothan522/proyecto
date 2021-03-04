@@ -152,7 +152,7 @@
         </div>
         @if ($ver_municipio)
             <div class="row justify-content-center" id="resultado_busqueda">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card-body">
 
 
@@ -161,7 +161,7 @@
                     </p>
 
                     <div class="progress-group">
-                        N° CLAPS
+                        <span class="">N° CLAPS</span>
                         <span class="float-right @if($total_claps != 0 && $mun_claps == 0) text-danger @endif">
                             @if($total_claps != 0 && $mun_claps == 0) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
                             <b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($mun_claps, 0) }}</span>
@@ -172,7 +172,7 @@
                     <!-- /.progress-group -->
 
                     <div class="progress-group">
-                        N° Familias
+                        <span class="">N° Familias</span>
                         <span class="float-right @if($total_familias != 0 && $mun_familias == 0) text-danger @endif">
                             @if($total_familias != 0 && $mun_familias == 0) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
                             <b>{{ formatoMillares($total_familias, 0) }}</b>/{{ formatoMillares($mun_familias, 0) }}</span>
@@ -195,10 +195,10 @@
 
                     <!-- /.progress-group -->
                     <div class="progress-group">
-                        N° Familias
+                        <span class="progress-text">N° Familias</span>
                         <span class="float-right"><b>0</b>/{{ formatoMillares($total_familias, 0) }}</span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-warning" style="width: 0%">0%</div>
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($claps_cargados, $total_claps)) }}" style="width: 0%">0%</div>
                         </div>
                     </div>
                     <!-- /.progress-group -->

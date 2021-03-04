@@ -175,7 +175,7 @@
                                                         <div class="card-body" style="display: none;">
                                                             <div class="row">
                                                                 <div class="col-md-3">
-                                                                    <label for="name">Cedula</label>
+                                                                    <label for="name">Cédula</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
@@ -198,7 +198,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
-                                                                    <label for="name">N° DE TELEFONO 1</label>
+                                                                    <label for="name">N° DE TELÉFONO 1</label>
                                                                     <div class="input-group mb-3">
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>

@@ -103,7 +103,7 @@
                 </div>
             </div>
             @endif
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h5 class="card-title">Usuarios Registrados</h5>
@@ -124,7 +124,7 @@
                                     <th scope="col" class="text-center" data-breakpoints="xs">Rol</th>
                                     <th scope="col" class="text-center" data-breakpoints="xs">Estatus</th>
                                     <th scope="col" class="text-right" data-breakpoints="xs">Registro</th>
-                                    <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
+                                    <th scope="col" data-breakpoints="xs" style="width: 5%;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -54,7 +54,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <label for="name">Cedula</label>
+                                                    <label for="name">Cédula</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
@@ -69,15 +69,15 @@
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
                                                         <span class="form-control text-sm">
-                                                                            {{ strtoupper($clap->primer_nombre_lider) }}
+                                                            {{ strtoupper($clap->primer_nombre_lider) }}
                                                             {{ strtoupper($clap->segundo_nombre_lider) }}
                                                             {{ strtoupper($clap->primer_apellido_lider) }}
                                                             {{ strtoupper($clap->segundo_apellido_lider) }}
-                                                                        </span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="name">N° DE TELEFONO 1</label>
+                                                    <label for="name">N° DE TELÉFONO 1</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
