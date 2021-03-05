@@ -36,7 +36,7 @@
 
     <script src="{{ asset('js/master_android.js') }}"></script>
 
-    @yield('script')
+
 
 
 </head>
@@ -95,7 +95,8 @@
 
 {{--<!-- Sweetalert2-->
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+--}}
 
-@yield('script')--}}
+@yield('script')
 </body>
 </html>
