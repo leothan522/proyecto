@@ -23,15 +23,15 @@
             </div>
         </div>
         <!-- /.info-box -->
-        <div class="col-12 col-sm-6 col-md-12">
+        {{--<div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                        {{--@if($familias)
+                        --}}{{--@if($familias)
                             {{ formatoMillares($familias->valor, 0) }}
-                        @endif--}}
+                        @endif--}}{{--
                         0
                 </span>
                     </span>
@@ -39,7 +39,7 @@
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
-        </div>
+        </div>--}}
     </div>
     <div class="row mb-3 justify-content-center">
             {{--{!! Form::open(['route' => ['android.modulo_clap_buscar', Auth::user()->id], 'method' => 'POST']) !!}

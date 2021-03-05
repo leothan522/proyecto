@@ -20,9 +20,25 @@
 
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
 
+    @yield('link')
+
+    <!-- jQuery -->
+    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- pace-progress -->
+    <script src="{{ asset('adminlte/plugins/pace-progress/pace.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+
+    <!-- Sweetalert2-->
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
     <script src="{{ asset('js/master_android.js') }}"></script>
 
-    @yield('link')
+    @yield('script')
+
+
 </head>
 <body class="hold-transition layout-top-nav pace-primary">
 <!-- Site wrapper -->
@@ -60,6 +76,7 @@
 </div>
 <!-- ./wrapper -->
 
+{{--
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -68,16 +85,17 @@
 <script src="{{ asset('adminlte/plugins/pace-progress/pace.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+--}}
 
-<script>
+{{--<script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-</script>
+</script>--}}
 
-<!-- Sweetalert2-->
+{{--<!-- Sweetalert2-->
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
-@yield('script')
+@yield('script')--}}
 </body>
 </html>
