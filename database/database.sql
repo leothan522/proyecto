@@ -13,12 +13,13 @@
 
 
 -- Volcando estructura de base de datos para alguarisa
-CREATE DATABASE IF NOT EXISTS `alguarisa` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
-USE `alguarisa`;
+CREATE DATABASE IF NOT EXISTS `admin_alguarisa` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+USE `admin_alguarisa`;
 
 -- Volcando estructura para tabla alguarisa.censo
 CREATE TABLE IF NOT EXISTS `censo` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `claps_id` bigint(20) unsigned NOT NULL,
   `num_familia` int(11) NOT NULL,
   `miembro_familia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -34,6 +35,8 @@ CREATE TABLE IF NOT EXISTS `censo` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `censo_lideres_id_foreign` (`lideres_id`),
+  KEY `censo_claps_id_foreign` (`claps_id`),
+  CONSTRAINT `censo_claps_id_foreign` FOREIGN KEY (`claps_id`) REFERENCES `claps` (`id`) ON DELETE CASCADE,
   CONSTRAINT `censo_lideres_id_foreign` FOREIGN KEY (`lideres_id`) REFERENCES `lideres` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -91,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   CONSTRAINT `claps_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3388 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.claps: ~3.368 rows (aproximadamente)
 /*!40000 ALTER TABLE `claps` DISABLE KEYS */;
 INSERT INTO `claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `productivo`, `tipo_produccion`, `detalles_produccion`, `num_familias`, `num_lideres`, `import_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'BANCO OBRERO', 'CLAP', 14, 36, 'BANCO OBRERO', 'CLAPS-GUA-121501-00004', 'CE00018200', 57, '20592185', 'ROSMALBY', 'ROSALIA', 'MARTINEZ', 'BARRIOS', 'VENEZOLANA', 'F', '1991-11-05', 'AMA DE CASA', 'OBRERA', '04142962649', NULL, 'rosmalbymartinez1991@gmail.com', 'ACTIVO', 'C MERIDA SECTOR BANCO OBRERO', '8°48\'54.3"N', '65°19\'29.9"W', NULL, NULL, 'Si', 'VEGETAL', 'frijol, yuca, aji', 622, 12, 314, NULL, '2021-03-02 22:50:06', '2021-03-02 22:50:06'),
@@ -3531,7 +3534,7 @@ CREATE TABLE IF NOT EXISTS `import_claps` (
   CONSTRAINT `import_claps_import_id_foreign` FOREIGN KEY (`import_id`) REFERENCES `parametros` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=758 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.import_claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.import_claps: ~490 rows (aproximadamente)
 /*!40000 ALTER TABLE `import_claps` DISABLE KEYS */;
 INSERT INTO `import_claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `import_id`, `created_at`, `updated_at`) VALUES
 	(268, 'AGUA HEDIONDA', 'CLAP', 'JUAN GERMAN ROSCIO', 'CANTAGALLO', 'AGUA HEDIONDA', 'CLAPS-GUA-120701-00010', 'CE00018132', '1', '15081268', 'LISANDRO', 'JOSE', 'HERNANDEZ', 'SOLORZANO', 'VENEZOLANO', 'MASCULINO', '1976-12-13', NULL, 'SI', '4243620415', NULL, NULL, 'ACTIVO', 'AGUA HEDIONDA (CANTAGALLO)', '9.783278', '-67.416443', NULL, '{"municipio":"true","parroquia":null,"bloque":"true"}', 352, '2021-03-04 16:48:41', '2021-03-04 16:48:41'),
@@ -4029,13 +4032,16 @@ INSERT INTO `import_claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `p
 -- Volcando estructura para tabla alguarisa.lideres
 CREATE TABLE IF NOT EXISTS `lideres` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `claps_id` bigint(20) unsigned NOT NULL,
   `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo_ci` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cedula` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `import_id` bigint(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `lideres_claps_id_foreign` (`claps_id`),
+  CONSTRAINT `lideres_claps_id_foreign` FOREIGN KEY (`claps_id`) REFERENCES `claps` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla alguarisa.lideres: ~0 rows (aproximadamente)
@@ -4048,9 +4054,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.migrations: ~16 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.migrations: ~18 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -4068,7 +4074,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(13, '2021_03_01_071533_create_periodos_table', 1),
 	(14, '2021_03_02_132002_add_claps_table', 1),
 	(15, '2021_03_07_105526_create_lideres_table', 1),
-	(16, '2021_03_07_110030_create_censo_table', 1);
+	(16, '2021_03_07_110030_create_censo_table', 1),
+	(17, '2021_03_07_132935_add_censo_table', 1),
+	(18, '2021_03_07_133124_add_lideres_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.municipios
@@ -4081,7 +4089,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.municipios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.municipios: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
 INSERT INTO `municipios` (`id`, `nombre_completo`, `nombre_corto`, `created_at`, `updated_at`) VALUES
 	(1, 'SAN JOSE DE GUARIBE', 'GUARIBE\r', NULL, NULL),
@@ -4112,7 +4120,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=355 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parametros: ~189 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `nombre`, `tabla_id`, `valor`, `created_at`, `updated_at`) VALUES
 	(1, 'familias_estadal', 0, '292146', '2020-12-14 23:57:25', '2021-02-26 07:05:48'),
@@ -4319,7 +4327,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parroquias: ~39 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
 INSERT INTO `parroquias` (`id`, `nombre_completo`, `nombre_corto`, `municipios_id`, `created_at`, `updated_at`) VALUES
 	(1, 'GUARIBE', NULL, 1, NULL, NULL),
@@ -4391,7 +4399,7 @@ CREATE TABLE IF NOT EXISTS `periodos` (
   CONSTRAINT `periodos_parametros_id_foreign` FOREIGN KEY (`parametros_id`) REFERENCES `parametros` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.periodos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.periodos: ~40 rows (aproximadamente)
 /*!40000 ALTER TABLE `periodos` DISABLE KEYS */;
 INSERT INTO `periodos` (`id`, `parametros_id`, `municipios_id`, `fecha_atencion`, `tipo_entrega`, `created_at`, `updated_at`) VALUES
 	(1, 37, 6, '2020-12-19', 'completa', '2021-03-03 00:07:38', '2021-03-03 00:07:38'),
@@ -4498,7 +4506,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.users: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.users: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `role`, `status`, `permisos`, `plataforma`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'Yonathan Castillo ', 'leothan522@gmail.com', NULL, '$2y$10$BFBHUYVouoUZ5pCXG8yZNOwHNjvDJfzkVKUBbzNbXNsRqL7T8GXBW', '04243386600', NULL, 'ozgKJVMgMlwEEGNnxpkeRg4MIhRUaslSY1Amn0OpZr6WhBhVsVpR9lYuACDh', NULL, NULL, 100, 1, NULL, '0', NULL, '2020-11-25 00:39:46', '2020-12-10 12:34:43'),
