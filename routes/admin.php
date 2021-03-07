@@ -31,7 +31,10 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::get('/claps/importar/{id}/por-revision/exportar', 'Admin\ClapsController@exportImportClaps')->name('claps.get_revision_export');
     Route::get('/claps/exportar/', 'Admin\ClapsController@exportClaps')->name('claps.export');
     Route::get('/claps/borrar-municipio/{id}', 'Admin\ClapsController@borrarMunicipio')->name('claps.borrar');
+    Route::get('/claps/ver/lideres/{id}', 'Admin\ClapsController@verLideres')->name('claps.lideres');
+    Route::get('/claps/ver/censo/{id}', 'Admin\ClapsController@verCenso')->name('claps.censo');
+    Route::get('/claps/formato/excel', 'Admin\ClapsController@formatoExcel')->name('claps.formato');
     Route::resource('claps', 'Admin\ClapsController');
-    Route::resource('/periodos', 'Admin\PeriodosController');
+    Route::resource('periodos', 'Admin\PeriodosController');
 
 });

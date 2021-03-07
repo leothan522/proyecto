@@ -414,7 +414,6 @@
                                                         </div>
                                                         <div class="modal-body">
 
-
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <!-- Default box -->
@@ -507,6 +506,12 @@
                                                                                 </div>
 
                                                                             </div>
+                                                                            <div class="row col-md-12 justify-content-end">
+                                                                                <div class="float-right">
+                                                                                    <a href="{{ route('claps.lideres', $clap->id) }}"class="btn btn-sm btn-info"><i class="fa fa-users"></i> Lideres de calle</a>
+                                                                                    <a href="{{ route('claps.censo', $clap->id) }}"class="btn btn-sm btn-info"><i class="fa fa-users"></i> Censo</a>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <!-- /.card-body -->
                                                                     </div>
@@ -515,11 +520,17 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <!-- Default box -->
-                                                                    <div class="card card-navy">
+                                                                    <div class="card card-navy collapsed-card">
                                                                         <div class="card-header">
                                                                             <h3 class="card-title">Jefe de Comunidad</h3>
+
+                                                                            <div class="card-tools">
+                                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!-- /.card-tools -->
                                                                         </div>
+                                                                        <!-- /.card-header -->
                                                                         <div class="card-body fondo">
                                                                             <div class="row">
                                                                                 <div class="col-md-3">
@@ -636,11 +647,72 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <!-- Default box -->
-                                                                    <div class="card card-navy">
+                                                                    <div class="card card-navy collapsed-card">
+                                                                        <div class="card-header">
+                                                                            <h3 class="card-title">Datos de Producción</h3>
+
+                                                                            <div class="card-tools">
+                                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!-- /.card-tools -->
+                                                                        </div>
+                                                                        <!-- /.card-header -->
+                                                                        <div class="card-body fondo">
+                                                                            <div class="row">
+
+                                                                                <div class="col-md-6">
+                                                                                    <label for="name">CLAP Productivo</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fa fa-product-hunt"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->productivo }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="name">Tipo de Producción</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fa fa-cogs"></i></span>
+                                                                                        </div>
+                                                                                        <span class="form-control">{{ $clap->tipo_produccion }}</span>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="row">
+
+                                                                                <div class="col-md-12">
+                                                                                    <label for="name">Detalles de Producción</label>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <textarea name="detalles_produccion" cols="30" rows="4" class="form-control" readonly>
+                                                                                            {{ strtoupper($clap->detalles_produccion) }}
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
+                                                                    </div>
+                                                                    <!-- /.card -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="card card-navy collapsed-card">
                                                                         <div class="card-header">
                                                                             <h3 class="card-title">Geolocalización</h3>
+
+                                                                            <div class="card-tools">
+                                                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!-- /.card-tools -->
                                                                         </div>
+                                                                        <!-- /.card-header -->
                                                                         <div class="card-body fondo">
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
@@ -687,6 +759,7 @@
                                                                     <!-- /.card -->
                                                                 </div>
                                                             </div>
+                                                            <br>
                                                             <div class="row">
                                                                 <div class="col-md-12 text-right">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

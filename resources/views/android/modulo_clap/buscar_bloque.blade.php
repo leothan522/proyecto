@@ -271,7 +271,9 @@
                                                                     <div class="col-md-12">
                                                                         <label for="name">Detalles de Producción</label>
                                                                         <div class="input-group mb-3">
-                                                                            <p class="form-control">{{ strtoupper(trim($clap->detalles_produccion)) }}</p>
+                                                                            <textarea name="detalles_produccion" cols="30" rows="4" class="form-control" readonly>
+                                                                                {{ strtoupper(trim($clap->detalles_produccion)) }}
+                                                                            </textarea>
                                                                         </div>
                                                                     </div>
 

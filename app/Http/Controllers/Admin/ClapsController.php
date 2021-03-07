@@ -719,5 +719,25 @@ class ClapsController extends Controller
         return back();
     }
 
+    public function formatoExcel()
+    {
+        $url  = public_path()."/files/FORMATO_APP.xlsx";
+        return response()->download($url);
+    }
+
+    public function verLideres($id)
+    {
+        $clap = Clap::find($id);
+        return view('admin.claps.ver_lideres')
+            ->with('clap', $clap);
+    }
+
+    public function verCenso($id)
+    {
+        $clap = Clap::find($id);
+        return view('admin.claps.ver_censo')
+            ->with('clap', $clap);
+    }
+
 
 }
