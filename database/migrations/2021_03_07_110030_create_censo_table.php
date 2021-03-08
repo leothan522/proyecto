@@ -18,8 +18,8 @@ class CreateCensoTable extends Migration
             $table->integer('num_familia');
             $table->string('miembro_familia');
             $table->string('nombre_completo');
-            $table->string('tipo_ci');
-            $table->string('cedula');
+            $table->string('tipo_ci')->nullable();
+            $table->string('cedula')->nullable();
             $table->string('telefono_1')->nullable();
             $table->string('telefono_2')->nullable();
             $table->string('estructura_clap')->nullable();

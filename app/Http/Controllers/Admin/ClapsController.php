@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ImportClapsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClapsRequest;
+use App\Imports\CensoImport;
+use App\Imports\ClapsCensoImport;
 use App\Imports\ClapsImport;
+use App\Imports\LideresImport;
+use App\Models\Censo;
 use App\Models\Clap;
 use App\Models\ImportClap;
+use App\Models\Lider;
 use App\Models\Municipio;
 use App\Models\Parametro;
 use App\Models\Parroquia;
@@ -728,15 +733,50 @@ class ClapsController extends Controller
     public function verLideres($id)
     {
         $clap = Clap::find($id);
+        $lideres = Lider::where('claps_id', $clap->id)->get();
         return view('admin.claps.ver_lideres')
-            ->with('clap', $clap);
+            ->with('clap', $clap)
+            ->with('lideres', $lideres);
     }
 
     public function verCenso($id)
     {
         $clap = Clap::find($id);
+        $censo = Censo::where('claps_id', $clap->id)->get();
         return view('admin.claps.ver_censo')
-            ->with('clap', $clap);
+            ->with('clap', $clap)
+            ->with('censos', $censo);
+    }
+
+    public function importCenso(Request $request, $id)
+    {
+        $parametros = new Parametro();
+        $parametros->nombre = "import_censo";
+        $parametros->valor = Auth::user()->id;
+        $parametros->save();
+
+        Excel::import(new ClapsCensoImport($id, $parametros->id), $request->file('excel'));
+
+        $validar = Lider::where('import_id', $parametros->id)->count();
+        if ($validar){
+            $message = "Data importada correctamente.";
+            verSweetAlert2($message);
+            return redirect()->route('claps.lideres', $id);
+        }else{
+            $validar = Censo::where('import_id', $parametros->id)->count();
+            if ($validar){
+                $message = "Data importada correctamente.";
+                verSweetAlert2($message);
+                return redirect()->route('claps.censo', $id);
+            }else{
+                $parametros->delete();
+                $title = "¡Error!";
+                $message = "El archivo que intentas subir no cumple con el formato establecido para la carga de los CLAPS";
+                verSweetAlert2($message, 'iconHtml', 'error', '<i class="fa fa-ban"></i>', $title);
+                return back();
+            }
+        }
+
     }
 
 

@@ -19,6 +19,7 @@
 @section('script')
     <!-- Select2 -->
     <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/importar_claps.js') }}"></script>
     <script>
         $(function () {
             //Initialize Select2 Elements
@@ -74,16 +75,31 @@
                         <table class="table table-hover bg-light table-responsive">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" class="text-center">#</th>
-                                <th scope="col" class="text-center">Nombre CLAPS</th>
-                                <th scope="col" class="text-center">Municipios</th>
-                                <th scope="col" class="text-center">Parroquias</th>
-                                <th scope="col" class="text-center">Bloques</th>
-                                <th scope="col" style="width: 5%;"></th>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cedula</th>
                                 <th scope="col" style="width: 5%;"></th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach ($lideres as $lider)
+                                <tr>
+                                    <td>{{ $lider->id }}</td>
+                                    <td>{{ $lider->nombre_completo }}</td>
+                                    <td>{{ $lider->tipo_ci }} {{ $lider->cedula }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <input type="hidden" name="delete" value="{{ false }}">
+                                            <input type="hidden" name="todo" value="{{ false }}">
+                                            <input type="hidden" name="id_clap" value="{{ $lider->id }}">
+                                            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $lider->id }}"><i class="fas fa-eye"></i></a>
+                                            <button type="submit" class="btn btn-info">
+                                                <i class="fas fa-save"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             {{--@foreach ($imports as $import)
                                 <tr>
                                     {!! Form::open(['route' => ['claps.post_revision', $parametro->id], 'method' => 'post']) !!}
@@ -281,7 +297,7 @@
                     </div>
                     <div class="card-body">
 
-                        {!! Form::open(['route' => 'claps.post_import', 'method' => 'post', 'files' => true, 'id' => 'form_importar']) !!}
+                        {!! Form::open(['route' => ['claps.censo_import', $clap->id], 'method' => 'post', 'files' => true, 'id' => 'form_importar']) !!}
 
                         <div class="form-group">
                             <label for="name">Subir Archivo</label>

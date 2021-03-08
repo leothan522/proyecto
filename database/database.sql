@@ -13,8 +13,8 @@
 
 
 -- Volcando estructura de base de datos para alguarisa
-CREATE DATABASE IF NOT EXISTS `admin_alguarisa` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
-USE `admin_alguarisa`;
+CREATE DATABASE IF NOT EXISTS `alguarisa` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+USE `alguarisa`;
 
 -- Volcando estructura para tabla alguarisa.censo
 CREATE TABLE IF NOT EXISTS `censo` (
@@ -23,14 +23,17 @@ CREATE TABLE IF NOT EXISTS `censo` (
   `num_familia` int(11) NOT NULL,
   `miembro_familia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo_ci` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cedula` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_ci` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cedula` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telefono_1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telefono_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estructura_clap` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `direccion` text COLLATE utf8mb4_unicode_ci,
   `lideres_id` bigint(20) unsigned DEFAULT NULL,
+  `cdlp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `import_id` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -94,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   CONSTRAINT `claps_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3388 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.claps: ~3.368 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.claps: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `claps` DISABLE KEYS */;
 INSERT INTO `claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `productivo`, `tipo_produccion`, `detalles_produccion`, `num_familias`, `num_lideres`, `import_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'BANCO OBRERO', 'CLAP', 14, 36, 'BANCO OBRERO', 'CLAPS-GUA-121501-00004', 'CE00018200', 57, '20592185', 'ROSMALBY', 'ROSALIA', 'MARTINEZ', 'BARRIOS', 'VENEZOLANA', 'F', '1991-11-05', 'AMA DE CASA', 'OBRERA', '04142962649', NULL, 'rosmalbymartinez1991@gmail.com', 'ACTIVO', 'C MERIDA SECTOR BANCO OBRERO', '8°48\'54.3"N', '65°19\'29.9"W', NULL, NULL, 'Si', 'VEGETAL', 'frijol, yuca, aji', 622, 12, 314, NULL, '2021-03-02 22:50:06', '2021-03-02 22:50:06'),
@@ -4054,9 +4057,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.migrations: ~18 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.migrations: ~19 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -4076,7 +4079,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(15, '2021_03_07_105526_create_lideres_table', 1),
 	(16, '2021_03_07_110030_create_censo_table', 1),
 	(17, '2021_03_07_132935_add_censo_table', 1),
-	(18, '2021_03_07_133124_add_lideres_table', 1);
+	(18, '2021_03_07_133124_add_lideres_table', 1),
+	(19, '2021_03_07_211609_add_new_censo_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.municipios
@@ -4477,10 +4481,11 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.sessions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.sessions: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('OX8uxFVYL3c54PD7Ay9A0jSPvjrgKKGJY8bhxD25', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTks3RTZDZ0RBYmo4bGdNcE03UW9JQjY0cDk1dXlNTXBKNXV3Y2tLUCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2FkbWluL2NsYXBzL2RhdG9zLWNhcmdhZG9zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJEJGQkhVWVZvdW9VWjVwQ1hHOHlaTk93SE5qdkRKZnprVktVQmJ6TmJYTnNScUw3VDhHWEJXIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRCRkJIVVlWb3VvVVo1cENYRzh5Wk5Pd0hOanZESmZ6a1ZLVUJiek5iWE5zUnFMN1Q4R1hCVyI7fQ==', 1615130293);
+	('OX8uxFVYL3c54PD7Ay9A0jSPvjrgKKGJY8bhxD25', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTks3RTZDZ0RBYmo4bGdNcE03UW9JQjY0cDk1dXlNTXBKNXV3Y2tLUCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2FkbWluL2NsYXBzL2RhdG9zLWNhcmdhZG9zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJEJGQkhVWVZvdW9VWjVwQ1hHOHlaTk93SE5qdkRKZnprVktVQmJ6TmJYTnNScUw3VDhHWEJXIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRCRkJIVVlWb3VvVVo1cENYRzh5Wk5Pd0hOanZESmZ6a1ZLVUJiek5iWE5zUnFMN1Q4R1hCVyI7fQ==', 1615130293),
+	('T4MOQuxNeeqtuLHkC9Jo3mQMeWI9jMjp6yc1wRMM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiR01haUpwREs0RE1FbWwweHJ6eGtUd085QTVJQjhSWDZDTkd2c2tPaCI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRCRkJIVVlWb3VvVVo1cENYRzh5Wk5Pd0hOanZESmZ6a1ZLVUJiek5iWE5zUnFMN1Q4R1hCVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1615140057);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.users
@@ -4506,10 +4511,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.users: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.users: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `role`, `status`, `permisos`, `plataforma`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 'Yonathan Castillo ', 'leothan522@gmail.com', NULL, '$2y$10$BFBHUYVouoUZ5pCXG8yZNOwHNjvDJfzkVKUBbzNbXNsRqL7T8GXBW', '04243386600', NULL, 'ozgKJVMgMlwEEGNnxpkeRg4MIhRUaslSY1Amn0OpZr6WhBhVsVpR9lYuACDh', NULL, NULL, 100, 1, NULL, '0', NULL, '2020-11-25 00:39:46', '2020-12-10 12:34:43'),
+	(1, 'Yonathan Castillo ', 'leothan522@gmail.com', NULL, '$2y$10$BFBHUYVouoUZ5pCXG8yZNOwHNjvDJfzkVKUBbzNbXNsRqL7T8GXBW', '04243386600', NULL, 'mZOIrxcr8558pEhZ7FHj2jvfz6wnZ1Z9hLDNXTwFWjHG6tyziTCSEhxsxxI0', NULL, NULL, 100, 1, NULL, '0', NULL, '2020-11-25 00:39:46', '2020-12-10 12:34:43'),
 	(3, 'Cesar Gamboa', 'planificacion.fundamercado@gmail.com', NULL, '$2y$10$UMtmFdfxRsFdn2376nyXDeTvxpJyBHgJN5q8IAt82ea78yqipDLpy', '04165433446', '19', 'J8Mj69p8LT6La39EDUPw999oEHo2WgC7DGxIo4MbTlAjJP2UpPLQtRf6fs2D', NULL, NULL, 1, 1, '{"admin.dashboard":null,"usuarios.index":"true","usuarios.store":null,"usuarios.status":"true","usuarios.editar":null,"usuarios.clave":"true","usuarios.edit":null,"municipios.index":"true","municipios.store":null,"municipios.update":"true","municipios.destroy":null,"parroquias.index":"true","parroquias.store":null,"parroquias.update":"true","parroquias.destroy":null,"familias.index":"true","familias.store":"true","familias.update":"true","familias.destroy":"true","bloques.index":"true","bloques.store":"true","bloques.destroy":"true","bloques.consultar":"true","bloques.update":"true","gestionar_claps":"true","claps.index":"true","claps.show":"true","claps.create":"true","claps.store":"true","claps.edit":"true","claps.update":"true","claps.destroy":"true","claps.export":"true","claps.get_import":"true","claps.post_import":"true","claps.get_revision":"true","claps.post_revision":"true","claps.get_revision_export":"true","claps.borrar":"true","periodos.index":"true","periodos.store":"true","periodos.update":"true","periodos.destroy":"true","periodos.show":"true","configuracion":"true","usuarios.show":"true","usuarios.update":"true","parametros":"true","gestionar_bloques":"true"}', '0', NULL, '2020-12-04 06:58:41', '2021-03-03 22:05:44'),
 	(4, 'Jhonathan Duarte', 'jhonthan.duarte@gmail.com', NULL, '$2y$10$KoEVHv7M8dqoyI6ZIAQthu4fpwOoQfPFTmMVsJyVHnikYRoxT072W', '+584243333978', NULL, 'YgZMZribdOhEI975TVnWOUC2rPkRUQxiuQDWd0Xdxwu1l8YdGb9eI3gIAhOU', NULL, NULL, 1, 1, '{"admin.dashboard":null,"usuarios.index":null,"usuarios.store":null,"usuarios.status":null,"usuarios.editar":null,"usuarios.clave":null,"usuarios.edit":null,"municipios.index":"true","municipios.store":null,"municipios.update":"true","municipios.destroy":null,"parroquias.index":"true","parroquias.store":null,"parroquias.update":"true","parroquias.destroy":null,"familias.index":"true","familias.store":"true","familias.update":"true","familias.destroy":"true","bloques.index":"true","bloques.store":"true","bloques.destroy":"true","bloques.consultar":"true","bloques.update":"true","gestionar_claps":"true","claps.index":"true","claps.show":"true","claps.create":"true","claps.store":"true","claps.edit":"true","claps.update":"true","claps.destroy":"true","claps.export":"true","claps.get_import":"true","claps.post_import":"true","claps.get_revision":"true","claps.post_revision":"true","claps.get_revision_export":"true","claps.borrar":"true","periodos.index":"true","periodos.store":"true","periodos.update":"true","periodos.destroy":"true","periodos.show":"true","configuracion":null,"usuarios.show":null,"usuarios.update":null,"parametros":"true","gestionar_bloques":"true"}', '0', NULL, '2021-01-06 00:10:39', '2021-03-04 16:59:17'),
 	(5, 'Sheila Ascanio', 'ascaniolinda17@gmail.com', NULL, '$2y$10$cuFJ8jFFSbTi0srlqpSDne0M2GEfWVI/Q6Rsx2GCrTzDPMmJUpTKG', '04243386600', '45', NULL, NULL, NULL, 0, 0, NULL, '1', NULL, '2021-02-09 20:43:43', '2021-03-03 23:24:23'),

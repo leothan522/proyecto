@@ -62,4 +62,14 @@ class Clap extends Model
         return $this->belongsTo(Parametro::class, 'bloques_id', 'id');
     }
 
+    public function lideres()
+    {
+        return $this->hasMany(Lider::class, 'claps_id', 'id');
+    }
+
+    public function censo()
+    {
+        return $this->hasMany(Censo::class, 'claps_id', 'id');
+    }
+
 }
