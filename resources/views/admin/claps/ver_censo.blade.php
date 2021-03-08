@@ -76,27 +76,52 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
+                                <th scope="col">Miembro de Familia</th>
+                                <th scope="col">Nombres y Apellidos</th>
                                 <th scope="col">Cedula</th>
-                                <th scope="col" style="width: 5%;"></th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col" style="width: 5%;">&emsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($censos as $censo)
+                                @php($i++)
                                 <tr>
-                                    <td>{{ $censo->id }}</td>
+                                    <td>{{ $i }}</td>
+                                    <td>{{ $censo->miembro_familia }}</td>
                                     <td>{{ $censo->nombre_completo }}</td>
                                     <td>{{ $censo->tipo_ci }} {{ $censo->cedula }}</td>
+                                    <td>{{ $censo->telefono_1 }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <input type="hidden" name="delete" value="{{ false }}">
-                                            <input type="hidden" name="todo" value="{{ false }}">
-                                            <input type="hidden" name="id_clap" value="{{ $censo->id }}">
-                                            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $censo->id }}"><i class="fas fa-eye"></i></a>
-                                            <button type="submit" class="btn btn-info">
-                                                <i class="fas fa-save"></i>
+                                            {{--<a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $censo->id }}"><i class="fas fa-eye"></i></a>--}}
+                                            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-censo{{ $censo->id }}">
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                         </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal-censo{{ $censo->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Titulo Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        hola
+                                                        <div class="row justify-content-end mt-3">
+                                                            <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Modal -->
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -331,7 +356,55 @@
 
                     </div>
                 </div>
+
+                <div class="card-body">
+
+                    <p class="text-center">
+                        <strong>Datos Cargados</strong>
+                    </p>
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <span class="progress-text">N° Lideres de Calle</span>
+                        <span class="float-right"><b>{{ formatoMillares($lideres, 0) }}</b>/{{ formatoMillares($clap->num_lideres, 0) }}</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($lideres, $clap->num_lideres)) }}"
+                                 style="width: {{ obtenerPorcentaje($lideres, $clap->num_lideres) }}%">
+                                {{ obtenerPorcentaje($lideres, $clap->num_lideres) }}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <span class="progress-text">N° Familias</span>
+                        <span class="float-right"><b>{{ formatoMillares($familias, 0) }}</b>/{{ formatoMillares($clap->num_familias, 0) }}</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($familias, $clap->num_familias)) }}"
+                                 style="width: {{ obtenerPorcentaje($familias, $clap->num_familias) }}%">
+                                {{ obtenerPorcentaje($familias, $clap->num_familias) }}%
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.progress-group -->
+                </div>
+
+                @if($lideres && $familias)
+                    <div class="row col-md-12 justify-content-center">
+                        {!! Form::open(['route' => ['claps.censo_delete', $clap->id], 'method' => 'Post', 'id' => 'form_delete_todo']) !!}
+                        <div class="">
+                            <input type="hidden" name="delete" value="{{ true }}">
+                            <input type="hidden" name="todo" value="{{ true }}">
+                            <input type="hidden" name="id_clap" value="{{ $clap->id }}">
+                            <button type="button" onclick="alertaBorrar('form_delete_todo')" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Borrar todo
+                            </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                @endif
+
             </div>
+
         </div>
         <div class="row justify-content-end p-3">
             <div class="col-md-3">

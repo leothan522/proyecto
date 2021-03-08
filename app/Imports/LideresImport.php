@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Clap;
 use App\Models\Lider;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -13,6 +14,9 @@ class LideresImport implements WithMappedCells, ToModel
     {
         $this->id_clap = $id_clap;
         $this->id_import = $id_import;
+        $clap = Clap::find($id_clap);
+        $this->id_municipio = $clap->municipios_id;
+        $this->id_parroquia = $clap->parroquias_id;
     }
 
     public function mapping(): array
@@ -40,6 +44,8 @@ class LideresImport implements WithMappedCells, ToModel
                     $lider->tipo_ci = strtoupper(trim($row['tipo_ci_' . $i]));
                     $lider->cedula = strtoupper(trim($row['cedula_' . $i]));
                     $lider->import_id = $this->id_import;
+                    $lider->municipios_id = $this->id_municipio;
+                    $lider->parroquias_id = $this->id_parroquia;
                     $lider->save();
                 }else{
                     $lider = null;

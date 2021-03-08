@@ -10,7 +10,7 @@ class Censo extends Model
     use HasFactory;
     protected $table = "censo";
     protected $fillable = ['claps_id', 'num_familia', 'miembro_familia', 'nombre_completo', 'tipo_ci', 'cedula', 'telefono_1',
-        'telefono_2', 'estructura_clap', 'email', 'direccion', 'lideres_id'];
+        'telefono_2', 'estructura_clap', 'email', 'direccion', 'lideres_id', 'cdlp', 'observaciones', 'municipios_id', 'parroquias_id'];
 
     public function claps()
     {

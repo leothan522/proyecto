@@ -33,14 +33,20 @@ CREATE TABLE IF NOT EXISTS `censo` (
   `lideres_id` bigint(20) unsigned DEFAULT NULL,
   `cdlp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `municipios_id` bigint(20) unsigned DEFAULT NULL,
+  `parroquias_id` bigint(20) unsigned DEFAULT NULL,
   `import_id` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `censo_lideres_id_foreign` (`lideres_id`),
   KEY `censo_claps_id_foreign` (`claps_id`),
+  KEY `censo_municipios_id_foreign` (`municipios_id`),
+  KEY `censo_parroquias_id_foreign` (`parroquias_id`),
   CONSTRAINT `censo_claps_id_foreign` FOREIGN KEY (`claps_id`) REFERENCES `claps` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `censo_lideres_id_foreign` FOREIGN KEY (`lideres_id`) REFERENCES `lideres` (`id`) ON DELETE SET NULL
+  CONSTRAINT `censo_lideres_id_foreign` FOREIGN KEY (`lideres_id`) REFERENCES `lideres` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `censo_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `censo_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla alguarisa.censo: ~0 rows (aproximadamente)
@@ -97,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   CONSTRAINT `claps_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3388 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.claps: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.claps: ~3.379 rows (aproximadamente)
 /*!40000 ALTER TABLE `claps` DISABLE KEYS */;
 INSERT INTO `claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `productivo`, `tipo_produccion`, `detalles_produccion`, `num_familias`, `num_lideres`, `import_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'BANCO OBRERO', 'CLAP', 14, 36, 'BANCO OBRERO', 'CLAPS-GUA-121501-00004', 'CE00018200', 57, '20592185', 'ROSMALBY', 'ROSALIA', 'MARTINEZ', 'BARRIOS', 'VENEZOLANA', 'F', '1991-11-05', 'AMA DE CASA', 'OBRERA', '04142962649', NULL, 'rosmalbymartinez1991@gmail.com', 'ACTIVO', 'C MERIDA SECTOR BANCO OBRERO', '8°48\'54.3"N', '65°19\'29.9"W', NULL, NULL, 'Si', 'VEGETAL', 'frijol, yuca, aji', 622, 12, 314, NULL, '2021-03-02 22:50:06', '2021-03-02 22:50:06'),
@@ -4040,11 +4046,17 @@ CREATE TABLE IF NOT EXISTS `lideres` (
   `tipo_ci` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cedula` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `import_id` bigint(20) DEFAULT NULL,
+  `municipios_id` bigint(20) unsigned DEFAULT NULL,
+  `parroquias_id` bigint(20) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `lideres_claps_id_foreign` (`claps_id`),
-  CONSTRAINT `lideres_claps_id_foreign` FOREIGN KEY (`claps_id`) REFERENCES `claps` (`id`) ON DELETE CASCADE
+  KEY `lideres_municipios_id_foreign` (`municipios_id`),
+  KEY `lideres_parroquias_id_foreign` (`parroquias_id`),
+  CONSTRAINT `lideres_claps_id_foreign` FOREIGN KEY (`claps_id`) REFERENCES `claps` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `lideres_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `lideres_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla alguarisa.lideres: ~0 rows (aproximadamente)
@@ -4057,9 +4069,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.migrations: ~19 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.migrations: ~21 rows (aproximadamente)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -4080,7 +4092,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(16, '2021_03_07_110030_create_censo_table', 1),
 	(17, '2021_03_07_132935_add_censo_table', 1),
 	(18, '2021_03_07_133124_add_lideres_table', 1),
-	(19, '2021_03_07_211609_add_new_censo_table', 1);
+	(19, '2021_03_07_211609_add_new_censo_table', 1),
+	(20, '2021_03_08_135621_add_other_censo_table', 1),
+	(21, '2021_03_08_135755_add_other_lideres_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.municipios
@@ -4511,7 +4525,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.users: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.users: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `role`, `status`, `permisos`, `plataforma`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'Yonathan Castillo ', 'leothan522@gmail.com', NULL, '$2y$10$BFBHUYVouoUZ5pCXG8yZNOwHNjvDJfzkVKUBbzNbXNsRqL7T8GXBW', '04243386600', NULL, 'mZOIrxcr8558pEhZ7FHj2jvfz6wnZ1Z9hLDNXTwFWjHG6tyziTCSEhxsxxI0', NULL, NULL, 100, 1, NULL, '0', NULL, '2020-11-25 00:39:46', '2020-12-10 12:34:43'),

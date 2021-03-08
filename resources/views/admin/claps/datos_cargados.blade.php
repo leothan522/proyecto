@@ -85,13 +85,41 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">N° Lideres de Calle</span>
+                                <span class="float-right"><b>{{ formatoMillares($lid_cargados, 0) }}</b>/{{ formatoMillares($total_lideres, 0) }}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar {{ colorBarra(obtenerPorcentaje($lid_cargados, $total_lideres)) }}"
+                                         style="width: {{ obtenerPorcentaje($lid_cargados, $total_lideres) }}%">
+                                        {{ obtenerPorcentaje($lid_cargados, $total_lideres) }}%
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">N° Familias</span>
+                                <span class="float-right"><b>{{ formatoMillares($fam_cargados, 0) }}</b>/{{ formatoMillares($total_familias, 0) }}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar {{ colorBarra(obtenerPorcentaje($fam_cargados, $total_familias)) }}"
+                                         style="width: {{ obtenerPorcentaje($fam_cargados, $total_familias) }}%">
+                                        {{ obtenerPorcentaje($fam_cargados, $total_familias) }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+
+
                         </div>
                     </div>
 
                 </div>
                 <!-- /.info-box -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="col-12 col-sm-6 col-md-12">
                     <div class="col-md-12">
                         <div class="card-body">
@@ -104,10 +132,10 @@
                                     @if ($municipio->claps && (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100))
                                         <a href="{{ route('claps.export', ['municipios_id' => $municipio->id, 'parroquias_id' => null,
                                           'bloques_id' => null, 'nombre_clap' => null, 'codigo_sica' => null, 'cedula_lider' => null, 'buscar' => true, 'datos_cargados' => true]) }}"
-                                           class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipio->nombre_completo }}</a>
+                                           class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipio->nombre_corto }}</a>
                                         <button type="button" onclick="alertaBorrar(null, '{{ route('claps.borrar', $municipio->id) }}')" class="btn btn-link btn-xs text-danger text-sm"><i class="fas fa-trash-alt"></i></button>
                                         @else
-                                        <span class="text-muted">{{ $municipio->nombre_completo }}</span>
+                                        <span class="text-muted">{{ $municipio->nombre_corto }}</span>
                                     @endif
                                     <span class="float-right @if($municipio->claps && !$municipio->total_claps) text-danger @endif">
                                         @if($municipio->claps && !$municipio->total_claps) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif
@@ -117,6 +145,78 @@
                                             class="progress-bar {{ colorBarra(obtenerPorcentaje($municipio->claps, $municipio->total_claps)) }}"
                                             style="width: {{ obtenerPorcentaje($municipio->claps, $municipio->total_claps) }}%">
                                             {{ obtenerPorcentaje($municipio->claps, $municipio->total_claps) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-3">
+                <div class="col-12 col-sm-6 col-md-12">
+                    <div class="col-md-12">
+                        <div class="card-body">
+
+                            <p class="text-center">
+                                <strong>Municipios / Lideres de Calle</strong>
+                            </p>
+                            @foreach ($municipios as $municipio)
+                                <div class="progress-group">
+                                    @if (false /*$municipio->claps && (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)*/)
+                                        {{--<a href="#"
+                                           class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipio->nombre_corto }}</a>
+                                        <button type="button" onclick="alertaBorrar(null, '{{ route('claps.borrar', $municipio->id) }}')"
+                                        class="btn btn-link btn-xs text-danger text-sm"><i class="fas fa-trash-alt"></i></button>--}}
+                                    @else
+                                        <span class="text-muted">{{ $municipio->nombre_corto }}</span>
+                                    @endif
+                                    <span class="float-right @if($municipio->claps && !$municipio->total_claps) text-danger @endif">
+                                        {{--@if($municipio->claps && !$municipio->total_claps) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif--}}
+                                            <b>{{ formatoMillares($municipio->lid_cargados, 0) }}</b>/{{ formatoMillares($municipio->lideres, 0) }}</span>
+                                    <div class="progress progress-sm">
+                                        <div
+                                            class="progress-bar {{ colorBarra(obtenerPorcentaje($municipio->lid_cargados, $municipio->lideres)) }}"
+                                            style="width: {{ obtenerPorcentaje($municipio->lid_cargados, $municipio->lideres) }}%">
+                                            {{ obtenerPorcentaje($municipio->lid_cargados, $municipio->lideres) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <div class="col-md-3">
+                <div class="col-12 col-sm-6 col-md-12">
+                    <div class="col-md-12">
+                        <div class="card-body">
+
+                            <p class="text-center">
+                                <strong>Municipios / Familias</strong>
+                            </p>
+                            @foreach ($municipios as $municipio)
+                                <div class="progress-group">
+                                    @if (false /*$municipio->claps && (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)*/)
+                                        {{--<a href="#"
+                                           class="text-muted"><i class="fas fa-cloud-download-alt text-sm"></i> {{ $municipio->nombre_corto }}</a>
+                                        <button type="button" onclick="alertaBorrar(null, '{{ route('claps.borrar', $municipio->id) }}')"
+                                        class="btn btn-link btn-xs text-danger text-sm"><i class="fas fa-trash-alt"></i></button>--}}
+                                    @else
+                                        <span class="text-muted">{{ $municipio->nombre_corto }}</span>
+                                    @endif
+                                    <span class="float-right @if($municipio->claps && !$municipio->total_claps) text-danger @endif">
+                                        {{--@if($municipio->claps && !$municipio->total_claps) <a href="{{ route('familias.index') }}" class="text-xs text-danger">(Error)</a> @endif--}}
+                                            <b>{{ formatoMillares($municipio->fam_cargados, 0) }}</b>/{{ formatoMillares($municipio->familias, 0) }}</span>
+                                    <div class="progress progress-sm">
+                                        <div
+                                            class="progress-bar {{ colorBarra(obtenerPorcentaje($municipio->fam_cargados, $municipio->familias)) }}"
+                                            style="width: {{ obtenerPorcentaje($municipio->fam_cargados, $municipio->familias) }}%">
+                                            {{ obtenerPorcentaje($municipio->fam_cargados, $municipio->familias) }}%
                                         </div>
                                     </div>
                                 </div>

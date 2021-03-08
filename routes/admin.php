@@ -34,6 +34,7 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::get('/claps/ver/lideres/{id}', 'Admin\ClapsController@verLideres')->name('claps.lideres');
     Route::get('/claps/ver/censo/{id}', 'Admin\ClapsController@verCenso')->name('claps.censo');
     Route::post('/claps/ver/censo/{id}/importar', 'Admin\ClapsController@importCenso')->name('claps.censo_import');
+    Route::post('/claps/ver/censo/{id}/delete', 'Admin\ClapsController@deleteCenso')->name('claps.censo_delete');
     Route::get('/claps/formato/excel', 'Admin\ClapsController@formatoExcel')->name('claps.formato');
     Route::resource('claps', 'Admin\ClapsController');
     Route::resource('periodos', 'Admin\PeriodosController');

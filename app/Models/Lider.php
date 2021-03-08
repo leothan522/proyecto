@@ -9,7 +9,7 @@ class Lider extends Model
 {
     use HasFactory;
     protected $table = "lideres";
-    protected $fillable = ['claps_id', 'nombre_completo', 'tipo_ci', 'cedula', 'import_id'];
+    protected $fillable = ['claps_id', 'nombre_completo', 'tipo_ci', 'cedula', 'import_id', 'municipios_id', 'parroquias_id'];
 
     public function claps()
     {

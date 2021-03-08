@@ -51,7 +51,86 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            CLAP: <span class="text-bold">{{ $clap->nombre_clap }}</span>
+                        </h3>
+
+                        <div class="card-tools">
+                            <span class="btn btn-tool text-bold text-danger">Estructura CLAP</span>
+                            {{--<a href="#" id="btn_exportar" class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
+                            --}}{{--<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i></button>--}}
+                            {{--<span class="float-right text-muted text-xs">
+                                {{ fecha($parametro->created_at, 'd-m-Y h:i a') }} /
+                                <i class="fa fa-user"></i> {{ $parametro->usuarios->name }}</span>--}}
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-hover bg-light table-responsive">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col" style="width: 5%;">&emsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($estructura as $lider)
+                                <tr>
+                                    <td>{{ $lider->estructura_clap }}</td>
+                                    <td>{{ $lider->nombre_completo }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            {{--<a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $lider->id }}"><i class="fas fa-eye"></i></a>
+                                            --}}<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-estructura-{{ $lider->id }}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+
+
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal-estructura-{{ $lider->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Titulo Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        hola
+                                                        <div class="row justify-content-end mt-3">
+                                                            <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Modal -->
+
+
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <div class="col-md-5">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -78,25 +157,50 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Cedula</th>
-                                <th scope="col" style="width: 5%;"></th>
+                                <th scope="col" style="width: 5%;">&emsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($lideres as $lider)
+                                @php($i++)
                                 <tr>
-                                    <td>{{ $lider->id }}</td>
+                                    <td>{{ $i }}</td>
                                     <td>{{ $lider->nombre_completo }}</td>
                                     <td>{{ $lider->tipo_ci }} {{ $lider->cedula }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <input type="hidden" name="delete" value="{{ false }}">
-                                            <input type="hidden" name="todo" value="{{ false }}">
-                                            <input type="hidden" name="id_clap" value="{{ $lider->id }}">
-                                            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $lider->id }}"><i class="fas fa-eye"></i></a>
-                                            <button type="submit" class="btn btn-info">
-                                                <i class="fas fa-save"></i>
+                                            {{--<a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $lider->id }}"><i class="fas fa-eye"></i></a>--}}
+                                            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-lideres-{{ $lider->id }}">
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                         </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal-lideres-{{ $lider->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Titulo Modal</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        hola
+                                                        <div class="row justify-content-end mt-3">
+                                                            <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Modal -->
+
+
+
+
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -331,6 +435,52 @@
 
                     </div>
                 </div>
+                <div class="card-body">
+
+                    <p class="text-center">
+                        <strong>Datos Cargados</strong>
+                    </p>
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <span class="progress-text">N° Lideres de Calle</span>
+                        <span class="float-right"><b>{{ formatoMillares($lideres->count(), 0) }}</b>/{{ formatoMillares($clap->num_lideres, 0) }}</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($lideres->count(), $clap->num_lideres)) }}"
+                                 style="width: {{ obtenerPorcentaje($lideres->count(), $clap->num_lideres) }}%">
+                                {{ obtenerPorcentaje($lideres->count(), $clap->num_lideres) }}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <span class="progress-text">N° Familias</span>
+                        <span class="float-right"><b>{{ formatoMillares($familias, 0) }}</b>/{{ formatoMillares($clap->num_familias, 0) }}</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar {{ colorBarra(obtenerPorcentaje($familias, $clap->num_familias)) }}"
+                                 style="width: {{ obtenerPorcentaje($familias, $clap->num_familias) }}%">
+                                {{ obtenerPorcentaje($familias, $clap->num_familias) }}%
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.progress-group -->
+                </div>
+
+                @if($lideres && $familias)
+                <div class="row col-md-12 justify-content-center">
+                    {!! Form::open(['route' => ['claps.censo_delete', $clap->id], 'method' => 'Post', 'id' => 'form_delete_todo']) !!}
+                    <div class="">
+                        <input type="hidden" name="delete" value="{{ true }}">
+                        <input type="hidden" name="todo" value="{{ true }}">
+                        <input type="hidden" name="id_clap" value="{{ $clap->id }}">
+                        <button type="button" onclick="alertaBorrar('form_delete_todo')" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i> Borrar todo
+                        </button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                @endif
+
             </div>
         </div>
         <div class="row justify-content-end p-3">

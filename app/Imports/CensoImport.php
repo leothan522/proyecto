@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Censo;
+use App\Models\Clap;
 use App\Models\Lider;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -15,6 +16,9 @@ class CensoImport implements WithMappedCells, ToModel
         $this->id_clap = $id_clap;
         $this->id_import = $id_import;
         $this->i = 0;
+        $clap = Clap::find($id_clap);
+        $this->id_municipio = $clap->municipios_id;
+        $this->id_parroquia = $clap->parroquias_id;
     }
 
     public function mapping(): array
@@ -92,6 +96,8 @@ class CensoImport implements WithMappedCells, ToModel
                     $censo->cdlp = $row['cdlp' . $i];
                     $censo->observaciones = strtoupper($row['observaciones' . $i]);
                     $censo->import_id = $this->id_import;
+                    $censo->municipios_id = $this->id_municipio;
+                    $censo->parroquias_id = $this->id_parroquia;
                     $censo->save();
 
                 } else {

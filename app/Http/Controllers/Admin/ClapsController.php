@@ -306,10 +306,29 @@ class ClapsController extends Controller
             $total_claps = Clap::count();
             $estadal = Parametro::where('nombre', 'claps_estadal')->first();
             if ($estadal){ $claps_estadal = $estadal->valor; }
-            $municipios = Municipio::orderBy('nombre_completo', 'ASC')->get();
+
+            $estadal_lideres = Clap::sum('num_lideres');
+            $estadal_familias = Clap::sum('num_familias');
+            $estadal_lid_cargados = Lider::count();
+            $estadal_fam_cargados = Censo::where('miembro_familia', 'Jefe de Familia')->count();
+
+
+            $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
             $municipios->each(function ($municipio){
+
                 $claps = Clap::where('municipios_id', $municipio->id)->count();
                 $municipio->claps = $claps;
+
+                $lideres = Clap::where('municipios_id', $municipio->id)->sum('num_lideres');
+                $lid_cargados = Lider::where('municipios_id', $municipio->id)->count();
+                $municipio->lideres = $lideres;
+                $municipio->lid_cargados = $lid_cargados;
+
+                $familias = Clap::where('municipios_id', $municipio->id)->sum('num_familias');
+                $fam_cargados = Censo::where('municipios_id', $municipio->id)->where('miembro_familia', 'Jefe de Familia')->count();
+                $municipio->familias = $familias;
+                $municipio->fam_cargados = $fam_cargados;
+
                 $claps_municipal = Parametro::where('nombre', 'claps')->where('tabla_id', $municipio->id)->first();
                 if ($claps_municipal){
                     $municipio->total_claps = $claps_municipal->valor;
@@ -322,7 +341,11 @@ class ClapsController extends Controller
             return view('admin.claps.datos_cargados')
                 ->with('total_claps', $total_claps)
                 ->with('claps_estadal', $claps_estadal)
-                ->with('municipios', $municipios);
+                ->with('municipios', $municipios)
+                ->with('total_lideres', $estadal_lideres)
+                ->with('lid_cargados', $estadal_lid_cargados)
+                ->with('total_familias', $estadal_familias)
+                ->with('fam_cargados', $estadal_fam_cargados);
 
         }
     }
@@ -734,18 +757,28 @@ class ClapsController extends Controller
     {
         $clap = Clap::find($id);
         $lideres = Lider::where('claps_id', $clap->id)->get();
+        $estructura = Censo::where('claps_id', $id)->where('estructura_clap', '!=', null)->get();
+        $censo = Censo::where('claps_id', $clap->id)->where('miembro_familia', 'Jefe de Familia')->count();
+
         return view('admin.claps.ver_lideres')
             ->with('clap', $clap)
-            ->with('lideres', $lideres);
+            ->with('lideres', $lideres)
+            ->with('estructura', $estructura)
+            ->with('familias', $censo)
+            ->with('i', 0);
     }
 
     public function verCenso($id)
     {
         $clap = Clap::find($id);
-        $censo = Censo::where('claps_id', $clap->id)->get();
+        $lideres = Lider::where('claps_id', $clap->id)->count();
+        $censo = Censo::where('claps_id', $clap->id)->where('miembro_familia', 'Jefe de Familia')->get();
         return view('admin.claps.ver_censo')
             ->with('clap', $clap)
-            ->with('censos', $censo);
+            ->with('lideres', $lideres)
+            ->with('censos', $censo)
+            ->with('familias', $censo->count())
+            ->with('i', 0);
     }
 
     public function importCenso(Request $request, $id)
@@ -776,6 +809,24 @@ class ClapsController extends Controller
                 return back();
             }
         }
+
+    }
+
+    public function deleteCenso($id)
+    {
+        $clap = Clap::find($id);
+        $lideres = Lider::where('claps_id', $id)->get();
+        foreach ($lideres as $lider){
+            $lider->delete();
+        }
+
+        $censos = Censo::where('claps_id', $id)->get();
+        foreach ($censos as $censo){
+            $censo->delete();
+        }
+
+        verSweetAlert2("Borrado TODO del CLAPS: <strong class='text-danger'>$clap->nombre_clap</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
+        return back();
 
     }
 
