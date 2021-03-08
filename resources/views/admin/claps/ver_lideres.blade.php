@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
