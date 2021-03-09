@@ -7,7 +7,8 @@
             <h5>{{ strtoupper($parroquia->nombre_completo) }}</h5>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center p-1">
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
@@ -23,6 +24,7 @@
             </div>
         </div>
         <!-- /.info-box -->
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
@@ -32,15 +34,16 @@
                         @if($familias)
                             {{ formatoMillares($familias, 0) }}
                         @endif
-                </span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
         </div>
+
     </div>
-    <div class="row mb-3 justify-content-center">
+    <div class="row justify-content-center">
+        <div class="mb-3">
             {!! Form::open(['route' => ['android.modulo_clap_buscar', Auth::user()->id], 'method' => 'POST']) !!}
             <div class="input-group">
                 <input type="text" name="buscar" placeholder="Buscar CLAP" class="form-control" required>
@@ -51,9 +54,12 @@
                 </span>
             </div>
             {!! Form::close() !!}
+        </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center p-1">
+
         <div class="col-12">
+
             <div class="card card-navy">
                 <div class="card-header">
                     <h3 class="card-title">Listado de CLAPS</h3>
@@ -64,23 +70,18 @@
                     </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
+
                     <ul class="nav nav-pills flex-column">
                         @foreach ($claps as $clap)
                             @php($i++)
                         <li class="nav-item active">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
-                                {{--<i class="fas fa-flag"></i>--}}{{ $i }}.- {{ $clap->nombre_clap }}
-                                {{--<span class="float-right">
-                                    --}}{{--<span class="badge bg-success">{{ formatoMillares($parroquia->claps, 0) }}</span>--}}{{--
-                                    <span class="badge bg-warning">0--}}{{--{{ formatoMillares($parroquia->familias, 0) }}--}}{{--</span>
-                                </span>--}}
-
+                                {{ $i }}.- {{ $clap->nombre_clap }}
                                 <span class="float-right justify-content-center row col-3">
                                     <span class="col-1">@if($clap->productivo == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
                                     <span class="col-1"></span>
                                     <span class="badge bg-warning col-6">{{ formatoMillares($clap->num_familias, 0) }}</span>
                                 </span>
-
                             </a>
                         </li>
                             <!-- Modal -->
@@ -340,7 +341,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
+                                            {{--<br>--}}
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -355,40 +356,13 @@
 
                         @endforeach
                     </ul>
-                </div>
-                <!-- /.card-body -->
-            </div>
-        </div>
-        {{--<div class="col-12">
-            <div class="card card-navy">
-                <div class="card-header">
-                    <h3 class="card-title">N° por Bloques</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
-                    </div>
                 </div>
-                @if('$bloques')
-                <div class="card-body p-0" style="display: block;">
-                    <ul class="nav nav-pills flex-column">
-                        @foreach ($bloques as $bloque)
-                        <li class="nav-item active">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-cubes"></i> {{ $bloque->valor }}
-                                <span class="float-right">
-                                    <span class="badge bg-success">{{ formatoMillares($bloque->claps, 0) }}</span>
-                                    <span class="badge bg-warning">{{ formatoMillares($bloque->familias, 0) }}</span>
-                                </span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
                 <!-- /.card-body -->
             </div>
-        </div>--}}
+
+        </div>
+
     </div>
 
 

@@ -48,6 +48,7 @@ class ModuloClapController extends Controller
         $autenticar->autenticar($id);
 
         $municipio = Municipio::find($id_municipio);
+
         $parroquias = Parroquia::where('municipios_id', $id_municipio)->orderBy('nombre_completo', 'ASC')->get();
         $parroquias->each(function ($parroquia) {
             $clap = Clap::where('parroquias_id', $parroquia->id)->count();
@@ -60,24 +61,38 @@ class ModuloClapController extends Controller
             $parroquia->familias = $familias;
 
         });
+
         $familias = Parametro::where('nombre', 'familias')->where('tabla_id', $id_municipio)->first();
         $claps = Parametro::where('nombre', 'claps')->where('tabla_id', $id_municipio)->first();
+
         $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $id_municipio)->orderBy('valor', 'ASC')->get();
         $bloques->each(function ($bloque) {
+
             $clap = Parametro::where('nombre', 'bloque_claps')->where('tabla_id', $bloque->id)->first();
-            if ($clap) {
-                $bloque->claps = $clap->valor;
-            } else {
-                $bloque->claps = 0;
-            }
+            if ($clap) { $bloque->claps = $clap->valor; } else { $bloque->claps = 0; }
+
             $familias = Parametro::where('nombre', 'bloque_familias')->where('tabla_id', $bloque->id)->first();
-            if ($familias) {
-                $bloque->familias = $familias->valor;
-            } else {
-                $bloque->familias = 0;
-            }
+            if ($familias) { $bloque->familias = $familias->valor; } else { $bloque->familias = 0; }
+
+            $periodos = Periodo::where('parametros_id', $bloque->id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($periodos){ $bloque->periodo = $periodos->fecha_atencion; }else{ $bloque->periodo = null; }
 
         });
+
+        $periodos = Periodo::where('municipios_id', $id_municipio)->where('tipo_entrega', 'completa')->orderBy('fecha_atencion', 'DESC')->get();
+        $dias = 0;
+        $bloque = null;
+        foreach ($periodos as $periodo){
+            if ($bloque == $periodo->parametros_id){
+                continue;
+            }else{
+                $bloque = $periodo->parametros_id;
+            }
+            $dias = $dias + cuantosDias($periodo->fecha_atencion, date('Y-m-d'));
+        }
+        $periodo_atencion = formatoMillares($dias / $bloques->count(), 0);
+
+        //dd($periodo_atencion);
 
 
         return view('android.modulo_clap.municipio')
@@ -85,7 +100,8 @@ class ModuloClapController extends Controller
             ->with('claps', $claps)
             ->with('municipio', $municipio)
             ->with('parroquias', $parroquias)
-            ->with('bloques', $bloques);
+            ->with('bloques', $bloques)
+            ->with('periodo_atencion', $periodo_atencion);
     }
 
     public function verParroquia($id, $id_municipio, $id_parroquia)
@@ -124,6 +140,9 @@ class ModuloClapController extends Controller
 
         $municipio = Municipio::find($id_municipio);
         $bloque = Parametro::find($id_bloque);
+        $periodo = Periodo::where('parametros_id', $id_bloque)->orderBy('fecha_atencion', 'DESC')->first();
+        if ($periodo){ $periodo_atencion = $periodo->fecha_atencion; }else{ $periodo_atencion = null; }
+
         $claps = Clap::where('bloques_id', $id_bloque)->orderBy('nombre_clap', 'ASC')->get();
         $claps->each(function ($clap){
             $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
@@ -142,6 +161,7 @@ class ModuloClapController extends Controller
             ->with('bloque', $bloque)
             ->with('claps', $claps)
             ->with('familias', $familias)
+            ->with('periodo_atencion', $periodo_atencion)
             ->with('i', 0);
     }
 

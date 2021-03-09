@@ -7,7 +7,7 @@
             <h5>BLOQUE {{ strtoupper($bloque->valor) }}</h5>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center p-1">
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
@@ -23,38 +23,13 @@
             </div>
         </div>
         <!-- /.info-box -->
-        {{--<div class="col-12 col-sm-6 col-md-12">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">N° Familias</span>
-                    <span class="info-box-number">
-                        --}}{{--@if($familias)
-                            {{ formatoMillares($familias->valor, 0) }}
-                        @endif--}}{{--
-                        0
-                </span>
-                    </span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>--}}
     </div>
-    <div class="row mb-3 justify-content-center">
-            {{--{!! Form::open(['route' => ['android.modulo_clap_buscar', Auth::user()->id], 'method' => 'POST']) !!}
-            <div class="input-group">
-                <input type="text" name="buscar" placeholder="Buscar CLAP" class="form-control" required>
-                <input type="hidden" name="id_municipio" value="{{ $municipio->id }}">
-                <input type="hidden" name="id_parroquia" value="{{ $bloque->id }}">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-            {!! Form::close() !!}--}}
-        <h5>Resultados para: <b> {{ strtoupper($buscar) }}</b></h5>
+    <div class="row justify-content-center">
+        <div class="mb-3">
+            <h5>Resultados para: <b> {{ strtoupper($buscar) }}</b></h5>
+        </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center p-1">
         <div class="col-12">
             <div class="card card-navy">
                 <div class="card-header">

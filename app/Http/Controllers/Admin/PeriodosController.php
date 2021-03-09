@@ -18,7 +18,7 @@ class PeriodosController extends Controller
      */
     public function index()
     {
-        $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
+        $periodos = Periodo::where('tipo_entrega', 'completa')->orderBy('fecha_atencion', 'ASC')->paginate(30);
         /*$mun_bloques = [];
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
@@ -104,6 +104,14 @@ class PeriodosController extends Controller
      */
     public function store(Request $request)
     {
+        $viejos = Periodo::where('parametros_id', $request->bloques_id)->get();
+        if ($viejos) {
+            foreach ($viejos as $viejo) {
+                $viejo->tipo_entrega = "viejo";
+                $viejo->update();
+            }
+        }
+
         $periodo = new Periodo($request->all());
         $periodo->parametros_id = $request->bloques_id;
         $periodo->save();
@@ -122,7 +130,7 @@ class PeriodosController extends Controller
         $mun_bloques = [];
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
-        $periodos = Periodo::where('municipios_id', $id)->orderBy('fecha_atencion', 'ASC')->paginate(30);
+        $periodos = Periodo::where('municipios_id', $id)->where('tipo_entrega', 'completa')->orderBy('fecha_atencion', 'ASC')->paginate(30);
         $i = 0;
         $json_bloque_valor[] = null;
         $json_bloque_id[] = null;
@@ -142,7 +150,7 @@ class PeriodosController extends Controller
         }
 
 
-        return view('admin.periodos.index')
+        return view('admin.periodos.show')
             ->with('municipios', $select_municipios)
             ->with('json_bloque_valor', $json_bloque_valor)
             ->with('json_bloque_id', $json_bloque_id)
@@ -189,6 +197,11 @@ class PeriodosController extends Controller
     public function destroy($id)
     {
         $periodo = Periodo::find($id);
+        $viejo = Periodo::where('id', '!=', $id)->where('municipios_id', $periodo->municipios_id)->where('parametros_id', $periodo->parametros_id)->orderBy('fecha_atencion', 'DESC')->first();
+        if ($viejo){
+            $viejo->tipo_entrega = 'completa';
+            $viejo->update();
+        }
         $periodo->delete();
         verSweetAlert2("Fecha Borrada Correctamente",'toast');
         return back();

@@ -4,7 +4,8 @@
     {{--<div class="col-md-12 text-center">
         <h2>Estado Guárico</h2>
     </div>--}}
-    <div class="row">
+    <div class="row justify-content-center p-1">
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
@@ -21,7 +22,7 @@
                 <!-- /.info-box-content -->
             </div>
         </div>
-        <!-- /.info-box -->
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
@@ -30,7 +31,7 @@
                     <span class="info-box-number">
                         @if($estadal)
                             {{ formatoMillares($estadal->valor, 0) }}
-                            @else
+                        @else
                             0
                         @endif
                 </span>
@@ -40,8 +41,10 @@
             </div>
             <!-- /.info-box -->
         </div>
+
     </div>
-    <div class="row">
+
+    <div class="row justify-content-center p-1">
         <div class="col-12">
             <div class="card card-navy">
                 <div class="card-header">
@@ -72,31 +75,6 @@
                 <!-- /.card-body -->
             </div>
         </div>
-        {{--<div class="col-12">
-            <div class="card card-navy">
-                <div class="card-header">
-                    <h3 class="card-title">N° Familias por Municipios</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body p-0" style="display: block;">
-                    <ul class="nav nav-pills flex-column">
-                        @foreach ($municipios as $municipio)
-                        <li class="nav-item active">
-                            <a href="#" class="nav-link">
-                                --}}{{--<i class="fas fa-flag"></i>--}}{{-- {{ $municipio->nombre_completo }}
-                                <span class="badge bg-warning float-right">12</span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <!-- /.card-body -->
-            </div>
-        </div>--}}
     </div>
 
 

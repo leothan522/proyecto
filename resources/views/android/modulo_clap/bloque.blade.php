@@ -7,7 +7,9 @@
             <h5>BLOQUE {{ strtoupper($bloque->valor) }}</h5>
         </div>
     </div>
-    <div class="row">
+
+    <div class="row justify-content-center p-1">
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
@@ -23,6 +25,7 @@
             </div>
         </div>
         <!-- /.info-box -->
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
@@ -32,27 +35,49 @@
                         @if($familias)
                             {{ formatoMillares($familias, 0) }}
                         @endif
-                </span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
         </div>
+
+        <!-- /.info-box -->
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Periodo de Atención</span>
+                    <span class="info-box-number">
+                    @if($familias)
+                        {{ fecha($periodo_atencion) }}
+                        <span class="badge badge-warning">{{ cuantosDias($periodo_atencion, date('Y-m-d')) }} Días</span>
+                    @endif
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
     </div>
-    <div class="row mb-3 justify-content-center">
-            {!! Form::open(['route' => ['android.modulo_clap_buscar_bloque', Auth::user()->id], 'method' => 'POST']) !!}
-            <div class="input-group">
-                <input type="text" name="buscar" placeholder="Buscar CLAP" class="form-control" required>
-                <input type="hidden" name="id_municipio" value="{{ $municipio->id }}">
-                <input type="hidden" name="id_bloque" value="{{ $bloque->id }}">
-                <span class="input-group-append {{--input-group-btn--}}">
+
+    <div class="row justify-content-center">
+            <div class="mb-3">
+                {!! Form::open(['route' => ['android.modulo_clap_buscar_bloque', Auth::user()->id], 'method' => 'POST']) !!}
+                <div class="input-group">
+                    <input type="text" name="buscar" placeholder="Buscar CLAP" class="form-control" required>
+                    <input type="hidden" name="id_municipio" value="{{ $municipio->id }}">
+                    <input type="hidden" name="id_bloque" value="{{ $bloque->id }}">
+                    <span class="input-group-append {{--input-group-btn--}}">
                     <button type="submit" class="btn btn-primary" onclick="verCargando()"><i class="fa fa-search"></i></button>
                 </span>
+                </div>
+                {!! Form::close() !!}
             </div>
-            {!! Form::close() !!}
     </div>
-    <div class="row">
+
+    <div class="row justify-content-center p-1">
         <div class="col-12">
             <div class="card card-navy">
                 <div class="card-header">
