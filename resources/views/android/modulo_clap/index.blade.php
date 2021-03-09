@@ -60,7 +60,7 @@
                         @foreach ($municipios as $municipio)
                         <li class="nav-item active">
                             <a href="{{ route('android.modulo_clap_municipio',[Auth::user()->id, $municipio->id]) }}" class="nav-link" onclick="verCargando()">
-                                {{--<i class="fas fa-flag"></i>--}} {{ $municipio->nombre_completo }}
+                                <span class="text-sm">{{ $municipio->nombre_completo }}</span>
                                 <span class="float-right justify-content-center row col-5">
                                     <span class="badge bg-success col-5">{{ formatoMillares($municipio->claps, 0) }}</span>
                                     <span class="col-2"></span>

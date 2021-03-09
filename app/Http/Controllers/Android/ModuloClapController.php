@@ -123,8 +123,6 @@ class ModuloClapController extends Controller
 
         $familias = Clap::where('parroquias_id', $parroquia->id)->sum('num_familias');
 
-
-
         return view('android.modulo_clap.parroquia')
             ->with('municipio', $municipio)
             ->with('parroquia', $parroquia)
@@ -155,6 +153,10 @@ class ModuloClapController extends Controller
         });
 
         $familias = Clap::where('bloques_id', $bloque->id)->sum('num_familias');
+        if (!$familias){
+            $parametro = Parametro::where('nombre', 'bloque_familias')->where('tabla_id', $bloque->id)->first();
+            $familias = $parametro->valor;
+        }
 
         return view('android.modulo_clap.bloque')
             ->with('municipio', $municipio)

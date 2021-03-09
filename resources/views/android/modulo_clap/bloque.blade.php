@@ -49,10 +49,8 @@
                 <div class="info-box-content">
                     <span class="info-box-text">Periodo de Atención</span>
                     <span class="info-box-number">
-                    @if($familias)
                         {{ fecha($periodo_atencion) }}
                         <span class="badge badge-warning">{{ cuantosDias($periodo_atencion, date('Y-m-d')) }} Días</span>
-                    @endif
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -94,7 +92,7 @@
                             @php($i++)
                         <li class="nav-item active">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
-                                {{--<i class="fas fa-flag"></i>--}}{{ $i }}.- {{ $clap->nombre_clap }}
+                                <span class="text-sm">{{ $i }}.- {{ $clap->nombre_clap }}</span>
 
                                 <span class="float-right justify-content-center row col-3">
                                     <span class="col-1">@if($clap->productivo == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
@@ -361,7 +359,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
+                                            {{--<br>--}}
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

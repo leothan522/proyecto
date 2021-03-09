@@ -45,8 +45,8 @@
                 </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'gestionar_bloques') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-bloques.consultar lko-periodos.index {{--menu-open--}}">
-                <a href="#" class="nav-link lkm-bloques.consultar lkm-periodos.index">
+                <li class="nav-item has-treeview lko-bloques.consultar lko-periodos.index lko-periodos.show {{--menu-open--}}">
+                <a href="#" class="nav-link lkm-bloques.consultar lkm-periodos.index lkm-periodos.show">
                     <i class="nav-icon fas fa-cubes"></i>
                     <p>
                         Gestionar Bloques
@@ -64,7 +64,7 @@
                     @endif
                     @if (leerJson(Auth::user()->permisos, 'periodos.index') || Auth::user()->role == 100)
                         <li class="nav-item">
-                            <a href="{{ route('periodos.index') }}" class="nav-link lk-periodos.index">
+                            <a href="{{ route('periodos.index') }}" class="nav-link lk-periodos.index lk-periodos.show">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Periodos de Atención</p>
                             </a>

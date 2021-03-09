@@ -31,9 +31,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                        @if($familias)
-                            {{ formatoMillares($familias, 0) }}
-                        @endif
+                       {{ formatoMillares($familias, 0) }}
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -76,7 +74,7 @@
                             @php($i++)
                         <li class="nav-item active">
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
-                                {{ $i }}.- {{ $clap->nombre_clap }}
+                                <span CLASS="text-sm">{{ $i }}.- {{ $clap->nombre_clap }}</span>
                                 <span class="float-right justify-content-center row col-3">
                                     <span class="col-1">@if($clap->productivo == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
                                     <span class="col-1"></span>
