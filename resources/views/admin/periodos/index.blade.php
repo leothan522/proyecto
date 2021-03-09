@@ -246,10 +246,10 @@
                             @if (leerJson(Auth::user()->permisos, 'periodos.show') || Auth::user()->role == 100)
                             <div class="btn-group show">
                                 <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" data-offset="-52" aria-expanded="true">
-                                    <i class="fas fa-filter"></i> Filtrar </button>
+                                    <i class="fas fa-filter"></i> Filtrar Municipio </button>
                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-52px, 31px, 0px);">
                                     @foreach($filtrar as $municipio)
-                                        <a href="{{ route('periodos.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_corto }}</a>
+                                        <a href="{{ route('periodos.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_completo }}</a>
                                     @endforeach
                                         <div class="dropdown-divider"></div>
                                     <a href="{{ route('periodos.index') }}" class="dropdown-item">Ver Todo</a>
@@ -268,6 +268,7 @@
                                     <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
                                     <th scope="col">Municipios</th>
                                     <th scope="col" class="text-center">Bloques</th>
+                                    <th scope="col" class="text-center">Nº Familias</th>
                                     <th scope="col" class="text-center">Fecha de Atención</th>
                                     <th scope="col" class="text-center">Nº de Días</th>
                                     <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
@@ -279,6 +280,7 @@
                                         <th scope="row" class="text-center">{{ $i++ }}</th>
                                         <td>{{ $periodo->municipios->nombre_corto }}</td>
                                         <td class="text-center">BLOQUE {{ $periodo->parametros->valor }}</td>
+                                        <td class="text-center">{{ formatoMillares($periodo->familias, 0) }}</td>
                                         <td class="text-center">{{ fecha($periodo->fecha_atencion)  }}</td>
                                         <td class="text-center">{{ cuantosDias($periodo->fecha_atencion, date('Y-m-d'))  }}</td>
                                         <td class="">

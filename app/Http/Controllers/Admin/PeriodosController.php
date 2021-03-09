@@ -19,27 +19,10 @@ class PeriodosController extends Controller
     public function index()
     {
         $periodos = Periodo::where('tipo_entrega', 'completa')->orderBy('fecha_atencion', 'ASC')->paginate(30);
-        /*$mun_bloques = [];
-        $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
-        $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
-        $periodos = Periodo::orderBy('fecha_atencion', 'ASC')->paginate(30);
-        $i = 0;
-        $json_bloque_valor[] = null;
-        $json_bloque_id[] = null;
-        foreach ($municipios as $municipio) {
-            $i++;
-            $array_valor[] = "Seleccione";
-            $array_id[] = "";
-            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
-            foreach ($bloques as $bloque) {
-                array_push($array_valor, $bloque->valor);
-                array_push($array_id, $bloque->id);
-            }
-            $json_bloque_valor[$i] = $array_valor;
-            $json_bloque_id[$i] = $array_id;
-            unset($array_valor);
-            unset($array_id);
-        }*/
+        $periodos->each(function ($periodo){
+            $parametro = Parametro::where('nombre', 'bloque_familias')->where('tabla_id', $periodo->parametros_id)->first();
+            if ($parametro){ $periodo->familias = $parametro->valor; }else{ $periodo->familias = null; }
+        });
 
         $total_claps = null;
         $total_familias = null;
@@ -50,7 +33,7 @@ class PeriodosController extends Controller
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
         $municipios = Municipio::all();
         $total = Parametro::where('nombre', 'bloques')->count();
-        $filtrar = Municipio::orderBy('nombre_corto', 'ASC')->get();
+        $filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
 
 
         $i = 0;
@@ -129,8 +112,14 @@ class PeriodosController extends Controller
     {
         $mun_bloques = [];
         $select_municipios = Municipio::orderBy('nombre_corto', 'ASC')->pluck('nombre_corto', 'id');
-        $municipios = Municipio::orderBy('nombre_corto', 'ASC')->get();
+        $municipios = Municipio::orderBy('nombre_completo', 'ASC')->get();
+
         $periodos = Periodo::where('municipios_id', $id)->where('tipo_entrega', 'completa')->orderBy('fecha_atencion', 'ASC')->paginate(30);
+        $periodos->each(function ($periodo){
+            $parametro = Parametro::where('nombre', 'bloque_familias')->where('tabla_id', $periodo->parametros_id)->first();
+            if ($parametro){ $periodo->familias = $parametro->valor; }else{ $periodo->familias = null; }
+        });
+
         $i = 0;
         $json_bloque_valor[] = null;
         $json_bloque_id[] = null;
