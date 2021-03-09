@@ -109,11 +109,12 @@
                         @foreach ($parroquias as $parroquia)
                             <li class="nav-item active">
                                 <a href="{{ route('android.modulo_clap_parroquia', [Auth::user()->id, $municipio->id, $parroquia->id]) }}" class="nav-link" onclick="verCargando()">
-                                    <span class="text-sm">{{ $parroquia->nombre_completo }}</span>
+                                    <span class="text-sm">{{ $parroquia->nombre_completo }}
                                     <span class="float-right justify-content-center row col-5">
                                         <span class="badge bg-success col-5">{{ formatoMillares($parroquia->claps, 0) }}</span>
                                         <span class="col-2"></span>
                                         <span class="badge bg-warning col-5">{{ formatoMillares($parroquia->familias, 0) }}</span>
+                                    </span>
                                     </span>
                                 </a>
                             </li>

@@ -31,7 +31,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">N° Familias</span>
                     <span class="info-box-number">
-                       {{ formatoMillares($familias, 0) }}
+                       {{ formatoMillares($familias, 0) }}4
                     </span>
                 </div>
                 <!-- /.info-box-content -->
