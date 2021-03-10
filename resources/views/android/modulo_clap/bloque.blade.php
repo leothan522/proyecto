@@ -10,6 +10,22 @@
 
     <div class="row justify-content-center p-1">
 
+        <!-- /.info-box -->
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Periodo de Atención</span>
+                    <span class="info-box-number">
+                        {{ fecha($periodo_atencion) }}
+                        <span class="badge badge-warning">{{ cuantosDias($periodo_atencion, date('Y-m-d')) }} Días</span>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
@@ -35,22 +51,6 @@
                         @if($familias)
                             {{ formatoMillares($familias, 0) }}
                         @endif
-                    </span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-
-        <!-- /.info-box -->
-        <div class="col-12 col-sm-6 col-md-12">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Periodo de Atención</span>
-                    <span class="info-box-number">
-                        {{ fecha($periodo_atencion) }}
-                        <span class="badge badge-warning">{{ cuantosDias($periodo_atencion, date('Y-m-d')) }} Días</span>
                     </span>
                 </div>
                 <!-- /.info-box-content -->

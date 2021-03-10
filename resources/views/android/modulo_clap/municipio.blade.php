@@ -10,6 +10,22 @@
 
         <div class="col-12 col-sm-6 col-md-12">
             <div class="info-box mb-3">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Promedio de Atención</span>
+                    <span class="info-box-number">
+                        @if($familias)
+                            {{ $periodo_atencion }} Días
+                        @endif
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clone"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">N° Claps</span>
@@ -31,22 +47,6 @@
                     <span class="info-box-number">
                         @if($familias)
                             {{ formatoMillares($familias->valor, 0) }}
-                        @endif
-                    </span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-12">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Periodo de Atención</span>
-                    <span class="info-box-number">
-                        @if($familias)
-                            {{ $periodo_atencion }} Días
                         @endif
                     </span>
                 </div>
