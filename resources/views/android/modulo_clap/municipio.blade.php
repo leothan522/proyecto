@@ -12,7 +12,7 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Promedio de Atención</span>
+                    <span class="info-box-text">Última Atención</span>
                     <span class="info-box-number">
                         @if($familias)
                             {{ $periodo_atencion }} Días
