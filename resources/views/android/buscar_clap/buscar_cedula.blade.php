@@ -64,7 +64,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="name">Nombre del Responsable</label>
+                                                    <label for="name">Jefe de Comunidad</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -78,7 +78,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="name">N° DE TELÉFONO 1</label>
+                                                    <label for="name">N° Teléfono</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>

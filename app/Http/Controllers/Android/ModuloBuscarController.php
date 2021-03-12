@@ -20,7 +20,11 @@ class ModuloBuscarController extends Controller
 
     public function buscarCedula(Request $request)
     {
-        $claps = Clap::where('cedula_lider', 'LIKE', '%'.$request->buscar.'%')->get();
+
+        //$buscar = str_replace(".", "", $request->buscar);
+        $buscar = intval(preg_replace('/[^0-9]+/', '', $request->buscar), 10);
+
+        $claps = Clap::where('cedula_lider', 'LIKE', '%'.$buscar.'%')->get();
         $claps->each(function ($clap){
             $perido = Periodo::where('parametros_id', $clap->bloques_id)->orderBy('fecha_atencion', 'DESC')->first();
             if ($perido){
@@ -31,7 +35,7 @@ class ModuloBuscarController extends Controller
 
         });
 
-        $censo = Censo::where('cedula', 'LIKE', '%'.$request->buscar.'%')->get();
+        $censo = Censo::where('cedula', 'LIKE', '%'.$buscar.'%')->get();
         $censo->each(function ($clap){
 
             $clap->periodo = null;
@@ -55,7 +59,7 @@ class ModuloBuscarController extends Controller
         return view('android.buscar_clap.buscar_cedula')
             ->with('resultados', $claps)
             ->with('censo', $censo)
-            ->with('buscar', $request->buscar)
+            ->with('buscar', $buscar)
             ->with('i', 0);
     }
 
