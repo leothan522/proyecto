@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Android;
 
 use App\Http\Controllers\Controller;
+use App\Models\Censo;
 use App\Models\Clap;
 use App\Models\Periodo;
 use Illuminate\Http\Request;
@@ -29,8 +30,11 @@ class ModuloBuscarController extends Controller
             }
 
         });
+
+        //$censo = Censo::where('cedula', 'LIKE', '%'.$request->buscar.'%')->get();
         return view('android.buscar_clap.buscar_cedula')
             ->with('resultados', $claps)
+            //->with('censo', $censo)
             ->with('buscar', $request->buscar)
             ->with('i', 0);
     }
