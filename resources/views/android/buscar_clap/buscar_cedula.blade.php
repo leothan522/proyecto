@@ -196,15 +196,16 @@
                                                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                                         </div>
                                                                         <span class="form-control">
-                                                            @if($clap->periodo)
+                                                                        @if($clap->periodo)
                                                                                 {{ fecha($clap->periodo) }}
                                                                                 <span class="badge badge-warning">{{ cuantosDias($clap->periodo, date('Y-m-d')) }} Días</span>
                                                                             @else
                                                                                 No registrado
                                                                             @endif
-                                                        </span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                         <!-- /.card-body -->
@@ -362,7 +363,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="name">Nombre del Responsable</label>
+                                                        <label for="name">Nombre Completo</label>
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -373,7 +374,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label for="name">N° DE TELÉFONO 1</label>
+                                                        <label for="name">N° Teléfono</label>
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -390,25 +391,30 @@
                                                             <span class="form-control text-sm">{{ strtolower($clap->email) }}</span>
                                                         </div>
                                                     </div>
-                                                    {{--<div class="col-md-3">
-                                                        <label for="name">Fecha de Nacimiento</label>
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                                            </div>
-                                                            <span class="form-control">{{ fecha($clap->fecha_nac_lider, 'd-m-Y') }} ({{ str_replace('hace ', '', haceCuanto($clap->fecha_nac_lider)) }})</span>
-                                                        </div>
-                                                    </div>
-                                                    --}}
                                                     <div class="col-md-3">
-                                                        <label for="name">Profesión</label>
+                                                        <label for="name">Miembro de Familia</label>
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                                             </div>
-                                                            <span class="form-control">{{ strtoupper($clap->profesion_lider) }}</span>
+                                                            <span class="form-control">
+                                                                {{ strtoupper($clap->miembro_familia) }}
+                                                                <span class=" badge badge-warning text-xs">Nucleo Familiar: {{ cerosIzquierda($clap->miembros) }}</span>
+                                                            </span>
                                                         </div>
                                                     </div>
+
+                                                    @if ($clap->miembro_familia != "Jefe de Familia")
+                                                        <div class="col-md-3">
+                                                            <label for="name">Jefe de Familia</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                                                                </div>
+                                                                <span class="form-control">{{ strtoupper($clap->jefe_familia) }}</span>
+                                                            </div>
+                                                        </div>
+                                                    @endif
 
                                                 </div>
 
@@ -498,7 +504,30 @@
                                                                                 @else
                                                                                     No registrado
                                                                                 @endif
-                                                        </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="name">Jefe de Comunidad</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                                            </div>
+                                                                            <span class="form-control text-sm">
+                                                                                {{ strtoupper($clap->claps->primer_nombre_lider) }}
+                                                                                {{ strtoupper($clap->claps->segundo_nombre_lider) }}
+                                                                                {{ strtoupper($clap->claps->primer_apellido_lider) }}
+                                                                                {{ strtoupper($clap->claps->segundo_apellido_lider) }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label for="name">N° Teléfono</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                                            </div>
+                                                                            <span class="form-control">{{ strtoupper($clap->claps->telefono_1_lider) }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

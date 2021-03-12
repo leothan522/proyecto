@@ -33,12 +33,23 @@ class ModuloBuscarController extends Controller
 
         $censo = Censo::where('cedula', 'LIKE', '%'.$request->buscar.'%')->get();
         $censo->each(function ($clap){
+
+            $clap->periodo = null;
+            $clap->jefe_familia = null;
+
             $perido = Periodo::where('parametros_id', $clap->claps->parametros->id)->orderBy('fecha_atencion', 'DESC')->first();
             if ($perido){
                 $clap->periodo = $perido->fecha_atencion;
-            }else{
-                $clap->periodo = null;
             }
+
+            if ($clap->miembro_familia != "Jefe de Familia"){
+                $familia = Censo::where('num_familia', $clap->num_familia)->where('miembro_familia', 'Jefe de Familia')->first();
+                if ($familia){
+                    $clap->jefe_familia = $familia->nombre_completo." (".formatoMillares($familia->cedula, 0).")";
+                }
+            }
+
+            $clap->miembros = Censo::where('num_familia', $clap->num_familia)->count();
 
         });
         return view('android.buscar_clap.buscar_cedula')
