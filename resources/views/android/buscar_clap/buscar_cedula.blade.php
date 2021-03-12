@@ -316,7 +316,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
+                                            {{--<br>--}}
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -411,7 +411,7 @@
                                                                 <div class="input-group-prepend">
                                                                     <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                                                 </div>
-                                                                <span class="form-control">{{ strtoupper($clap->jefe_familia) }}</span>
+                                                                <span class="form-control">{!! strtoupper($clap->jefe_familia)  !!}</span>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -640,7 +640,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <br>
+                                                {{--<br>--}}
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

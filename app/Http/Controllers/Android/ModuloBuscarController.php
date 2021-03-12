@@ -45,7 +45,7 @@ class ModuloBuscarController extends Controller
             if ($clap->miembro_familia != "Jefe de Familia"){
                 $familia = Censo::where('num_familia', $clap->num_familia)->where('miembro_familia', 'Jefe de Familia')->first();
                 if ($familia){
-                    $clap->jefe_familia = $familia->nombre_completo." (".formatoMillares($familia->cedula, 0).")";
+                    $clap->jefe_familia = $familia->nombre_completo." <small><small>(CI: ".formatoMillares($familia->cedula, 0).")</small></small>";
                 }
             }
 
