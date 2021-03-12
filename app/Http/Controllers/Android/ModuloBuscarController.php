@@ -31,10 +31,19 @@ class ModuloBuscarController extends Controller
 
         });
 
-        //$censo = Censo::where('cedula', 'LIKE', '%'.$request->buscar.'%')->get();
+        $censo = Censo::where('cedula', 'LIKE', '%'.$request->buscar.'%')->get();
+        $censo->each(function ($clap){
+            $perido = Periodo::where('parametros_id', $clap->claps->parametros->id)->orderBy('fecha_atencion', 'DESC')->first();
+            if ($perido){
+                $clap->periodo = $perido->fecha_atencion;
+            }else{
+                $clap->periodo = null;
+            }
+
+        });
         return view('android.buscar_clap.buscar_cedula')
             ->with('resultados', $claps)
-            //->with('censo', $censo)
+            ->with('censo', $censo)
             ->with('buscar', $request->buscar)
             ->with('i', 0);
     }

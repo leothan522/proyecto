@@ -21,4 +21,15 @@ class Censo extends Model
     {
         return $this->belongsTo(Lider::class, 'lideres_id', 'id');
     }
+
+    public function municipios()
+    {
+        return $this->belongsTo(Municipio::class, 'municipios_id', 'id');
+    }
+
+    public function parroquias()
+    {
+        return $this->belongsTo(Parroquia::class, 'parroquias_id', 'id');
+    }
+
 }

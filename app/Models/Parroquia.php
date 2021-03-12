@@ -20,4 +20,10 @@ class Parroquia extends Model
     {
         return $this->hasMany(Clap::class, 'parroquias_id', 'id');
     }
+
+    public function censo()
+    {
+        return $this->hasMany(Censo::class, 'municipios_id', 'id');
+    }
+
 }

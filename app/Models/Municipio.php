@@ -31,4 +31,9 @@ class Municipio extends Model
         return $this->hasMany(Periodo::class, 'municipios_id', 'id');
     }
 
+    public function censo()
+    {
+        return $this->hasMany(Censo::class, 'municipios_id', 'id');
+    }
+
 }
