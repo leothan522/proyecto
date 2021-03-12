@@ -112,7 +112,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <label for="name">Periodo de Atención</label>
+                                                    <label for="name">Última Atención</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
