@@ -52,7 +52,7 @@
                             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-{{ $clap->id }}">
                                 <span class="text-sm">{{ $i }}.- {{ $clap->nombre_clap }}</span>
                                 <span class="float-right justify-content-center row col-3">
-                                    <span class="col-1">@if($clap->productivo == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
+                                    <span class="col-1">@if(strtoupper($clap->productivo) == "SI")<i class="fa fa-product-hunt float-left text-success"></i>@endif</span>
                                     <span class="col-1"></span>
                                     <span class="badge bg-warning col-6">{{ formatoMillares($clap->num_familias, 0) }}</span>
                                 </span>
@@ -210,7 +210,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if($clap->productivo == "SI")
+                                            @if(strtoupper($clap->productivo) == "SI")
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="card card-navy collapsed-card">
