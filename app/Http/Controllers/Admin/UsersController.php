@@ -164,6 +164,8 @@ class UsersController extends Controller
                     'claps.borrar'    => $request->input('claps_borrar'),
                     'claps.lideres'    => $request->input('gestionar_claps'),
                     'claps.censo'    => $request->input('gestionar_claps'),
+                    'claps.censo_import'    => $request->input('gestionar_claps'),
+                    'claps.censo_delete'    => $request->input('gestionar_claps'),
                     'claps.formato'    => $request->input('gestionar_claps'),
                     'periodos.index'    => $request->input('periodos_index'),
                     'periodos.store'    => $request->input('periodos_store'),

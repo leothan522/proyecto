@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `claps` (
   CONSTRAINT `claps_parroquias_id_foreign` FOREIGN KEY (`parroquias_id`) REFERENCES `parroquias` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3388 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.claps: ~3.255 rows (aproximadamente)
 /*!40000 ALTER TABLE `claps` DISABLE KEYS */;
 INSERT INTO `claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `productivo`, `tipo_produccion`, `detalles_produccion`, `num_familias`, `num_lideres`, `import_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'BANCO OBRERO', 'CLAP', 14, 36, 'BANCO OBRERO', 'CLAPS-GUA-121501-00004', 'CE00018200', 57, '20592185', 'ROSMALBY', 'ROSALIA', 'MARTINEZ', 'BARRIOS', 'VENEZOLANA', 'F', '1991-11-05', 'AMA DE CASA', 'OBRERA', '04142962649', NULL, 'rosmalbymartinez1991@gmail.com', 'ACTIVO', 'C MERIDA SECTOR BANCO OBRERO', '8°48\'54.3"N', '65°19\'29.9"W', NULL, NULL, 'Si', 'VEGETAL', 'frijol, yuca, aji', 622, 12, 314, NULL, '2021-03-03 05:50:06', '2021-03-03 05:50:06'),
@@ -3543,7 +3543,7 @@ CREATE TABLE IF NOT EXISTS `import_claps` (
   CONSTRAINT `import_claps_import_id_foreign` FOREIGN KEY (`import_id`) REFERENCES `parametros` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=758 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.import_claps: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.import_claps: ~490 rows (aproximadamente)
 /*!40000 ALTER TABLE `import_claps` DISABLE KEYS */;
 INSERT INTO `import_claps` (`id`, `nombre_clap`, `programa`, `municipios_id`, `parroquias_id`, `comunidad`, `codigo_spda`, `codigo_sica`, `bloques_id`, `cedula_lider`, `primer_nombre_lider`, `segundo_nombre_lider`, `primer_apellido_lider`, `segundo_apellido_lider`, `nacionalidad_lider`, `genero`, `fecha_nac_lider`, `profesion_lider`, `trabajo_lider`, `telefono_1_lider`, `telefono_2_lider`, `email_lider`, `estatus_lider`, `direccion`, `longitud`, `latitud`, `google_maps`, `observaciones`, `import_id`, `created_at`, `updated_at`) VALUES
 	(268, 'AGUA HEDIONDA', 'CLAP', 'JUAN GERMAN ROSCIO', 'CANTAGALLO', 'AGUA HEDIONDA', 'CLAPS-GUA-120701-00010', 'CE00018132', '1', '15081268', 'LISANDRO', 'JOSE', 'HERNANDEZ', 'SOLORZANO', 'VENEZOLANO', 'MASCULINO', '1976-12-13', NULL, 'SI', '4243620415', NULL, NULL, 'ACTIVO', 'AGUA HEDIONDA (CANTAGALLO)', '9.783278', '-67.416443', NULL, '{"municipio":"true","parroquia":null,"bloque":"true"}', 352, '2021-03-04 23:48:41', '2021-03-04 23:48:41'),
@@ -4107,7 +4107,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.municipios: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.municipios: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
 INSERT INTO `municipios` (`id`, `nombre_completo`, `nombre_corto`, `created_at`, `updated_at`) VALUES
 	(1, 'SAN JOSE DE GUARIBE', 'GUARIBE\r', NULL, NULL),
@@ -4138,7 +4138,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parametros: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parametros: ~191 rows (aproximadamente)
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
 INSERT INTO `parametros` (`id`, `nombre`, `tabla_id`, `valor`, `created_at`, `updated_at`) VALUES
 	(1, 'familias_estadal', 0, '292146', '2020-12-15 06:57:25', '2021-02-26 14:05:48'),
@@ -4347,7 +4347,7 @@ CREATE TABLE IF NOT EXISTS `parroquias` (
   CONSTRAINT `parroquias_municipios_id_foreign` FOREIGN KEY (`municipios_id`) REFERENCES `municipios` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.parroquias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.parroquias: ~39 rows (aproximadamente)
 /*!40000 ALTER TABLE `parroquias` DISABLE KEYS */;
 INSERT INTO `parroquias` (`id`, `nombre_completo`, `nombre_corto`, `municipios_id`, `created_at`, `updated_at`) VALUES
 	(1, 'GUARIBE', NULL, 1, NULL, NULL),
@@ -4419,7 +4419,7 @@ CREATE TABLE IF NOT EXISTS `periodos` (
   CONSTRAINT `periodos_parametros_id_foreign` FOREIGN KEY (`parametros_id`) REFERENCES `parametros` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.periodos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.periodos: ~39 rows (aproximadamente)
 /*!40000 ALTER TABLE `periodos` DISABLE KEYS */;
 INSERT INTO `periodos` (`id`, `parametros_id`, `municipios_id`, `fecha_atencion`, `tipo_entrega`, `created_at`, `updated_at`) VALUES
 	(1, 37, 6, '2020-12-19', 'completa', '2021-03-03 07:07:38', '2021-03-03 07:07:38'),
@@ -4496,10 +4496,10 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.sessions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.sessions: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('9FX64It0vuiIq06dtJcXcUYGD6pONoUhGdnlj5T4', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiaEFaTkx6a0o2UkZpeEFFRWFRdTJPaVlTZXphMHUydjdRV1ZCa1NjVCI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRCRkJIVVlWb3VvVVo1cENYRzh5Wk5Pd0hOanZESmZ6a1ZLVUJiek5iWE5zUnFMN1Q4R1hCVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTQ6Imh0dHA6Ly9wcm95ZWN0by50ZXN0L2FuZHJvaWQvbW9kdWxvL2NsYXAvYmxvcXVlLzEvNy8zNiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkQkZCSFVZVm91b1VaNXBDWEc4eVpOT3dITmp2REpmemtWS1VCYnpOYlhOc1JxTDdUOEdYQlciO30=', 1615286444);
+	('4AjRM4w8upy8Q0UdDno7OEhFrRnRuD4L4MVXnGpt', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiVjZ0V2c0TmhrcEFaZVN3UlBrNWIyRmJwOWVkS0tPVXh5VmdyMXl4cyI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJEJGQkhVWVZvdW9VWjVwQ1hHOHlaTk93SE5qdkRKZnprVktVQmJ6TmJYTnNScUw3VDhHWEJXIjtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0NDoiaHR0cDovL3Byb3llY3RvLnRlc3QvYW5kcm9pZC9tb2R1bG8vY2xhcC8xLzIiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1615302613);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla alguarisa.users
@@ -4525,7 +4525,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla alguarisa.users: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla alguarisa.users: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `role`, `status`, `permisos`, `plataforma`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'Yonathan Castillo', 'leothan522@gmail.com', NULL, '$2y$10$BFBHUYVouoUZ5pCXG8yZNOwHNjvDJfzkVKUBbzNbXNsRqL7T8GXBW', '04243386600', NULL, 'qxBxHZj3NpjyadE0FelVY5Esk5kZGnb5BzKZY5V1RmQhbqCf8kDGDooEcbTx', NULL, NULL, 100, 1, NULL, '0', NULL, '2020-11-25 07:39:46', '2020-12-10 19:34:43'),
