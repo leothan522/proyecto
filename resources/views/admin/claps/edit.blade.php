@@ -283,7 +283,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-product-hunt"></i></span>
                                         </div>
-                                        {!! Form::select('productivo', ['SI' => 'SI', 'NO' => 'NO'] , $clap->productivo , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
+                                        {!! Form::select('productivo', ['SI' => 'SI', 'NO' => 'NO'] , strtoupper($clap->productivo) , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
