@@ -283,7 +283,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-product-hunt"></i></span>
                                         </div>
-                                        {!! Form::select('productivo', ['SI' => 'SI', 'NO' => 'NO'] , $clap->productivo , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
+                                        {!! Form::select('productivo', ['SI' => 'SI', 'NO' => 'NO'] , $clap->productivo , ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -526,7 +526,8 @@
             <div class="col-md-12 text-right">
                 <input type="hidden" name="observaciones" value="{{ Auth::user()->name }}">
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i> Restablecer</button>
-                <input type="submit" class="btn btn-primary" value="Guardar Cambios">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar Cambios</button>
+
             </div>
         </div>
         {!! Form::close() !!}
