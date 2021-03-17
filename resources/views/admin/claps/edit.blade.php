@@ -526,7 +526,7 @@
             <div class="col-md-12 text-right">
                 <input type="hidden" name="observaciones" value="{{ Auth::user()->name }}">
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i> Restablecer</button>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
+                <input type="submit" class="btn btn-primary" value="Guardar Cambios">
             </div>
         </div>
         {!! Form::close() !!}
