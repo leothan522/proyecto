@@ -107,7 +107,11 @@ class ClapsController extends Controller
                 $id_bloque = $request->bloques_id;
                 $nombre_clap = $request->nombre_clap;
                 $codigo_sica = $request->codigo_sica;
-                $cedula_lider = $request->cedula_lider;
+                if ($request->cedula_lider){
+                    $cedula_lider = intval(preg_replace('/[^0-9]+/', '', $request->cedula_lider), 10);;
+                }else{
+                    $cedula_lider = null;
+                }
                 $resultado = true;
 
                 if ($codigo_sica && $cedula_lider){
@@ -427,6 +431,7 @@ class ClapsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($id);
         $rules = [
             'programa' => 'required',
             'municipios_id' => 'required',
@@ -434,7 +439,6 @@ class ClapsController extends Controller
             'bloques_id' => 'required',
             'nombre_clap' => 'required|min:4',
             'comunidad' => 'required|min:4',
-            'codigo_sica' => ['required', Rule::unique('claps')->ignore($id),]
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()){
@@ -447,7 +451,8 @@ class ClapsController extends Controller
         $clap->fill($request->all());
         $clap->update();
 
-        flash('Cambios Guardados Correctamente', 'primary')->important();
+        //flash('Cambios Guardados Correctamente', 'primary')->important();
+        verSweetAlert2('Cambios Guardados Correctamente', 'toast', 'success');
         return back();
 
     }

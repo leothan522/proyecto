@@ -99,7 +99,7 @@ function obtenerPorcentaje($cantidad, $total) {
 function programa($i = null){
     $status = [
         'CLAP'     => 'CLAP',
-        'BASE'     => 'BASE'
+        'BMS'     => 'BMS'
     ];
     if (is_null($i)){
         return $status;
