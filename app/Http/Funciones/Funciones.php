@@ -119,8 +119,11 @@ function colorBarra($porcentaje){
         case $porcentaje <= 90:
             return "bg-info";
         break;
-        case $porcentaje >= 100:
+        case $porcentaje == 100:
             return "bg-success";
+        break;
+        case $porcentaje > 100:
+            return "bg-orange";
         break;
         default:
             return "bg-info";
