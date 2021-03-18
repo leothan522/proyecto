@@ -252,13 +252,22 @@
                                     {!! Form::select('parroquias_id', $parroquias, $id_parroquia, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="name">Bloque</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                     </div>
                                     {!! Form::select('bloques_id', $bloques, $id_bloque, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <label for="name"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend custom-control custom-checkbox">
+                                        <input name="productivo" class="custom-control-input" type="checkbox" id="customCheckbox2" value="SI" @if($productivo) checked @endif>
+                                        <label for="customCheckbox2" class="custom-control-label"><i class="fa fa-product-hunt"></i></label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -279,7 +288,7 @@
                                     {!! Form::text('codigo_sica', $codigo_sica, ['class' => 'form-control', 'placeholder' => 'Ingrese Codigo']) !!}
                                 </div>
                             </div>
-                           <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="name">Cedula Lider</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -323,7 +332,7 @@
                             @if ($ver_resultados->count() > 0)
                                 @if (leerJson(Auth::user()->permisos, 'claps.export') || Auth::user()->role == 100)
                                 <a href="{{ route('claps.export', ['municipios_id' => $id_municipio, 'parroquias_id' => $id_parroquia,
-                            'bloques_id' => $id_bloque, 'nombre_clap' => $nombre_clap, 'codigo_sica' => $codigo_sica, 'cedula_lider' => $cedula_lider]) }}"
+                            'bloques_id' => $id_bloque, 'nombre_clap' => $nombre_clap, 'codigo_sica' => $codigo_sica, 'cedula_lider' => $cedula_lider, 'productivo' => $productivo]) }}"
                                    id="btn_exportar"
                                    class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
                                 @endif
@@ -339,11 +348,12 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col" class="text-center">ID</th>
-                                    <th scope="col" data-breakpoints="xs" class="text-center">Codigo SICA</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center" style="width: 5%;">Codigo SICA</th>
                                     <th scope="col" class="text-center">Nombre CLAPS</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Municipio</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Parroquia</th>
-                                    <th scope="col" data-breakpoints="xs" class="text-center">Bloque</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center" style="width: 5%;">Bloque</th>
+                                    <th scope="col" data-breakpoints="xs" class="text-center">Familias</th>
                                     <th scope="col" data-breakpoints="xs" class="text-center">Cedula Lider</th>
                                     <th scope="col" data-breakpoints="xs" style="width: 5%;"></th>
                                 </tr>
@@ -353,10 +363,16 @@
                                     <tr>
                                         <td class="text-center">{{ $clap->id }}</td>
                                         <td class="text-center text-bold">{{ strtoupper($clap->codigo_sica) }}</td>
-                                        <td class="text-center">{{ strtoupper($clap->nombre_clap) }}</td>
+                                        <td class="text-center">
+                                            @if(strtoupper($clap->productivo) == "SI")
+                                                <span class="float-left"><i class="fa fa-product-hunt"></i></span>
+                                            @endif
+                                            {{ strtoupper($clap->nombre_clap) }}
+                                        </td>
                                         <td class="text-center">{{ $clap->municipios->nombre_corto }}</td>
                                         <td class="text-center">{{ $clap->parroquias->nombre_completo }}</td>
                                         <td class="text-center">{{ strtoupper($clap->parametros->valor) }}</td>
+                                        <td class="text-center"><span class="text-sm"><b>{{ formatoMillares($clap->carg_familias, 0) }}</b> / {{ formatoMillares($clap->num_familias, 0) }}</span></td>
                                         <td class="text-center">@if ($clap->cedula_lider) V-{{ formatoMillares($clap->cedula_lider, 0) }} @else S/D @endif</td>
                                         <td>
 
@@ -465,7 +481,7 @@
                                                                                         <div class="input-group-prepend">
                                                                                             <span class="input-group-text"><i class="fas fa-code"></i></span>
                                                                                         </div>
-                                                                                        <span class="form-control">{{ strtoupper($clap->num_familias) }}</span>
+                                                                                        <span class="form-control"><span class="text-sm"><b>{{ formatoMillares($clap->carg_familias, 0) }}</b> / {{ formatoMillares($clap->num_familias, 0) }}</span></span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-3">
@@ -501,7 +517,7 @@
                                                                                         <div class="input-group-prepend">
                                                                                             <span class="input-group-text"><i class="fas fa-code"></i></span>
                                                                                         </div>
-                                                                                        <span class="form-control">{{ strtoupper($clap->num_lideres) }}</span>
+                                                                                        <span class="form-control"><span class="text-sm"><b>{{ formatoMillares($clap->carg_lideres, 0) }}</b> / {{ formatoMillares($clap->num_lideres, 0) }}</span></span>
                                                                                     </div>
                                                                                 </div>
 
@@ -645,7 +661,8 @@
                                                                     <!-- /.card -->
                                                                 </div>
                                                             </div>
-                                                            <div class="row">
+                                                            @if(strtoupper($clap->productivo) == "SI")
+                                                                <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="card card-navy collapsed-card">
                                                                         <div class="card-header">
@@ -702,6 +719,7 @@
                                                                     <!-- /.card -->
                                                                 </div>
                                                             </div>
+                                                            @endif
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="card card-navy collapsed-card">

@@ -42,6 +42,7 @@ class ClapsController extends Controller
         $nombre_clap = null;
         $codigo_sica = null;
         $cedula_lider = null;
+        $productivo = null;
         $ver_resultados = null;
         $claps_estadal = null;
         $claps_municipal = null;
@@ -94,8 +95,10 @@ class ClapsController extends Controller
 
 
         if ($request->buscar){
+            //dd($request->all());
             if ($request->municipios_id == null && $request->parroquias_id == null && $request->bloques_id == null
-                && $request->nombre_clap == null && $request->codigo_sica == null && $request->cedula_lider == null){
+                && $request->nombre_clap == null && $request->codigo_sica == null && $request->cedula_lider == null
+                && $request->productivo == null){
                 //flash('Debes definir al menos un parametro para la Buscqueda', 'warning')->important();
                 verSweetAlert2('Debes definir al menos un parametro para la Buscqueda', 'toast', 'warning');
                 $resultado = null;
@@ -112,6 +115,11 @@ class ClapsController extends Controller
                 }else{
                     $cedula_lider = null;
                 }
+                if ($request->productivo){
+                    $productivo = true;
+                }else{
+                    $productivo = false;
+                }
                 $resultado = true;
 
                 if ($codigo_sica && $cedula_lider){
@@ -123,6 +131,9 @@ class ClapsController extends Controller
                     })
                         ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                             return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('productivo', 'SI');
                         })
                         /*where('municipios_id', 'LIKE', $id_municipio)*/
                         /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
@@ -142,6 +153,9 @@ class ClapsController extends Controller
                         ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                             return $ver_resultados->where('bloques_id', $id_bloque);
                         })
+                        ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('productivo', 'SI');
+                        })
                         /*where('municipios_id', 'LIKE', $id_municipio)*/
                         /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
                         /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
@@ -158,6 +172,9 @@ class ClapsController extends Controller
                         })
                         ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                             return $ver_resultados->where('bloques_id', $id_bloque);
+                        })
+                        ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('productivo', 'SI');
                         })
                         /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')*/
                         /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
@@ -176,12 +193,22 @@ class ClapsController extends Controller
                         ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                             return $ver_resultados->where('bloques_id', $id_bloque);
                         })
+                        ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                            return $ver_resultados->where('productivo', 'SI');
+                        })
                         /*->where('municipios_id', 'LIKE', '%'.$id_municipio.'%')*/
                         /*->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')*/
                         /*->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                         ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
                         ->get();
                 }
+
+                $ver_resultados->each(function ($clap){
+                    $familias = Censo::where('claps_id', $clap->id)->where('miembro_familia', 'Jefe de Familia')->count();
+                    $clap->carg_familias = $familias;
+                    $lideres = Lider::where('claps_id', $clap->id)->count();
+                    $clap->carg_lideres = $lideres;
+                });
 
 
                 if ($id_municipio){
@@ -216,6 +243,7 @@ class ClapsController extends Controller
             ->with('nombre_clap', $nombre_clap)
             ->with('codigo_sica', $codigo_sica)
             ->with('cedula_lider', $cedula_lider)
+            ->with('productivo', $productivo)
             ->with('ver_resultados', $ver_resultados);
     }
 
@@ -674,7 +702,11 @@ class ClapsController extends Controller
                 })
                 ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                     return $ver_resultados->where('bloques_id', $id_bloque);
-                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                })
+                ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('productivo', 'SI');
+                })
+                /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
@@ -691,7 +723,11 @@ class ClapsController extends Controller
                 })
                 ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                     return $ver_resultados->where('bloques_id', $id_bloque);
-                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                })
+                ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('productivo', 'SI');
+                })
+                /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
@@ -707,7 +743,11 @@ class ClapsController extends Controller
                 })
                 ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                     return $ver_resultados->where('bloques_id', $id_bloque);
-                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                })
+                ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('productivo', 'SI');
+                })
+                /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
@@ -723,7 +763,11 @@ class ClapsController extends Controller
                 })
                 ->when($request->bloques_id, function ($ver_resultados) use ($id_bloque) {
                     return $ver_resultados->where('bloques_id', $id_bloque);
-                })/*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
+                })
+                ->when($request->productivo, function ($ver_resultados) use ($id_bloque) {
+                    return $ver_resultados->where('productivo', 'SI');
+                })
+                /*where('municipios_id', 'LIKE', '%'.$id_municipio.'%')
                 ->where('parroquias_id', 'LIKE', '%'.$id_parroquia.'%')
                 ->where('bloques_id', 'LIKE', '%'.$id_bloque.'%')*/
                 ->where('nombre_clap', 'LIKE', '%'.$nombre_clap.'%')
