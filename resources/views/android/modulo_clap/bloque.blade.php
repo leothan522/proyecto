@@ -291,9 +291,11 @@
                                                                     <div class="col-md-12">
                                                                         <label for="name">Detalles de Producción</label>
                                                                         <div class="input-group mb-3">
-                                                                            <textarea name="detalles_produccion" cols="30" rows="4" class="form-control" readonly>
-                                                                                {{ strtoupper(trim($clap->detalles_produccion)) }}
-                                                                            </textarea>
+                                                                            <div class="attachment-block col-md-12 clearfix">
+                                                                                <div class="attachment-text">
+                                                                                    {{ strtoupper(trim($clap->detalles_produccion)) }}
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 

@@ -250,7 +250,11 @@
                                                                     <div class="col-md-12">
                                                                         <label for="name">Detalles de Producción</label>
                                                                         <div class="input-group mb-3">
-                                                                            <p class="form-control">{{ strtoupper(trim($clap->detalles_produccion)) }}</p>
+                                                                            <div class="attachment-block col-md-12 clearfix">
+                                                                                <div class="attachment-text">
+                                                                                    {{ strtoupper(trim($clap->detalles_produccion)) }}
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 
