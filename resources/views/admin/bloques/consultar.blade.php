@@ -242,8 +242,8 @@
                                 @foreach ($ver_bloques as $bloque)
                                     <tr>
                                         <td class="text-center">{{ strtoupper($bloque->valor) }}</td>
-                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->claps, 0)) }} / {{ cerosIzquierda(formatoMillares($bloque->claps_cargados, 0)) }} </td>
-                                        <td class="text-center text-bold">{{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }} / 0</td>
+                                        <td class="text-center"><b>{{ cerosIzquierda(formatoMillares($bloque->claps_cargados, 0)) }}</b> / {{ cerosIzquierda(formatoMillares($bloque->claps, 0)) }}</td>
+                                        <td class="text-center"><b>0</b> / {{ cerosIzquierda(formatoMillares($bloque->familias, 0)) }}</td>
                                         <td class="">
 
                                             {!! Form::open(['route' => ['bloques.destroy', $bloque->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$bloque->id]) !!}
