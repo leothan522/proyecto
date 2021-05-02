@@ -39,4 +39,7 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::resource('claps', 'Admin\ClapsController');
     Route::resource('periodos', 'Admin\PeriodosController');
 
+    //Programas
+    Route::resource('ferias', 'Admin\FeriasController');
+
 });
