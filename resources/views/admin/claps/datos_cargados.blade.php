@@ -106,7 +106,7 @@
                             </div>
 
                             <br>
-                            
+
                             <!-- /.progress-group -->
                             <div class="progress-group">
                                 <span class="progress-text">N° Lideres de Calle</span>
