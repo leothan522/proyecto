@@ -77,6 +77,45 @@
         </div>
     </div>
 
+    <div class="row justify-content-center p-1">
+        <div class="col-md-3">
+            <div class="card-body">
+
+                <p class="text-center">
+                    <strong>Datos Cargados</strong>
+                </p>
+                <!-- /.progress-group -->
+                <div class="progress-group">
+                    <span class="progress-text">N° CLAPS</span>
+                    <span class="float-right"><b>{{ formatoMillares($programa_clap, 0) }}</b>{{--/{{ formatoMillares($claps->valor, 0) }}--}}</span>
+                    {{--<div class="progress progress-sm">
+                        <div class="progress-bar bg-primary --}}{{--{{ colorBarra(obtenerPorcentaje($programa_clap, $claps->valor)) }}--}}{{--" style="width: {{ obtenerPorcentaje($programa_clap, $claps->valor) }}%">{{ obtenerPorcentaje($programa_clap, $claps->valor) }}%</div>
+                    </div>--}}
+                </div>
+                <div class="dropdown-divider"></div>
+                <!-- /.progress-group -->
+                <div class="progress-group">
+                    <span class="progress-text">N° BMS</span>
+                    <span class="float-right"><b>{{ formatoMillares($programa_bms, 0) }}</b>{{--/{{ formatoMillares($claps->valor, 0) }}--}}</span>
+                    {{--<div class="progress progress-sm">
+                        <div class="progress-bar bg-primary --}}{{--{{ colorBarra(obtenerPorcentaje(100, $claps->valor)) }}--}}{{--" style="width: {{ obtenerPorcentaje($programa_bms, $claps->valor) }}%">{{ obtenerPorcentaje($programa_bms, $claps->valor) }}%</div>
+                    </div>--}}
+                </div>
+                <!-- /.progress-group -->
+                <div class="dropdown-divider"></div>
+                <!-- /.progress-group -->
+                <div class="progress-group">
+                    <span class="progress-text">Total</span>
+                    <span class="float-right"><b>{{ formatoMillares($programa_clap + $programa_bms, 0) }}</b>/{{ formatoMillares($claps->valor, 0) }}</span>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar {{ colorBarra(obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor)) }}" style="width: {{ obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor) }}%">{{ obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor) }}%</div>
+                    </div>
+                </div>
+                <!-- /.progress-group -->
+            </div>
+        </div>
+    </div>
+
 
 
 @endsection

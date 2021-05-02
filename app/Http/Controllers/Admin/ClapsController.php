@@ -336,6 +336,8 @@ class ClapsController extends Controller
             $claps_estadal = null;
 
             $total_claps = Clap::count();
+            $programa_clap = Clap::where('programa', 'CLAP')->count();
+            $programa_bms = Clap::where('programa','!=', 'CLAP')->count();
             $estadal = Parametro::where('nombre', 'claps_estadal')->first();
             if ($estadal){ $claps_estadal = $estadal->valor; }
 
@@ -377,7 +379,9 @@ class ClapsController extends Controller
                 ->with('total_lideres', $estadal_lideres)
                 ->with('lid_cargados', $estadal_lid_cargados)
                 ->with('total_familias', $estadal_familias)
-                ->with('fam_cargados', $estadal_fam_cargados);
+                ->with('fam_cargados', $estadal_fam_cargados)
+                ->with('programa_clap', $programa_clap)
+                ->with('programa_bms', $programa_bms);
 
         }
     }

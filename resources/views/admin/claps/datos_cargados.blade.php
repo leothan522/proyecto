@@ -75,8 +75,27 @@
                                 <strong>Datos Cargados</strong>
                             </p>
 
+                            <!-- /.progress-group -->
                             <div class="progress-group">
-                                <a href="{{ route('claps.show', 'datos-cargados') }}" class="text-muted">N° CLAPS <i class="fa fa-refresh text-xs"></i></a>
+                                <span class="progress-text">N° CLAPS</span>
+                                <span class="float-right"><b>{{ formatoMillares($programa_clap, 0) }}</b>{{--/{{ formatoMillares($claps->valor, 0) }}--}}</span>
+                                {{--<div class="progress progress-sm">
+                                    <div class="progress-bar bg-primary --}}{{--{{ colorBarra(obtenerPorcentaje($programa_clap, $claps->valor)) }}--}}{{--" style="width: {{ obtenerPorcentaje($programa_clap, $claps->valor) }}%">{{ obtenerPorcentaje($programa_clap, $claps->valor) }}%</div>
+                                </div>--}}
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">N° BMS</span>
+                                <span class="float-right"><b>{{ formatoMillares($programa_bms, 0) }}</b>{{--/{{ formatoMillares($claps->valor, 0) }}--}}</span>
+                                {{--<div class="progress progress-sm">
+                                    <div class="progress-bar bg-primary --}}{{--{{ colorBarra(obtenerPorcentaje(100, $claps->valor)) }}--}}{{--" style="width: {{ obtenerPorcentaje($programa_bms, $claps->valor) }}%">{{ obtenerPorcentaje($programa_bms, $claps->valor) }}%</div>
+                                </div>--}}
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="dropdown-divider"></div>
+                            <div class="progress-group">
+                                <a href="{{ route('claps.show', 'datos-cargados') }}" class="text-muted">Total <i class="fa fa-refresh text-xs"></i></a>
                                 <span class="float-right"><b>{{ formatoMillares($total_claps, 0) }}</b>/{{ formatoMillares($claps_estadal, 0) }}</span>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-primary"
@@ -86,7 +105,8 @@
                                 </div>
                             </div>
 
-
+                            <br>
+                            
                             <!-- /.progress-group -->
                             <div class="progress-group">
                                 <span class="progress-text">N° Lideres de Calle</span>

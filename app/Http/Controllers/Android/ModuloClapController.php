@@ -36,10 +36,15 @@ class ModuloClapController extends Controller
 
         });
 
+        $programa_clap = Clap::where('programa', 'CLAP')->count();
+        $programa_bms = Clap::where('programa','!=', 'CLAP')->count();
+
         return view('android.modulo_clap.index')
             ->with('estadal', $estadal)
             ->with('claps', $claps_estadal)
-            ->with('municipios', $municipios);
+            ->with('municipios', $municipios)
+            ->with('programa_clap', $programa_clap)
+            ->with('programa_bms', $programa_bms);
     }
 
     public function verMunicipio($id, $id_municipio)
