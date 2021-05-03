@@ -74,9 +74,9 @@
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'gestionar_bloques') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-bloques.consultar lko-periodos.index lko-periodos.show {{--menu-open--}}">
-                    <a href="#" class="nav-link lkm-bloques.consultar lkm-periodos.index lkm-periodos.show">
-                        <i class="nav-icon fas fa-th"></i>
+                <li class="nav-item has-treeview lko-ferias.index {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-ferias.index">
+                        <i class="nav-icon fas fa-sitemap"></i>
                         <p>
                             Programas
                             <i class="right fas fa-angle-left"></i>
@@ -85,7 +85,7 @@
                     <ul class="nav nav-treeview">
                         @if (leerJson(Auth::user()->permisos, 'bloques.consultar') || Auth::user()->role == 100)
                             <li class="nav-item">
-                                <a href="{{ route('ferias.index') }}" class="nav-link lk-bloques.consultar">
+                                <a href="{{ route('ferias.index') }}" class="nav-link lk-ferias.index">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Ferias Campo Soberano</p>
                                 </a>

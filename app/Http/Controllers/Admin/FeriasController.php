@@ -37,7 +37,11 @@ class FeriasController extends Controller
             unset($array_valor);
             unset($array_id);
         }
-        return view('admin.ferias.index');
+        return view('admin.ferias.index')
+            ->with('municipios', $select_municipios)
+            //->with('parroquias', $parroquias)
+            ->with('json_parroquias_valor', $json_parroquias_valor)
+            ->with('json_parroquias_id', $json_parroquias_id);
     }
 
     /**

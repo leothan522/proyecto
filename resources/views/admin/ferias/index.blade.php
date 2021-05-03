@@ -1,8 +1,8 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Periodos de Atención')
+@section('title', 'Ferias Campo Soberano')
 
-@section('header', 'Periodos de Atención')
+@section('header', 'Ferias Campo Soberano')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">Parametros Registrados</li>
@@ -16,14 +16,17 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <script>
-        var bloques_nombres = [];
-        var bloques_id = [];
-        @foreach($json_bloque_valor as $valor)
-        bloques_nombres.push(@json($valor))
+
+        //parroquias
+        var parroquias_nombres = [];
+        var parroquias_id = [];
+        @foreach($json_parroquias_valor as $valor)
+        parroquias_nombres.push(@json($valor))
         @endforeach
-        @foreach($json_bloque_id as $valor)
-        bloques_id.push(@json($valor))
+        @foreach($json_parroquias_id as $valor)
+        parroquias_id.push(@json($valor))
         @endforeach
+
     </script>
 @endsection
 
@@ -45,35 +48,38 @@
             })
         });
 
-
-        function select_bloques(){
+        function select_parroquias(){
             //tomo el valor del select elegido
             var municipios_id;
             municipios_id = document.f1.municipios_id[document.f1.municipios_id.selectedIndex].value;
             //miro a ver si el select está definido
             if (municipios_id != 0) {
+                //Inicio el select en el blanco
+                document.f1.parroquias_id.length = 1;
+                document.f1.parroquias_id.options[0].value = "-";
+                document.f1.parroquias_id.options[0].text = "-";
                 //si estaba definido, entonces coloco las opciones correspondientes.
                 //selecciono el array adecuado
-                mis_bloques=bloques_nombres[municipios_id];
-                mis_id=bloques_id[municipios_id];
+                mis_parroquias=parroquias_nombres[municipios_id];
+                mis_id=parroquias_id[municipios_id];
                 //calculo el numero del array
-                num_bloques = mis_bloques.length;
+                num_parroquias = mis_parroquias.length;
                 //marco el número de elementos en el select
-                document.f1.bloques_id.length = num_bloques;
+                document.f1.parroquias_id.length = num_parroquias;
                 //para cada elemento del array, la introduzco en el select
-                for(i=0;i<num_bloques;i++){
-                    document.f1.bloques_id.options[i].value=mis_id[i];
-                    document.f1.bloques_id.options[i].text=mis_bloques[i];
+                for(i=0;i<num_parroquias;i++){
+                    document.f1.parroquias_id.options[i].value=mis_id[i];
+                    document.f1.parroquias_id.options[i].text=mis_parroquias[i];
                 }
             }else{
                 //si no había bloques_id seleccionada, elimino las bloques_ids del select
-                document.f1.bloques_id.length = 1;
+                document.f1.parroquias_id.length = 1;
                 //coloco un guión en la única opción que he dejado
-                document.f1.bloques_id.options[0].value = "-";
-                document.f1.bloques_id.options[0].text = "-";
+                document.f1.parroquias_id.options[0].value = "-";
+                document.f1.parroquias_id.options[0].text = "-";
             }
             //marco como seleccionada la opción primera de bloques_id
-            document.f1.bloques_id.options[0].selected = true;
+            document.f1.parroquias_id.options[0].selected = true;
         }
 
 
@@ -195,7 +201,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     </div>
-                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_bloques()']) !!}
+                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_parroquias();']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -204,7 +210,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                     </div>
-                                    {!! Form::select('bloques_id', $mun_bloques, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
+                                    {!! Form::select('parroquias_id', ['' => 'Seleccione'], null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,7 +219,25 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                     </div>
-                                    {!! Form::date('fecha_atencion', null, ['class' => 'form-control', 'required']) !!}
+                                    {!! Form::date('fecha', null, ['class' => 'form-control', 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">N° Familias</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    </div>
+                                    {!! Form::number('familias', null, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">TM</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-cube"></i></span>
+                                    </div>
+                                    {!! Form::number('tm', null, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
                                 </div>
                             </div>
                             @if ($errors->any())
@@ -238,7 +262,7 @@
                     </div>
                     @endif
                 </div>
-            <div class="col-md-8">
+            {{--<div class="col-md-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h5 class="card-title">Fechas de Entrega</h5>
@@ -370,7 +394,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
 
