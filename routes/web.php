@@ -39,6 +39,13 @@ Route::get('/banned', function () {
 Route::prefix('/android')->group(function (){
 
     Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
+	
+	//Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
+    Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
+    Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
+    Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
+    Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tiendaMovil');
+
 
     //Modulo CLAP
     Route::get('/modulo/clap/{id}', 'Android\ModuloClapController@index')->name('android.modulo_clap');
@@ -52,14 +59,10 @@ Route::prefix('/android')->group(function (){
     Route::get('/buscar/clap/{id}', 'Android\ModuloBuscarController@index')->name('android.buscarClap');
     Route::post('/buscar/clap/{id}/cedula', 'Android\ModuloBuscarController@buscarCedula')->name('android.buscar_cedula');
 
-
-
-    Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
-    Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
-    Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
-    Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
-    Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tiendaMovil');
-
+	//Ferias Campo Soberano
+	Route::get('/ferias/campo/{id}', 'Android\FeriasCampoController@index')->name('android.ferias_campo');
+	Route::get('/ferias/campo/{id}/{municipio}', 'Android\FeriasCampoController@verMunicipio')->name('android.ferias_campo_municipio');
+    Route::get('/ferias/campo/{id}/{municipio}/{parroquia}', 'Android\FeriasCampoController@verParroquia')->name('android.ferias_campo_parroquia');
 
 
 });
