@@ -172,6 +172,11 @@ class UsersController extends Controller
                     'periodos.update'    => $request->input('periodos_update'),
                     'periodos.destroy'    => $request->input('periodos_destroy'),
                     'periodos.show'    => $request->input('periodos_show'),
+                    'ferias.index'    => $request->input('ferias_campo'),
+                    'ferias.store'    => $request->input('ferias_campo'),
+                    'ferias.show'    => $request->input('ferias_campo'),
+                    'ferias.update'    => $request->input('ferias_campo'),
+                    'ferias.destroy'    => $request->input('ferias_campo'),
 
                 ];
                 //******************************************** configuracion SIDEBAR
@@ -205,6 +210,13 @@ class UsersController extends Controller
                     $permisos['gestionar_bloques'] = "true";
                 }else{
                     $permisos['gestionar_bloques'] = null;
+                }
+				
+				//******************************************* Programas
+                if ($permisos['ferias.index']){
+                    $permisos['programas'] = "true";
+                }else{
+                    $permisos['programas'] = null;
                 }
 
                 $permisos = json_encode($permisos);

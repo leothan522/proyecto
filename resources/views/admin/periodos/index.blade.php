@@ -286,7 +286,10 @@
                                         <td class="">
                                             {!! Form::open(['route' => ['periodos.destroy', $periodo->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$periodo->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
+                                                @if (leerJson(Auth::user()->permisos, 'periodos.edit') || Auth::user()->role == 100)
+                                                    <a href="{{ route('periodos.edit', $periodo->parametros_id) }}" class="btn btn-info"><i class="fas fa-list"></i></a>
+                                                @endif
+												@if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $periodo->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>

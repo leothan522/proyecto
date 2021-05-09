@@ -1,8 +1,8 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Periodos de Atención')
+@section('title', 'Ferias Campo Soberano')
 
-@section('header', 'Periodos de Atención')
+@section('header', 'Ferias Campo Soberano')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">Parametros Registrados</li>
@@ -16,14 +16,17 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <script>
-        var bloques_nombres = [];
-        var bloques_id = [];
-        @foreach($json_bloque_valor as $valor)
-        bloques_nombres.push(@json($valor))
+
+        //parroquias
+        var parroquias_nombres = [];
+        var parroquias_id = [];
+        @foreach($json_parroquias_valor as $valor)
+        parroquias_nombres.push(@json($valor))
         @endforeach
-        @foreach($json_bloque_id as $valor)
-        bloques_id.push(@json($valor))
+        @foreach($json_parroquias_id as $valor)
+        parroquias_id.push(@json($valor))
         @endforeach
+
     </script>
 @endsection
 
@@ -45,35 +48,38 @@
             })
         });
 
-
-        function select_bloques(){
+        function select_parroquias(){
             //tomo el valor del select elegido
             var municipios_id;
             municipios_id = document.f1.municipios_id[document.f1.municipios_id.selectedIndex].value;
             //miro a ver si el select está definido
             if (municipios_id != 0) {
+                //Inicio el select en el blanco
+                document.f1.parroquias_id.length = 1;
+                document.f1.parroquias_id.options[0].value = "";
+                document.f1.parroquias_id.options[0].text = "-";
                 //si estaba definido, entonces coloco las opciones correspondientes.
                 //selecciono el array adecuado
-                mis_bloques=bloques_nombres[municipios_id];
-                mis_id=bloques_id[municipios_id];
+                mis_parroquias=parroquias_nombres[municipios_id];
+                mis_id=parroquias_id[municipios_id];
                 //calculo el numero del array
-                num_bloques = mis_bloques.length;
+                num_parroquias = mis_parroquias.length;
                 //marco el número de elementos en el select
-                document.f1.bloques_id.length = num_bloques;
+                document.f1.parroquias_id.length = num_parroquias;
                 //para cada elemento del array, la introduzco en el select
-                for(i=0;i<num_bloques;i++){
-                    document.f1.bloques_id.options[i].value=mis_id[i];
-                    document.f1.bloques_id.options[i].text=mis_bloques[i];
+                for(i=0;i<num_parroquias;i++){
+                    document.f1.parroquias_id.options[i].value=mis_id[i];
+                    document.f1.parroquias_id.options[i].text=mis_parroquias[i];
                 }
             }else{
                 //si no había bloques_id seleccionada, elimino las bloques_ids del select
-                document.f1.bloques_id.length = 1;
+                document.f1.parroquias_id.length = 1;
                 //coloco un guión en la única opción que he dejado
-                document.f1.bloques_id.options[0].value = "-";
-                document.f1.bloques_id.options[0].text = "-";
+                document.f1.parroquias_id.options[0].value = "";
+                document.f1.parroquias_id.options[0].text = "-";
             }
             //marco como seleccionada la opción primera de bloques_id
-            document.f1.bloques_id.options[0].selected = true;
+            document.f1.parroquias_id.options[0].selected = true;
         }
 
 
@@ -177,8 +183,8 @@
                             <!-- /Modal -->
                         </div>
                     @endif--}}
-                    @if (leerJson(Auth::user()->permisos, 'periodos.store') || Auth::user()->role == 100)
-                    {{--<div class="card card-navy">
+                    @if (leerJson(Auth::user()->permisos, 'ferias.store') || Auth::user()->role == 100)
+                    <div class="card card-navy">
                         <div class="card-header">
                             <h5 class="card-title">Ingresar Fecha de Atención</h5>
                             <div class="card-tools">
@@ -187,7 +193,7 @@
                         </div>
                         <div class="card-body">
 
-                            {!! Form::open(['route' => 'periodos.store', 'method' => 'post', 'name' => 'f1']) !!}
+                            {!! Form::open(['route' => 'ferias.store', 'method' => 'post', 'name' => 'f1']) !!}
 
                             <div class="form-group">
                                 <label for="name">Municipio</label>
@@ -195,16 +201,16 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     </div>
-                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_bloques()']) !!}
+                                    {!! Form::select('municipios_id', $municipios, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required', 'onchange'=> 'select_parroquias();']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Bloque</label>
+                                <label for="name">Parroquia</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                     </div>
-                                    {!! Form::select('bloques_id', $mun_bloques, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione']) !!}
+                                    {!! Form::select('parroquias_id', ['' => 'Seleccione'], null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,7 +219,25 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                     </div>
-                                    {!! Form::date('fecha_atencion', null, ['class' => 'form-control', 'required']) !!}
+                                    {!! Form::date('fecha', null, ['class' => 'form-control', 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">N° Familias</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    </div>
+                                    {!! Form::number('familias', null, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">TM</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-cube"></i></span>
+                                    </div>
+                                    {!! Form::number('tm', null, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 0.01, 'pattern' => "^[0-9]+", 'step' => 'any', 'required']) !!}
                                 </div>
                             </div>
                             @if ($errors->any())
@@ -235,24 +259,24 @@
                             {!! Form::close() !!}
 
                         </div>
-                    </div>--}}
+                    </div>
                     @endif
                 </div>
             <div class="col-md-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Fechas de Entrega</h5>
+                        <h5 class="card-title">Ferias Realizadas</h5>
                         <div class="card-tools">
-                            @if (leerJson(Auth::user()->permisos, 'periodos.show') || Auth::user()->role == 100)
+                            @if (leerJson(Auth::user()->permisos, 'ferias.show') || Auth::user()->role == 100)
                             <div class="btn-group show">
                                 <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" data-offset="-52" aria-expanded="true">
-                                    <i class="fas fa-filter"></i> Filtrar Municipio</button>
+                                    <i class="fas fa-filter"></i> Filtrar Municipio </button>
                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-52px, 31px, 0px);">
                                     @foreach($filtrar as $municipio)
-                                        <a href="{{ route('periodos.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_completo }}</a>
+                                        <a href="{{ route('ferias.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_completo }}</a>
                                     @endforeach
                                         <div class="dropdown-divider"></div>
-                                    <a href="{{ route('periodos.index') }}" class="dropdown-item">Ver Todo</a>
+                                    <a href="{{ route('ferias.index') }}" class="dropdown-item">Ver Todo</a>
                                 </div>
                             </div>
                             <span class="btn btn-tool"><i class="fas fa-calendar-alt"></i></span>
@@ -267,39 +291,41 @@
                                 <tr>
                                     <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
                                     <th scope="col">Municipios</th>
-                                    <th scope="col" class="text-center">Bloques</th>
-                                    <th scope="col" class="text-center">Nº Familias</th>
-                                    <th scope="col" class="text-center">Fecha de Atención</th>
-                                    <th scope="col" class="text-center">Nº de Días</th>
+                                    <th scope="col">Parroquias</th>
+                                    <th scope="col" class="text-center">Familias</th>
+                                    <th scope="col" class="text-center">TM</th>
+                                    <th scope="col" class="text-center">Fecha</th>
+									<th scope="col" class="text-center">Nº de Días</th>
                                     <th scope="col" data-breakpoints="xs" style="width: 10%;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($periodos as $periodo)
+                                @foreach ($ferias as $feria)
                                     <tr>
                                         <th scope="row" class="text-center">{{ $i++ }}</th>
-                                        <td>{{ $periodo->municipios->nombre_corto }}</td>
-                                        <td class="text-center">BLOQUE {{ $periodo->parametros->valor }}</td>
-                                        <td class="text-center">{{ formatoMillares($periodo->familias, 0) }}</td>
-                                        <td class="text-center">{{ fecha($periodo->fecha_atencion)  }}</td>
-                                        <td class="text-center">{{ cuantosDias($periodo->fecha_atencion, date('Y-m-d'))  }}</td>
+                                        <td>{{ $feria->municipios->nombre_corto }}</td>
+                                        <td>{{ $feria->parroquias->nombre_completo }}</td>
+                                        <td class="text-center">{{ formatoMillares($feria->familias, 0) }}</td>
+                                        <td class="text-right">{{ formatoMillares($feria->tm) }}</td>
+                                        <td class="text-center">{{ fecha($feria->fecha)  }}</td>
+										<td class="text-center">{{ cuantosDias($feria->fecha, date('Y-m-d'))  }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['periodos.destroy', $periodo->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$periodo->id]) !!}
+                                            {!! Form::open(['route' => ['ferias.destroy', $feria->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$feria->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
-                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $periodo->id }}">
+												@if (leerJson(Auth::user()->permisos, 'ferias.update') || Auth::user()->role == 100)
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $feria->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 @endif
-                                                @if (leerJson(Auth::user()->permisos, 'periodos.destroy') || Auth::user()->role == 100)
-                                                    <input type="hidden" name="id_clap" value="{{ $periodo->id_clap }}">
-                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $periodo->id }}')" class="btn btn-info show-alert-{{ $periodo->id }}"><i class="fas fa-trash"></i></button>
+                                                @if (leerJson(Auth::user()->permisos, 'ferias.destroy') || Auth::user()->role == 100)
+                                                    <input type="hidden" name="id_clap" value="{{ $feria->id_clap }}">
+                                                    <button type="button" onclick="alertaBorrar('form_delete_{{ $feria->id }}')" class="btn btn-info show-alert-{{ $feria->id }}"><i class="fas fa-trash"></i></button>
                                                 @endif
                                             </div>
                                             {!! Form::close() !!}
 
                                         <!-- Modal -->
-                                            <div class="modal fade" id="modal-{{ $periodo->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="modal-{{ $feria->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -310,7 +336,7 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {!! Form::open(['route' => ['periodos.update', $periodo->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['ferias.update', $feria->id], 'method' => 'PUT']) !!}
 
                                                             <div class="form-group">
                                                                 <label for="name">Municipio</label>
@@ -318,27 +344,45 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                                                     </div>
-                                                                    <label class="form-control">{{ $periodo->municipios->nombre_corto }}</label>
+                                                                    <label class="form-control">{{ $feria->municipios->nombre_corto }}</label>
                                                                     </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="name">Bloque</label>
+                                                                <label for="name">Parroquia</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                                                     </div>
-                                                                    <label class="form-control">BLOQUE {{ $periodo->parametros->valor }}</label>
+                                                                    <label class="form-control">{{ $feria->parroquias->nombre_completo }}</label>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="name">Fecha</label>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                                                    </div>
-                                                                    {!! Form::date('fecha_atencion', $periodo->fecha_atencion, ['class' => 'form-control', 'required']) !!}
-                                                                </div>
-                                                            </div>
+                                <label for="name">Fecha</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    </div>
+                                    {!! Form::date('fecha', $feria->fecha, ['class' => 'form-control', 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">N° Familias</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    </div>
+                                    {!! Form::number('familias', $feria->familias, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 1, 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">TM</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-cube"></i></span>
+                                    </div>
+                                    {!! Form::number('tm', $feria->tm, ['class' => 'form-control', 'placeholder' => 'Numero', 'min' => 0.01, 'pattern' => "^[0-9]+", 'step' => 'any', 'required']) !!}
+                                </div>
+                            </div>
                                                             <div class="form-group text-right">
                                                                 <input type="submit" class="btn btn-block btn-primary" value="Guardar">
                                                             </div>
@@ -361,7 +405,7 @@
                         <div class="row justify-content-end p-3">
                             <div class="col-md-3">
                                 <span>
-                                {{ $periodos->render() }}
+                                {{ $ferias->render() }}
                                 </span>
                             </div>
                         </div>

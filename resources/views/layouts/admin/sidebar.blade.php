@@ -73,7 +73,7 @@
                 </ul>
             </li>
             @endif
-            @if (leerJson(Auth::user()->permisos, 'gestionar_bloques') || Auth::user()->role == 100)
+            @if (leerJson(Auth::user()->permisos, 'programas') || Auth::user()->role == 100)
                 <li class="nav-item has-treeview lko-ferias.index {{--menu-open--}}">
                     <a href="#" class="nav-link lkm-ferias.index">
                         <i class="nav-icon fas fa-sitemap"></i>
@@ -83,7 +83,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @if (leerJson(Auth::user()->permisos, 'bloques.consultar') || Auth::user()->role == 100)
+                        @if (leerJson(Auth::user()->permisos, 'ferias.index') || Auth::user()->role == 100)
                             <li class="nav-item">
                                 <a href="{{ route('ferias.index') }}" class="nav-link lk-ferias.index">
                                     <i class="far fa-circle nav-icon"></i>

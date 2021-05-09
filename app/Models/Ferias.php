@@ -14,6 +14,18 @@ class Ferias extends Model
         'municipios_id',
         'parroquias_id',
         'familias',
-        'tm'
+        'tm',
+		'band'
         ];
+		
+	public function municipios()
+    {
+        return $this->belongsTo(Municipio::class, 'municipios_id', 'id');
+    }
+
+    public function parroquias()
+    {
+        return $this->belongsTo(Parroquia::class, 'parroquias_id', 'id');
+    }
+		
 }

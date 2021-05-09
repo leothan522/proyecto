@@ -178,7 +178,8 @@
                         </div>
                     @endif--}}
                     @if (leerJson(Auth::user()->permisos, 'periodos.store') || Auth::user()->role == 100)
-                    {{--<div class="card card-navy">
+                    {{--
+					<div class="card card-navy">
                         <div class="card-header">
                             <h5 class="card-title">Ingresar Fecha de Atención</h5>
                             <div class="card-tools">
@@ -235,7 +236,8 @@
                             {!! Form::close() !!}
 
                         </div>
-                    </div>--}}
+                    </div>
+					--}}
                     @endif
                 </div>
             <div class="col-md-8">
@@ -246,7 +248,7 @@
                             @if (leerJson(Auth::user()->permisos, 'periodos.show') || Auth::user()->role == 100)
                             <div class="btn-group show">
                                 <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" data-offset="-52" aria-expanded="true">
-                                    <i class="fas fa-filter"></i> Filtrar Municipio</button>
+                                    <i class="fas fa-filter"></i> Filtrar Municipio </button>
                                 <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-52px, 31px, 0px);">
                                     @foreach($filtrar as $municipio)
                                         <a href="{{ route('periodos.show', $municipio->id) }}" class="dropdown-item">{{ $municipio->nombre_completo }}</a>
@@ -286,7 +288,7 @@
                                         <td class="">
                                             {!! Form::open(['route' => ['periodos.destroy', $periodo->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$periodo->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
+												@if (leerJson(Auth::user()->permisos, 'periodos.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $periodo->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
