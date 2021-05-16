@@ -38,12 +38,12 @@ class FeriasController extends Controller
             unset($array_valor);
             unset($array_id);
         }
-		
-		
+
+
 		$ferias = Ferias::where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
 		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
-		
-		
+
+
         return view('admin.ferias.index')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)
@@ -71,14 +71,32 @@ class FeriasController extends Controller
      */
     public function store(Request $request)
     {
-		$viejos = Ferias::where('parroquias_id', $request->parroquias_id)->get();
+        $existe = Ferias::where('parroquias_id', $request->parroquias_id)->where('band', 1)->first();
+        if ($existe){
+            if ($existe->fecha < $request->fecha){
+                $viejos = Ferias::where('parroquias_id', $request->parroquias_id)->get();
+                foreach ($viejos as $viejo) {
+                    $viejo->band = 0;
+                    $viejo->update();
+                }
+                $band = 1;
+            }else{
+                $band = 0;
+            }
+
+        }else{
+            $band = 1;
+        }
+		/*$viejos = Ferias::where('parroquias_id', $request->parroquias_id)->get();
         if ($viejos) {
             foreach ($viejos as $viejo) {
                 $viejo->band = 0;
                 $viejo->update();
             }
-        }
+        }*/
+
         $feria = new Ferias($request->all());
+        $feria->band = $band;
 		$feria->save();
         verSweetAlert2('Feria Campo Soberano cargada correctamente');
         return back();
@@ -113,12 +131,12 @@ class FeriasController extends Controller
             unset($array_valor);
             unset($array_id);
         }
-		
-		
+
+
 		$ferias = Ferias::where('municipios_id', $id)->where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
 		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
-		
-		
+
+
         return view('admin.ferias.index')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)
@@ -157,12 +175,12 @@ class FeriasController extends Controller
             unset($array_valor);
             unset($array_id);
         }
-		
-		
+
+
 		$ferias = Ferias::where('parroquias_id', $id)->orderBy('fecha', 'DESC')->paginate(30);
 		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
-		
-		
+
+
         return view('admin.ferias.show')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)

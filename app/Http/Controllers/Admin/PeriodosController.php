@@ -87,16 +87,34 @@ class PeriodosController extends Controller
      */
     public function store(Request $request)
     {
-        $viejos = Periodo::where('parametros_id', $request->bloques_id)->get();
+        $existe = Periodo::where('parametros_id', $request->bloques_id)->where('tipo_entrega', 'completa')->first();
+        if ($existe){
+            if ($existe->fecha_atencion < $request->fecha_atencion){
+                $viejos = Periodo::where('parametros_id', $request->bloques_id)->get();
+                foreach ($viejos as $viejo) {
+                    $viejo->tipo_entrega = "viejo";
+                    $viejo->update();
+                }
+                $tipo_entrega = 'completa';
+            }else{
+                $tipo_entrega = 'viejo';
+            }
+
+        }else{
+            $tipo_entrega = 'completa';
+        }
+
+        /*$viejos = Periodo::where('parametros_id', $request->bloques_id)->get();
         if ($viejos) {
             foreach ($viejos as $viejo) {
                 $viejo->tipo_entrega = "viejo";
                 $viejo->update();
             }
-        }
+        }*/
 
         $periodo = new Periodo($request->all());
         $periodo->parametros_id = $request->bloques_id;
+        $periodo->tipo_entrega = $tipo_entrega;
         $periodo->save();
         verSweetAlert2('Fecha de atencion cargada correctamente');
         return back();

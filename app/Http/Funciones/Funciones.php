@@ -49,6 +49,29 @@ function cuantosDias($fecha_inicio, $fecha_final){
     return $diasDiferencia;
 }
 
+function fechaFeria($fecha){
+    $explode = explode('-', $fecha);
+    $diaSemana = date("w",strtotime($fecha));
+    $diasEspanol = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado");
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $mes = $meses[$explode[1] - 1];
+    $fechaFeria = $mes." ".$explode[2].", ".$diasEspanol[$diaSemana];
+    return $fechaFeria;
+}
+
+function diaEspanol($fecha){
+    $diaSemana = date("w",strtotime($fecha));
+    $diasEspanol = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado");
+    $dia = $diasEspanol[$diaSemana];
+    return $dia;
+}
+
+function mesEspanol($numMes){
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $mes = $meses[$numMes - 1];
+    return $mes;
+}
+
 function iconoPlataforma($plataforma){
     if ($plataforma == 0){
         return '<i class="fas fa-desktop"></i>';
