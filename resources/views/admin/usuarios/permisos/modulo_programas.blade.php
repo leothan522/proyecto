@@ -18,6 +18,11 @@
                        @if (leerJson($user->permisos, 'ferias.index')) checked @endif>
                 <label for="ferias_campo" class="custom-control-label">Ferias Campo Soberano</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input name="tienda_movil" value="true" class="custom-control-input" type="checkbox" id="tienda_movil"
+                       @if (leerJson($user->permisos, 'movil.index')) checked @endif>
+                <label for="tienda_movil" class="custom-control-label">Tienda Movil</label>
+            </div>
 
         </div>
     </div>

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ferias;
+use App\Models\Movil;
 use App\Models\Municipio;
 use App\Models\Parroquia;
-use App\Models\Ferias;
 use Illuminate\Http\Request;
 
-class FeriasController extends Controller
+class TiendaMovilController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,16 +41,16 @@ class FeriasController extends Controller
         }
 
 
-		$ferias = Ferias::where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
-		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
+        $ferias = Movil::where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
+        $filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
 
 
-        return view('admin.ferias_campo.index')
+        return view('admin.tienda_movil.index')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)
             ->with('json_parroquias_id', $json_parroquias_id)
             ->with('ferias', $ferias)
-			->with('filtrar', $filtrar)
+            ->with('filtrar', $filtrar)
             ->with('i', 1);
     }
 
@@ -71,10 +72,10 @@ class FeriasController extends Controller
      */
     public function store(Request $request)
     {
-        $existe = Ferias::where('parroquias_id', $request->parroquias_id)->where('band', 1)->first();
+        $existe = Movil::where('parroquias_id', $request->parroquias_id)->where('band', 1)->first();
         if ($existe){
             if ($existe->fecha < $request->fecha){
-                $viejos = Ferias::where('parroquias_id', $request->parroquias_id)->get();
+                $viejos = Movil::where('parroquias_id', $request->parroquias_id)->get();
                 foreach ($viejos as $viejo) {
                     $viejo->band = 0;
                     $viejo->update();
@@ -87,7 +88,7 @@ class FeriasController extends Controller
         }else{
             $band = 1;
         }
-		/*$viejos = Ferias::where('parroquias_id', $request->parroquias_id)->get();
+        /*$viejos = Movil::where('parroquias_id', $request->parroquias_id)->get();
         if ($viejos) {
             foreach ($viejos as $viejo) {
                 $viejo->band = 0;
@@ -95,9 +96,9 @@ class FeriasController extends Controller
             }
         }*/
 
-        $feria = new Ferias($request->all());
+        $feria = new Movil($request->all());
         $feria->band = $band;
-		$feria->save();
+        $feria->save();
         verSweetAlert2('Feria Campo Soberano cargada correctamente');
         return back();
     }
@@ -133,16 +134,16 @@ class FeriasController extends Controller
         }
 
 
-		$ferias = Ferias::where('municipios_id', $id)->where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
-		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
+        $ferias = Movil::where('municipios_id', $id)->where('band', 1)->orderBy('fecha', 'DESC')->paginate(30);
+        $filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
 
 
-        return view('admin.ferias_campo.index')
+        return view('admin.tienda_movil.index')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)
             ->with('json_parroquias_id', $json_parroquias_id)
             ->with('ferias', $ferias)
-			->with('filtrar', $filtrar)
+            ->with('filtrar', $filtrar)
             ->with('i', 1);
     }
 
@@ -177,16 +178,16 @@ class FeriasController extends Controller
         }
 
 
-		$ferias = Ferias::where('parroquias_id', $id)->orderBy('fecha', 'DESC')->paginate(30);
-		$filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
+        $ferias = Movil::where('parroquias_id', $id)->orderBy('fecha', 'DESC')->paginate(30);
+        $filtrar = Municipio::orderBy('nombre_completo', 'ASC')->get();
 
 
-        return view('admin.ferias_campo.show')
+        return view('admin.tienda_movil.show')
             ->with('municipios', $select_municipios)
             ->with('json_parroquias_valor', $json_parroquias_valor)
             ->with('json_parroquias_id', $json_parroquias_id)
             ->with('ferias', $ferias)
-			->with('filtrar', $filtrar)
+            ->with('filtrar', $filtrar)
             ->with('i', 1);
     }
 
@@ -199,9 +200,9 @@ class FeriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $feria = Ferias::find($id);
-		$feria->familias = $request->familias;
-		$feria->tm = $request->tm;
+        $feria = Movil::find($id);
+        $feria->familias = $request->familias;
+        $feria->tm = $request->tm;
         $feria->fecha = $request->fecha;
         $feria->update();
         verSweetAlert2('Feria Campo Soberano Actualizada', 'toast');
@@ -216,8 +217,8 @@ class FeriasController extends Controller
      */
     public function destroy($id)
     {
-        $feria = Ferias::find($id);
-        $viejo = Ferias::where('id', '!=', $id)->where('parroquias_id', $feria->parroquias_id)->where('band', 0)->orderBy('fecha', 'DESC')->first();
+        $feria = Movil::find($id);
+        $viejo = Movil::where('id', '!=', $id)->where('parroquias_id', $feria->parroquias_id)->where('band', 0)->orderBy('fecha', 'DESC')->first();
         if ($viejo){
             $viejo->band = 1;
             $viejo->update();

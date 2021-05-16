@@ -177,7 +177,11 @@ class UsersController extends Controller
                     'ferias.show'    => $request->input('ferias_campo'),
                     'ferias.update'    => $request->input('ferias_campo'),
                     'ferias.destroy'    => $request->input('ferias_campo'),
-
+                    'movil.index'    => $request->input('tienda_movil'),
+                    'movil.store'    => $request->input('tienda_movil'),
+                    'movil.show'    => $request->input('tienda_movil'),
+                    'movil.update'    => $request->input('tienda_movil'),
+                    'movil.destroy'    => $request->input('tienda_movil'),
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -211,9 +215,9 @@ class UsersController extends Controller
                 }else{
                     $permisos['gestionar_bloques'] = null;
                 }
-				
+
 				//******************************************* Programas
-                if ($permisos['ferias.index']){
+                if ($permisos['ferias.index'] || $permisos['movil.index']){
                     $permisos['programas'] = "true";
                 }else{
                     $permisos['programas'] = null;

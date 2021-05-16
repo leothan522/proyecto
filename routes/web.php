@@ -44,7 +44,7 @@ Route::prefix('/android')->group(function (){
     Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
     Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
     Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
-    Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tiendaMovil');
+    //Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tienda_movil');
 
 
     //Modulo CLAP
@@ -63,6 +63,11 @@ Route::prefix('/android')->group(function (){
 	Route::get('/ferias/campo/{id}', 'Android\FeriasCampoController@index')->name('android.ferias_campo');
 	Route::get('/ferias/campo/{id}/{municipio}', 'Android\FeriasCampoController@verMunicipio')->name('android.ferias_campo_municipio');
     Route::get('/ferias/campo/{id}/{municipio}/{parroquia}', 'Android\FeriasCampoController@verParroquia')->name('android.ferias_campo_parroquia');
+
+    //Tienda Movil
+    Route::get('/tienda/movil/{id}', 'Android\TiendaMovilController@index')->name('android.tienda_movil');
+    Route::get('/tienda/movil/{id}/{municipio}', 'Android\TiendaMovilController@verMunicipio')->name('android.tienda_movil_municipio');
+    Route::get('/tienda/movil/{id}/{municipio}/{parroquia}', 'Android\TiendaMovilController@verParroquia')->name('android.tienda_movil_parroquia');
 
 
 });

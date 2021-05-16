@@ -41,5 +41,6 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
 
     //Programas
     Route::resource('ferias', 'Admin\FeriasController');
+    Route::resource('movil', 'Admin\TiendaMovilController');
 
 });

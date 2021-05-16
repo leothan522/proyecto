@@ -74,8 +74,8 @@
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'programas') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-ferias.index {{--menu-open--}}">
-                    <a href="#" class="nav-link lkm-ferias.index">
+                <li class="nav-item has-treeview lko-ferias.index  lko-movil.index {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-ferias.index lkm-movil.index">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>
                             Programas
@@ -88,6 +88,14 @@
                                 <a href="{{ route('ferias.index') }}" class="nav-link lk-ferias.index">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Ferias Campo Soberano</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (leerJson(Auth::user()->permisos, 'movil.index') || Auth::user()->role == 100)
+                            <li class="nav-item">
+                                <a href="{{ route('movil.index') }}" class="nav-link lk-movil.index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tienda Movil</p>
                                 </a>
                             </li>
                         @endif

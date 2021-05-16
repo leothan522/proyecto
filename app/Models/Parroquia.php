@@ -25,10 +25,15 @@ class Parroquia extends Model
     {
         return $this->hasMany(Censo::class, 'municipios_id', 'id');
     }
-	
+
 	public function ferias()
     {
         return $this->hasMany(Ferias::class, 'parroquias_id', 'id');
+    }
+
+    public function movil()
+    {
+        return $this->hasMany(Movil::class, 'parroquias_id', 'id');
     }
 
 }
