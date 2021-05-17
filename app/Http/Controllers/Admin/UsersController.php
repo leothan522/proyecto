@@ -188,6 +188,12 @@ class UsersController extends Controller
                     'fisica.update'    => $request->input('tienda_fisica'),
                     'fisica.destroy'    => $request->input('tienda_fisica'),
                     'fisica.parametro'    => $request->input('tienda_fisica'),
+                    'enlinea.index'    => $request->input('tienda_enlinea'),
+                    'enlinea.store'    => $request->input('tienda_enlinea'),
+                    'enlinea.show'    => $request->input('tienda_enlinea'),
+                    'enlinea.update'    => $request->input('tienda_enlinea'),
+                    'enlinea.destroy'    => $request->input('tienda_enlinea'),
+                    'enlinea.parametro'    => $request->input('tienda_enlinea'),
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -223,7 +229,7 @@ class UsersController extends Controller
                 }
 
 				//******************************************* Programas
-                if ($permisos['ferias.index'] || $permisos['movil.index'] || $permisos['fisica.index']){
+                if ($permisos['ferias.index'] || $permisos['movil.index'] || $permisos['fisica.index'] || $permisos['enlinea.index']){
                     $permisos['programas'] = "true";
                 }else{
                     $permisos['programas'] = null;

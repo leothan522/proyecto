@@ -1,8 +1,8 @@
 @extends('layouts.admin.master')
 
-@section('title', 'Tiendas Fisicas')
+@section('title', 'Tiendas En Linea')
 
-@section('header', 'Tiendas Fisicas')
+@section('header', 'Tiendas En Linea')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">Parametros Registrados</li>
@@ -50,7 +50,7 @@
         <div class="row justify-content-center">
                 <div class="col-md-3">
 
-                    @if (leerJson(Auth::user()->permisos, 'fisica.store') || Auth::user()->role == 100)
+                    @if (leerJson(Auth::user()->permisos, 'enlinea.store') || Auth::user()->role == 100)
                     <div class="card card-navy">
                         <div class="card-header">
                             <h5 class="card-title">Ingresar Reporte</h5>
@@ -60,15 +60,24 @@
                         </div>
                         <div class="card-body">
 
-                            {!! Form::open(['route' => 'fisica.store', 'method' => 'post', 'name' => 'f1']) !!}
+                            {!! Form::open(['route' => 'enlinea.store', 'method' => 'post', 'name' => 'f1']) !!}
 
                             <div class="form-group">
-                                <label for="name">Tienda Fisica</label>
+                                <label for="name">Tienda En Linea</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-store-alt"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-store"></i></span>
                                     </div>
                                     {!! Form::select('parametros_id', $select_tiendas, null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Plataforma</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-store"></i></span>
+                                    </div>
+                                    {!! Form::select('plataforma', ['TELEFONICA' => 'TELEFONICA', 'WEB' => 'WEB'], 'TELEFONICA', ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +134,7 @@
                     <div class="card-header">
                         <h5 class="card-title">Reportes Registrados</h5>
                         <div class="card-tools">
-                            @if (leerJson(Auth::user()->permisos, 'fisica.show') || Auth::user()->role == 100)
+                            @if (leerJson(Auth::user()->permisos, 'enlinea.show') || Auth::user()->role == 100)
                             <span class="btn btn-tool"><i class="fas fa-calendar-alt"></i></span>
                             @endif
                         </div>
@@ -137,7 +146,7 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col" class="text-center" data-breakpoints="xs">ID</th>
-                                    <th scope="col">Tiendas Fisicas</th>
+                                    <th scope="col">Tiendas En Linea</th>
                                     <th scope="col" class="text-center">Familias</th>
                                     <th scope="col" class="text-center">TM</th>
                                     <th scope="col" class="text-center">Fecha</th>
@@ -153,17 +162,17 @@
                                         <td class="text-right">{{ formatoMillares($feria->tm) }}</td>
                                         <td class="text-center">{{ fecha($feria->fecha)  }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['fisica.destroy', $feria->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$feria->id]) !!}
+                                            {!! Form::open(['route' => ['enlinea.destroy', $feria->id], 'method' => 'DELETE', 'id' => 'form_delete_'.$feria->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'fisica.edit') || Auth::user()->role == 100)
-                                                    <a href="{{ route('fisica.edit', $feria->parametros->id) }}" class="btn btn-info"><i class="fas fa-list"></i></a>
+                                                @if (leerJson(Auth::user()->permisos, 'enlinea.edit') || Auth::user()->role == 100)
+                                                    <a href="{{ route('enlinea.edit', $feria->parametros->id) }}" class="btn btn-info"><i class="fas fa-list"></i></a>
                                                 @endif
-												@if (leerJson(Auth::user()->permisos, 'fisica.update') || Auth::user()->role == 100)
+												@if (leerJson(Auth::user()->permisos, 'enlinea.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $feria->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 @endif
-                                                @if (leerJson(Auth::user()->permisos, 'fisica.destroy') || Auth::user()->role == 100)
+                                                @if (leerJson(Auth::user()->permisos, 'enlinea.destroy') || Auth::user()->role == 100)
                                                     <input type="hidden" name="id_clap" value="{{ $feria->id_clap }}">
                                                     <button type="button" onclick="alertaBorrar('form_delete_{{ $feria->id }}')" class="btn btn-info show-alert-{{ $feria->id }}"><i class="fas fa-trash"></i></button>
                                                 @endif
@@ -182,7 +191,7 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {!! Form::open(['route' => ['fisica.update', $feria->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['enlinea.update', $feria->id], 'method' => 'PUT']) !!}
 
                                                             <div class="form-group">
                                                                 <label for="name">Tienda Fisica</label>
@@ -191,6 +200,15 @@
                                                                         <span class="input-group-text"><i class="fas fa-store-alt"></i></span>
                                                                     </div>
                                                                     <label class="form-control">{{ $feria->parametros->municipios->nombre_corto }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Plataforma</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="fas fa-store"></i></span>
+                                                                    </div>
+                                                                    {!! Form::select('plataforma', ['TELEFONICA' => 'TELEFONICA', 'WEB' => 'WEB'], $feria->plataforma, ['class' => 'custom-select', 'placeholder' => 'Seleccione', 'required']) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -256,9 +274,9 @@
             <div class="col-md-3">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Tiendas Fisicas</h5>
+                        <h5 class="card-title">Tiendas En Linea</h5>
                         <div class="card-tools">
-                            @if (leerJson(Auth::user()->permisos, 'fisica.show') || Auth::user()->role == 100)
+                            @if (leerJson(Auth::user()->permisos, 'enlinea.show') || Auth::user()->role == 100)
                                 <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#modal-tiendas-create">
                                     <i class="fas fa-plus-square"></i>
                                 </button>
@@ -267,14 +285,14 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Agregar Tienda Fisica</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Agregar Tienda En Linea</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
 
-                                                {!! Form::open(['route' => 'fisica.store', 'method' => 'POST']) !!}
+                                                {!! Form::open(['route' => 'enlinea.store', 'method' => 'POST']) !!}
 
                                                 <div class="form-group">
                                                     <label for="name">Municipio</label>
@@ -286,16 +304,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="name">Condición Tienda</label>
+                                                    <label for="name">Plataforma</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-store-alt"></i></span>
+                                                            <span class="input-group-text"><i class="fas fa-store"></i></span>
                                                         </div>
-                                                        {!! Form::select('valor', ['ALGUARISA' => 'ALGUARISA', 'CONVENIO' => 'CONVENIO'], null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
+                                                        {!! Form::select('valor', ['TELEFONICA' => 'TELEFONICA', 'WEB' => 'WEB', 'AMBOS' => 'AMBOS'], null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-right">
-                                                    <input type="hidden" name="nombre" value="tienda_fisica">
+                                                    <input type="hidden" name="nombre" value="tienda_enlinea">
                                                     <input type="submit" class="btn btn-block btn-primary" value="Guardar">
                                                 </div>
 
@@ -326,14 +344,14 @@
                                         <th scope="row" class="text-center">{{ $i++ }}</th>
                                         <td>{{ $tienda->municipios->nombre_corto }}</td>
                                         <td class="">
-                                            {!! Form::open(['route' => ['fisica.parametro', $tienda->id], 'method' => 'DELETE', 'id' => 'form_parametro_'.$tienda->id]) !!}
+                                            {!! Form::open(['route' => ['enlinea.parametro', $tienda->id], 'method' => 'DELETE', 'id' => 'form_parametro_'.$tienda->id]) !!}
                                             <div class="btn-group">
-                                                @if (leerJson(Auth::user()->permisos, 'fisica.update') || Auth::user()->role == 100)
+                                                @if (leerJson(Auth::user()->permisos, 'enlinea.update') || Auth::user()->role == 100)
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{ $tienda->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 @endif
-                                                @if (leerJson(Auth::user()->permisos, 'fisica.parametro') || Auth::user()->role == 100)
+                                                @if (leerJson(Auth::user()->permisos, 'enlinea.parametro') || Auth::user()->role == 100)
                                                     <button type="button" onclick="alertaBorrar('form_parametro_{{ $tienda->id }}')" class="btn btn-info show-alert-{{ $tienda->id }}"><i class="fas fa-trash"></i></button>
                                                 @endif
                                             </div>
@@ -351,7 +369,7 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {!! Form::open(['route' => ['fisica.update', $tienda->id], 'method' => 'PUT']) !!}
+                                                            {!! Form::open(['route' => ['enlinea.update', $tienda->id], 'method' => 'PUT']) !!}
 
                                                             <div class="form-group">
                                                                 <label for="name">Municipio</label>
@@ -363,16 +381,16 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="name">Condición Tienda</label>
+                                                                <label for="name">Plataforma</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-store-alt"></i></span>
+                                                                        <span class="input-group-text"><i class="fas fa-store"></i></span>
                                                                     </div>
-                                                                    {!! Form::select('valor', ['ALGUARISA' => 'ALGUARISA', 'CONVENIO' => 'CONVENIO'], $tienda->valor, ['class' => 'custom-select', 'placeholder' => 'Seleccione', 'required']) !!}
+                                                                    {!! Form::select('valor', ['TELEFONICA' => 'TELEFONICA', 'WEB' => 'WEB', 'AMBOS' => 'AMBOS'], $tienda->valor, ['class' => 'custom-select', 'placeholder' => 'Seleccione', 'required']) !!}
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-right">
-                                                                <input type="hidden" name="nombre" value="tienda_fisica">
+                                                                <input type="hidden" name="nombre" value="tienda_enlinea">
                                                                 <input type="submit" class="btn btn-block btn-primary" value="Guardar">
                                                             </div>
 

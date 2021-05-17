@@ -74,8 +74,8 @@
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'programas') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-ferias.index  lko-movil.index lko-fisica.index {{--menu-open--}}">
-                    <a href="#" class="nav-link lkm-ferias.index lkm-movil.index lkm-fisica.index">
+                <li class="nav-item has-treeview lko-ferias.index  lko-movil.index lko-fisica.index lko-enlinea.index {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-ferias.index lkm-movil.index lkm-fisica.index lkm-enlinea.index">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>
                             Programas
@@ -107,6 +107,14 @@
                                 </a>
                             </li>
                         @endif
+                            @if (leerJson(Auth::user()->permisos, 'enlinea.index') || Auth::user()->role == 100)
+                                <li class="nav-item">
+                                    <a href="{{ route('enlinea.index') }}" class="nav-link lk-enlinea.index">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tiendas En Linea</p>
+                                    </a>
+                                </li>
+                            @endif
                     </ul>
                 </li>
             @endif
