@@ -36,4 +36,9 @@ class Parametro extends Model
         return $this->hasMany(Periodo::class, 'parametros_id', 'id');
     }
 
+    public function fisica()
+    {
+        return $this->hasMany(Fisica::class, 'parametros_id', 'id');
+    }
+
 }

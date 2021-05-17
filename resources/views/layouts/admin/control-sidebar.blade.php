@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('android.tiendaFisica', Auth::user()->id) }}" class="nav-link" target="_blank">
+            <a href="{{ route('android.tienda_fisica', Auth::user()->id) }}" class="nav-link" target="_blank">
                 {{--<i class="far fa-envelope"></i>--}} Tienda Fisica
             </a>
         </li>

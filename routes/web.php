@@ -42,7 +42,7 @@ Route::prefix('/android')->group(function (){
 
 	//Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
     Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
-    Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tiendaFisica');
+    //Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tienda_fisica');
     Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tiendaEnlinea');
     //Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tienda_movil');
 
@@ -68,6 +68,11 @@ Route::prefix('/android')->group(function (){
     Route::get('/tienda/movil/{id}', 'Android\TiendaMovilController@index')->name('android.tienda_movil');
     Route::get('/tienda/movil/{id}/{municipio}', 'Android\TiendaMovilController@verMunicipio')->name('android.tienda_movil_municipio');
     Route::get('/tienda/movil/{id}/{municipio}/{parroquia}', 'Android\TiendaMovilController@verParroquia')->name('android.tienda_movil_parroquia');
+
+    //Tienda Fisica
+    Route::get('/tienda/fisica/{id}', 'Android\TiendaFisicaController@index')->name('android.tienda_fisica');
+    Route::get('/tienda/fisica/{id}/{municipio}', 'Android\TiendaFisicaController@verMunicipio')->name('android.tienda_fisica_municipio');
+    Route::get('/tienda/fisica/{id}/{municipio}/{parroquia}', 'Android\TiendaFisicaController@verParroquia')->name('android.tienda_fisica_parroquia');
 
 
 });

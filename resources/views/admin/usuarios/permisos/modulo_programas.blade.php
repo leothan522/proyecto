@@ -23,6 +23,11 @@
                        @if (leerJson($user->permisos, 'movil.index')) checked @endif>
                 <label for="tienda_movil" class="custom-control-label">Tienda Movil</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input name="tienda_fisica" value="true" class="custom-control-input" type="checkbox" id="tienda_fisica"
+                       @if (leerJson($user->permisos, 'fisica.index')) checked @endif>
+                <label for="tienda_fisica" class="custom-control-label">Tiendas Fisicas</label>
+            </div>
 
         </div>
     </div>

@@ -42,5 +42,7 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     //Programas
     Route::resource('ferias', 'Admin\FeriasController');
     Route::resource('movil', 'Admin\TiendaMovilController');
+    Route::resource('fisica', 'Admin\TiendaFisicaController');
+    Route::delete('fisica/parametro/{id}', 'Admin\TiendaFisicaController@destroyParametro')->name('fisica.parametro');
 
 });
