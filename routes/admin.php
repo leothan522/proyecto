@@ -39,6 +39,8 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::resource('claps', 'Admin\ClapsController');
     Route::resource('periodos', 'Admin\PeriodosController');
 
+    Route::get('/claps/ver/censo/{id}/export', 'Admin\ClapsController@exportCenso')->name('claps.censo_export');
+
     //Programas
     Route::resource('ferias', 'Admin\FeriasController');
     Route::resource('movil', 'Admin\TiendaMovilController');

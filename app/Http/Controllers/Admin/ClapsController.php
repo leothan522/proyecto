@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CensoExport;
 use App\Exports\ImportClapsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClapsRequest;
@@ -881,6 +882,17 @@ class ClapsController extends Controller
         verSweetAlert2("Borrado TODO del CLAPS: <strong class='text-danger'>$clap->nombre_clap</strong>", 'iconHtml', 'error', '<i class="fa fa-trash"></i>');
         return back();
 
+    }
+
+    public function exportCenso($id)
+    {
+        $clap = Clap::find($id);
+        $censo = Censo::where('claps_id', $id)->get();
+        /*return view('admin.claps.exports.censo')
+            ->with('clap', $clap)
+            ->with('censo', $censo)
+            ;*/
+        return Excel::download(new CensoExport($clap, $censo), "CENSO_CLAP_$clap->nombre_clap.xlsx");
     }
 
 

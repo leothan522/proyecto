@@ -27,14 +27,14 @@
                 theme: 'bootstrap4'
             })
         });
-        /*document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             var btn_exportar = document.getElementById('btn_exportar');
             var url = btn_exportar.getAttribute('href');
             btn_exportar.addEventListener('click', function (e) {
                 e.preventDefault();
                 alertExport(url);
             });
-        });*/
+        });
 
         function cambiar(){
             var pdrs = document.getElementById('customFileLang').files[0].name;
@@ -60,7 +60,7 @@
 
                         <div class="card-tools">
                             <span class="btn btn-tool text-bold text-danger">Censo</span>
-                            <a href="#" id="btn_exportar" class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
+                            <a href="{{ route('claps.censo_export', $clap->id) }}" id="btn_exportar" class="btn btn-tool text-success"><i class="fas fa-file-excel"></i> Generar Excel</a>
                             {{--<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
                             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
