@@ -46,4 +46,9 @@ class Parametro extends Model
         return $this->hasMany(Enlinea::class, 'parametros_id', 'id');
     }
 
+    public function proteico()
+    {
+        return $this->hasMany(Proteico::class, 'parametros_id', 'id');
+    }
+
 }

@@ -36,4 +36,9 @@ class Parroquia extends Model
         return $this->hasMany(Movil::class, 'parroquias_id', 'id');
     }
 
+    public function proteico()
+    {
+        return $this->hasMany(Proteico::class, 'parroquias_id', 'id');
+    }
+
 }

@@ -46,4 +46,9 @@ class Municipio extends Model
         return $this->hasMany(Movil::class, 'municipios_id', 'id');
     }
 
+    public function proteico()
+    {
+        return $this->hasMany(Proteico::class, 'municipios_id', 'id');
+    }
+
 }

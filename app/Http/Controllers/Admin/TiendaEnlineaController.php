@@ -173,7 +173,6 @@ class TiendaEnlineaController extends Controller
     public function update(Request $request, $id)
     {
 
-
         if ($request->nombre) {
 
             if ($request->valor == null) {
@@ -200,6 +199,7 @@ class TiendaEnlineaController extends Controller
 
         //verSweetAlert2('Feria Campo Soberano Actualizada', 'toast');
         return back();
+
     }
 
     /**

@@ -48,5 +48,7 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::delete('fisica/parametro/{id}', 'Admin\TiendaFisicaController@destroyParametro')->name('fisica.parametro');
     Route::resource('enlinea', 'Admin\TiendaEnlineaController');
     Route::delete('enlinea/parametro/{id}', 'Admin\TiendaEnlineaController@destroyParametro')->name('enlinea.parametro');
+    Route::resource('proteico', 'Admin\PlanProteicoController');
+    Route::delete('proteico/parametro/{id}', 'Admin\PlanProteicoController@destroyParametro')->name('proteico.parametro');
 
 });

@@ -107,14 +107,22 @@
                                 </a>
                             </li>
                         @endif
-                            @if (leerJson(Auth::user()->permisos, 'enlinea.index') || Auth::user()->role == 100)
-                                <li class="nav-item">
-                                    <a href="{{ route('enlinea.index') }}" class="nav-link lk-enlinea.index">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tiendas En Linea</p>
-                                    </a>
-                                </li>
-                            @endif
+                        @if (leerJson(Auth::user()->permisos, 'enlinea.index') || Auth::user()->role == 100)
+                            <li class="nav-item">
+                                <a href="{{ route('enlinea.index') }}" class="nav-link lk-enlinea.index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Tiendas En Linea</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (leerJson(Auth::user()->permisos, 'proteico.index') || Auth::user()->role == 100)
+                            <li class="nav-item">
+                                <a href="{{ route('proteico.index') }}" class="nav-link lk-enlinea.index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Plan Proteico</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif
