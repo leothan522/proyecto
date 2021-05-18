@@ -194,6 +194,12 @@ class UsersController extends Controller
                     'enlinea.update'    => $request->input('tienda_enlinea'),
                     'enlinea.destroy'    => $request->input('tienda_enlinea'),
                     'enlinea.parametro'    => $request->input('tienda_enlinea'),
+                    'proteico.index'    => $request->input('plan_proteico'),
+                    'proteico.store'    => $request->input('plan_proteico'),
+                    'proteico.show'    => $request->input('plan_proteico'),
+                    'proteico.update'    => $request->input('plan_proteico'),
+                    'proteico.destroy'    => $request->input('plan_proteico'),
+                    'proteico.parametro'    => $request->input('plan_proteico'),
                 ];
                 //******************************************** configuracion SIDEBAR
                 if ($permisos['usuarios.index']){
@@ -229,7 +235,8 @@ class UsersController extends Controller
                 }
 
 				//******************************************* Programas
-                if ($permisos['ferias.index'] || $permisos['movil.index'] || $permisos['fisica.index'] || $permisos['enlinea.index']){
+                if ($permisos['ferias.index'] || $permisos['movil.index'] || $permisos['fisica.index'] ||
+                    $permisos['enlinea.index'] || $permisos['proteico.index']){
                     $permisos['programas'] = "true";
                 }else{
                     $permisos['programas'] = null;

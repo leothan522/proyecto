@@ -33,6 +33,11 @@
                        @if (leerJson($user->permisos, 'enlinea.index')) checked @endif>
                 <label for="tienda_enlinea" class="custom-control-label">Tiendas En Linea</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input name="plan_proteico" value="true" class="custom-control-input" type="checkbox" id="plan_proteico"
+                       @if (leerJson($user->permisos, 'proteico.index')) checked @endif>
+                <label for="plan_proteico" class="custom-control-label">Plan Proteico</label>
+            </div>
         </div>
     </div>
 </div>

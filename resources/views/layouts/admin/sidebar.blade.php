@@ -74,8 +74,8 @@
             </li>
             @endif
             @if (leerJson(Auth::user()->permisos, 'programas') || Auth::user()->role == 100)
-                <li class="nav-item has-treeview lko-ferias.index  lko-movil.index lko-fisica.index lko-enlinea.index {{--menu-open--}}">
-                    <a href="#" class="nav-link lkm-ferias.index lkm-movil.index lkm-fisica.index lkm-enlinea.index">
+                <li class="nav-item has-treeview lko-ferias.index  lko-movil.index lko-fisica.index lko-enlinea.index lko-proteico.index {{--menu-open--}}">
+                    <a href="#" class="nav-link lkm-ferias.index lkm-movil.index lkm-fisica.index lkm-enlinea.index lkm-proteico.index">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>
                             Programas
@@ -117,7 +117,7 @@
                         @endif
                         @if (leerJson(Auth::user()->permisos, 'proteico.index') || Auth::user()->role == 100)
                             <li class="nav-item">
-                                <a href="{{ route('proteico.index') }}" class="nav-link lk-enlinea.index">
+                                <a href="{{ route('proteico.index') }}" class="nav-link lk-proteico.index">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Plan Proteico</p>
                                 </a>
