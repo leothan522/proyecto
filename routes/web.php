@@ -41,7 +41,7 @@ Route::prefix('/android')->group(function (){
     Route::get('/usuarios', 'Android\AppController@usuariosRegistrados')->name('android.usuarios');
 
 	//Route::get('/ferias/campo/{id}', 'Android\ProgramasController@feriasCampo')->name('android.ferias_campo');
-    Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
+    //Route::get('/plan/proteico/{id}', 'Android\ProgramasController@planProteico')->name('android.plan_proteico');
     //Route::get('/tienda/fisica/{id}', 'Android\ProgramasController@tiendaFisica')->name('android.tienda_fisica');
     //Route::get('/tienda/enlinea/{id}', 'Android\ProgramasController@tiendaEnlinea')->name('android.tienda_enlinea');
     //Route::get('/tienda/movil/{id}', 'Android\ProgramasController@tiendaMovil')->name('android.tienda_movil');
@@ -78,6 +78,11 @@ Route::prefix('/android')->group(function (){
     Route::get('/tienda/enlinea/{id}', 'Android\TiendaEnlineaController@index')->name('android.tienda_enlinea');
     Route::get('/tienda/enlinea/{id}/{municipio}', 'Android\TiendaEnlineaController@verMunicipio')->name('android.tienda_enlinea_municipio');
     Route::get('/tienda/enlinea/{id}/{municipio}/{parroquia}', 'Android\TiendaEnlineaController@verParroquia')->name('android.tienda_enlinea_parroquia');
+
+    //Plan Proteico
+    Route::get('/plan/proteico/{id}', 'Android\PlanProteicoController@index')->name('android.plan_proteico');
+    Route::get('/plan/proteico/{id}/{municipio}', 'Android\PlanProteicoController@verMunicipio')->name('android.plan_proteico_municipio');
+    Route::get('/plan/proteico/{id}/{municipio}/{parroquia}', 'Android\PlanProteicoController@verParroquia')->name('android.plan_proteico_parroquia');
 
 
 });

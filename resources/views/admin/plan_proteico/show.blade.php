@@ -121,7 +121,7 @@
                                 <label for="name">Parroquia</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-tags"></i></span>
                                     </div>
                                     {!! Form::select('parroquias_id', ['' => 'Seleccione'], null, ['class' => 'custom-select select2bs4', 'placeholder' => 'Seleccione', 'required']) !!}
                                 </div>
@@ -288,7 +288,7 @@
                                                                 <label for="name">Parroquia</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
+                                                                        <span class="input-group-text"><i class="fas fa-tags"></i></span>
                                                                     </div>
                                                                     <label class="form-control">{{ $feria->parroquias->nombre_completo }}</label>
                                                                 </div>
