@@ -126,6 +126,52 @@
         </div>
     </div>
 
+    <div class="row justify-content-center p-1">
 
+        <div class="col-12">
+
+            <div class="card card-navy collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">Histórico de Atención</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+
+
+                    <ul class="nav nav-pills flex-column">
+                        @foreach ($ferias as $feria)
+                            @php($i++)
+                            <li class="nav-item active">
+                                <a class="nav-link">
+                                    <span CLASS="text-sm">{{--{{ $i }}.- --}}{{ fechaFeria($feria->fecha_atencion) }}</span>
+                                    <span class="float-right">
+                                    {{--<span class="badge bg-maroon col-5">{{ formatoMillares($feria->familias, 0) }}</span>
+									<span class="col-1"></span>--}}
+                                        {{--<span class="badge bg-indigo col-5">{{ formatoMillares($feria->tm, 2) }}</span>--}}
+                                        <i class="fas fa-cubes"></i> {{ $feria->parametros->valor }}
+                                        {{--<span CLASS="text-sm">--}}{{--{{ $i }}.- --}}{{--{{ fechaFeria($feria->fecha_atencion) }}</span>--}}
+                                </span>
+                                </a>
+                            </li>
+
+                        @endforeach
+                    </ul>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+        </div>
+
+    </div>
 
 @endsection

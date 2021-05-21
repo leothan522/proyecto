@@ -97,8 +97,7 @@ class ModuloClapController extends Controller
         }
         $periodo_atencion = formatoMillares($dias / $bloques->count(), 0);
 
-        //dd($periodo_atencion);
-
+        $ferias = Periodo::where('municipios_id', $id_municipio)->orderBy('fecha_atencion', 'DESC')->get();
 
         return view('android.modulo_clap.municipio')
             ->with('familias', $familias)
@@ -106,7 +105,9 @@ class ModuloClapController extends Controller
             ->with('municipio', $municipio)
             ->with('parroquias', $parroquias)
             ->with('bloques', $bloques)
-            ->with('periodo_atencion', $periodo_atencion);
+            ->with('periodo_atencion', $periodo_atencion)
+            ->with('ferias', $ferias)
+            ->with('i', 0);
     }
 
     public function verParroquia($id, $id_municipio, $id_parroquia)
