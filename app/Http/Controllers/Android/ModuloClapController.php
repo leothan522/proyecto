@@ -34,7 +34,21 @@ class ModuloClapController extends Controller
                 $municipio->familias = 0;
             }
 
+            $bloques = Parametro::where('nombre', 'bloques')->where('tabla_id', $municipio->id)->orderBy('valor', 'ASC')->get();
+            $bloques->each(function ($bloque){
+                $periodo = Periodo::where('parametros_id', $bloque->id)->where('tipo_entrega', 'completa')->first();
+                if ($periodo){
+                    $bloque->ultima = $periodo->fecha_atencion;
+                }else{
+                    $bloque->ultima = null;
+                }
+            });
+            $municipio->bloques = $bloques;
+
+
         });
+
+        //dd($municipios);
 
         $programa_clap = Clap::where('programa', 'CLAP')->count();
         $programa_bms = Clap::where('programa','!=', 'CLAP')->count();

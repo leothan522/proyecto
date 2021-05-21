@@ -78,6 +78,56 @@
     </div>
 
     <div class="row justify-content-center p-1">
+        <div class="col-12">
+            <div class="card card-navy collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">Semáforo Planificación Bloques</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="nav nav-pills flex-column">
+                        @foreach ($municipios as $municipio)
+                            <li class="nav-item active">
+                                <a href="{{ route('android.modulo_clap_municipio',[Auth::user()->id, $municipio->id]) }}" class="nav-link" onclick="verCargando()">
+                                    <span class="row text-sm">{{ $municipio->nombre_completo }}</span>
+                                    <span class="row text-sm">
+                                        @php($cont = 0)
+                                        @foreach($municipio->bloques as $bloque)
+                                            @php($cont++)
+                                        <span class="col-2">
+                                            @if($bloque->valor != 'BMS') <i class="fas fa-cubes"></i> @endif
+                                                {{ $bloque->valor }}
+                                                <span class="float-right badge {{ semaforoDias(cuantosDias($bloque->ultima, date('Y-m-d'))) }}">{{ cuantosDias($bloque->ultima, date('Y-m-d')) }}</span>
+                                        </span>
+                                        @endforeach
+                                        @for($cont; $cont < 5; $cont++)
+                                            <span class="col-2">{{--<i class="fas fa-cubes"></i> 1<span class="float-right badge bg-success"></span>--}}</span>
+                                        @endfor
+                                        {{--<span class="col-2"><i class="fas fa-cubes"></i> 1<span class="float-right badge bg-success">99</span></span>
+                                        <span class="col-2"><i class="fas fa-cubes"></i> 1<span class="float-right badge bg-success">99</span></span>
+                                        <span class="col-2"><i class="fas fa-cubes"></i> 1<span class="float-right badge bg-success">99</span></span>
+                                        <span class="col-2">--}}{{--<i class="fas fa-cubes"></i>--}}{{-- BMS<span class="float-right badge bg-success">99</span></span>--}}
+                                    </span>
+                                    {{--<span class="float-right justify-content-center row col-5">
+                                        <span class="badge bg-success col-5">{{ formatoMillares($municipio->claps, 0) }}</span>
+                                        <span class="col-2"></span>
+                                        <span class="badge bg-warning col-5">{{ formatoMillares($municipio->familias, 0) }}</span>
+                                    </span>--}}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center p-1">
         <div class="col-md-3">
             <div class="card-body">
 

@@ -42,6 +42,11 @@ function fecha($fecha, $format = null){
 }
 
 function cuantosDias($fecha_inicio, $fecha_final){
+
+    if ($fecha_inicio == null){
+        return 0;
+    }
+
     $carbon = new Carbon();
     $fechaEmision = $carbon->parse($fecha_inicio);
     $fechaExpiracion = $carbon->parse($fecha_final);
@@ -104,7 +109,7 @@ function formatoMillares($cantidad, $decimal = 2){
 //Ceros a la izquierda
 function cerosIzquierda($cantidad, $cantCeros = 2){
     if ($cantidad == 0){
-        return 0;
+        return 'nulo';
     }
     return str_pad($cantidad, $cantCeros, "0", STR_PAD_LEFT);
 }
@@ -150,6 +155,25 @@ function colorBarra($porcentaje){
         break;
         default:
             return "bg-info";
+        break;
+    }
+}
+
+function semaforoDias($dias){
+
+    if ($dias == 0){
+        return 'bg-success';
+    }
+
+    switch ($dias){
+        case $dias <= 30:
+            return "bg-success";
+        break;
+        case $dias > 40:
+            return "bg-danger";
+        break;
+        default:
+            return "bg-warning";
         break;
     }
 }
