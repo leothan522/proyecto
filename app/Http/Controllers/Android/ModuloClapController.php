@@ -47,7 +47,7 @@ class ModuloClapController extends Controller
             $municipio->bloques = $bloques;
 
             if ($bloques->count()){
-                $municipio->promedio = $bloques->sum('suma') / $bloques->count();
+                $municipio->promedio = round($bloques->sum('suma') / $bloques->count());
             }else{
                 $municipio->promedio = 0;
             }
