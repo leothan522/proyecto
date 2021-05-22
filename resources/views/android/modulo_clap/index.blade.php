@@ -90,10 +90,10 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="nav nav-pills flex-column">
-                        @foreach ($municipios as $municipio)
+                        @foreach ($bloques as $municipio)
                             <li class="nav-item active">
                                 <a href="{{ route('android.modulo_clap_municipio',[Auth::user()->id, $municipio->id]) }}" class="nav-link" onclick="verCargando()">
-                                    <span class="row text-sm">{{ $municipio->nombre_completo }}</span>
+                                    <span class="row text-sm text-bold {{ semaforoDias($municipio->promedio, true) }}">{{ $municipio->nombre_completo }}</span>
                                     <span class="row text-sm">
                                         @php($cont = 0)
                                         @foreach($municipio->bloques as $bloque)

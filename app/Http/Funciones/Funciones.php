@@ -159,23 +159,47 @@ function colorBarra($porcentaje){
     }
 }
 
-function semaforoDias($dias){
+function semaforoDias($dias, $text = false){
 
-    if ($dias == 0){
-        return 'bg-success';
+    if ($text){
+
+        if ($dias == 0){
+            return 'text-success';
+        }
+
+        switch ($dias){
+            case $dias <= 30:
+                return "text-success";
+                break;
+            case $dias > 40:
+                return "text-danger";
+                break;
+            default:
+                return "text-warning";
+                break;
+        }
+
+    }else{
+
+        if ($dias == 0){
+            return 'bg-success';
+        }
+
+        switch ($dias){
+            case $dias <= 30:
+                return "bg-success";
+                break;
+            case $dias > 40:
+                return "bg-danger";
+                break;
+            default:
+                return "bg-warning";
+                break;
+        }
+
     }
 
-    switch ($dias){
-        case $dias <= 30:
-            return "bg-success";
-        break;
-        case $dias > 40:
-            return "bg-danger";
-        break;
-        default:
-            return "bg-warning";
-        break;
-    }
+
 }
 
 //Alertas de sweetAlert2

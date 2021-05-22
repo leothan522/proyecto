@@ -42,9 +42,15 @@ class ModuloClapController extends Controller
                 }else{
                     $bloque->ultima = null;
                 }
+                $bloque->suma = cuantosDias($bloque->ultima, date('Y-m-d'));
             });
             $municipio->bloques = $bloques;
 
+            if ($bloques->count()){
+                $municipio->promedio = $bloques->sum('suma') / $bloques->count();
+            }else{
+                $municipio->promedio = 0;
+            }
 
         });
 
@@ -57,6 +63,7 @@ class ModuloClapController extends Controller
             ->with('estadal', $estadal)
             ->with('claps', $claps_estadal)
             ->with('municipios', $municipios)
+            ->with('bloques', $municipios->sortByDesc('promedio'))
             ->with('programa_clap', $programa_clap)
             ->with('programa_bms', $programa_bms);
     }
