@@ -10,7 +10,7 @@ class Clap extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = "Claps";
+    protected $table = "claps";
     protected $fillable = [
         'nombre_clap',
         'programa',
