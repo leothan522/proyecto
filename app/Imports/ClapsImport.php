@@ -254,6 +254,7 @@ class ClapsImport implements ToModel, WithHeadingRow
                 $import = new ImportClap($data);
             }
         }catch (\ErrorException $e) {
+            dd($e);
             $import = null;
         }
 
