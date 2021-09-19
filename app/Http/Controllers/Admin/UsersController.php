@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 
 class UsersController extends Controller
@@ -20,11 +22,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $clave = Str::random(8);
+        /*$clave = Str::random(8);
         $users = User::orderBy('id', 'DESC')->paginate(30);
         return view('admin.usuarios.index')
             ->with('users', $users)
-            ->with('clave', $clave);
+            ->with('clave', $clave);*/
+        return view('admin.usuarios_new.index');
     }
 
     /**
@@ -336,5 +339,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport(), "Usuarios_Registrados_".date('d-m-Y').".xlsx");
     }
 }

@@ -16,6 +16,23 @@ function status($i){
     return $status[$i];
 }
 
+function estatusUsuario($i, $icon = null){
+    if (is_null($icon)){
+        $suspendido = "Suspendido";
+        $activado = "Activo";
+    }else{
+        $suspendido = '<i class="fa fa-user-slash"></i>';
+        $activado = '<i class="fa fa-user-check"></i>';
+    }
+
+    $status = [
+        '0' => '<span class="text-danger">'.$suspendido.'</span>',
+        '1' => '<span class="text-success">'.$activado.'</span>'/*,
+        '2' => '<span class="text-success">Confirmado</span>'*/
+    ];
+    return $status[$i];
+}
+
 function role($i = null){
     $status = [
         '0'     => 'Estandar',

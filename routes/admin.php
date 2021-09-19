@@ -51,4 +51,6 @@ Route::middleware(['auth', 'user.status', 'isadmin', 'user.permisos'])->prefix('
     Route::resource('proteico', 'Admin\PlanProteicoController');
     Route::delete('proteico/parametro/{id}', 'Admin\PlanProteicoController@destroyParametro')->name('proteico.parametro');
 
+    //new
+    Route::get('export/usuarios', 'Admin\UsersController@export')->name('usuarios.excel');
 });

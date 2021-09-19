@@ -66,4 +66,9 @@ class User extends Authenticatable
         return $this->hasMany(Parametro::class, 'valor', 'id');
     }
 
+    public function scopeBuscar($query, $keyword)
+    {
+        return $query->where('name', 'LIKE', "%$keyword%");
+    }
+
 }

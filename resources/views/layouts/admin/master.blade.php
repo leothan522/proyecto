@@ -34,6 +34,7 @@
     <script src="{{ asset('js/master.js') }}"></script>
 
     @yield('link')
+    @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse layout-navbar-fixed layout-fixed pace-primary">
 <!-- Site wrapper -->
@@ -131,5 +132,7 @@
 </script>
 
 @yield('script')
+@livewireScripts
+<x-livewire-alert::scripts />
 </body>
 </html>

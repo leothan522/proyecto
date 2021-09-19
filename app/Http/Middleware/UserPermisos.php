@@ -21,6 +21,7 @@ class UserPermisos
         if (leerJson(Auth::user()->permisos, Route::currentRouteName()) == true || Auth::user()->role == 100){
             return $next($request);
         }else{
+            verSweetAlert2('No tienes Permisos Suficientes', 'toast', 'error');
             return redirect()->route('dashboard');
         }
 
