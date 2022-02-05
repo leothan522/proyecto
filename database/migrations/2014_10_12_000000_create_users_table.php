@@ -28,6 +28,17 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+		
+		DB::table("users")
+            ->insert([
+                "name" => "Yonathan Castillo",
+                "email" => "leothan522@gmail.com",
+                "password" => \Illuminate\Support\Facades\Hash::make("20025623"),
+                "role" => "100",
+                "estatus" => "1",
+                "created_at" => \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
+            ]);
     }
 
     /**
