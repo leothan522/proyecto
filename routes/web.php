@@ -84,6 +84,8 @@ Route::prefix('/android')->group(function (){
     Route::get('/plan/proteico/{id}/{municipio}', 'Android\PlanProteicoController@verMunicipio')->name('android.plan_proteico_municipio');
     Route::get('/plan/proteico/{id}/{municipio}/{parroquia}', 'Android\PlanProteicoController@verParroquia')->name('android.plan_proteico_parroquia');
 
+    //Personal de Alguarisa
+    Route::get('/personal/{id?}', 'Android\PersonalController@index')->name('android.personal_alguarisa');
 
 });
 

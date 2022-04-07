@@ -43,6 +43,11 @@
                 {{--<i class="far fa-envelope"></i>--}} Buscar
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('android.personal_alguarisa', 19160501) }}" class="nav-link" target="_blank">
+                {{--<i class="far fa-envelope"></i>--}} Carnet
+            </a>
+        </li>
         <li class="dropdown-divider"></li>
     </ul>
 
