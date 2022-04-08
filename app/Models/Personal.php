@@ -18,6 +18,7 @@ class Personal extends Model
         'cargo',
         'ubicacion_geografica',
         'ubicacion_administrativa',
+        'estatus',
         'foto_perfil'
     ];
 
