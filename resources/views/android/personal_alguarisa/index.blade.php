@@ -15,7 +15,7 @@
                         <p class="text-muted text-sm"><b>Cargo: </b> {{ $personal->cargo }} </p>
                         <ul class="ml-4 mb-0 fa-ul text-muted">
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span> Cédula de Identidad: <b><br>{{ formatoMillares($personal->cedula, 0) }}</b></li>
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user-shield"></i></span> Cargo: <b><br>{{ $personal->cargo }}</b></li>
+                            {{--<li class="small"><span class="fa-li"><i class="fas fa-lg fa-user-shield"></i></span> Cargo: <b><br>{{ $personal->cargo }}</b></li>--}}
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Ubicación Administrativa: <b><br>{{ $personal->ubicacion_administrativa }}</b></li>
                             <br>
                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user-alt"></i></span> Estatus: <b>{{ $personal->estatus }}</b></li>
