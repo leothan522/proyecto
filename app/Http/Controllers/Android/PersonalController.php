@@ -11,6 +11,7 @@ class PersonalController extends Controller
     public function index($cedula = null)
     {
         $personal = Personal::where('cedula', $cedula)->first();
+        //dd($personal);
         return view('android.personal_alguarisa.index')
             ->with('personal', $personal);
     }

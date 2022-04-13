@@ -282,4 +282,15 @@ function verSweetAlert2($mensaje, $alert = null, $type = 'success', $icono = '<i
 
 }
 
+function verFotosPersonal($url_imagen)
+{
+    $image_path = public_path()."/".$url_imagen;
+
+    if (file_exists($image_path.".jpg")) { return asset($url_imagen.".jpg"); }
+    if (file_exists($image_path.".jpeg")) { return asset($url_imagen.".jpeg"); }
+    if (file_exists($image_path.".png")) { return asset($url_imagen.".png"); }
+
+    return asset('img/user.png');
+}
+
 
