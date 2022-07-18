@@ -156,9 +156,11 @@
                 <!-- /.progress-group -->
                 <div class="progress-group">
                     <span class="progress-text">Total</span>
-                    <span class="float-right"><b>{{ formatoMillares($programa_clap + $programa_bms, 0) }}</b>/{{ formatoMillares($claps->valor, 0) }}</span>
+                    <span class="float-right"><b>{{ formatoMillares($programa_clap + $programa_bms, 0) }}</b>/@if($claps) {{ formatoMillares($claps->valor, 0) }} @endif</span>
                     <div class="progress progress-sm">
+                        @if($claps)
                         <div class="progress-bar {{ colorBarra(obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor)) }}" style="width: {{ obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor) }}%">{{ obtenerPorcentaje($programa_clap + $programa_bms, $claps->valor) }}%</div>
+                        @endif
                     </div>
                 </div>
                 <!-- /.progress-group -->

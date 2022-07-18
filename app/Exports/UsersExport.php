@@ -7,10 +7,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class UsersExport implements FromView, WithTitle, WithProperties
+class UsersExport implements FromView, WithTitle, WithProperties, ShouldAutoSize
 {
     public function view(): View
     {

@@ -19,6 +19,11 @@ class ModuloClapController extends Controller
 
         $estadal = Parametro::where('nombre', 'familias_estadal')->first();
         $claps_estadal = Parametro::where('nombre', 'claps_estadal')->first();
+        if ($claps_estadal){
+            $claps = $claps_estadal;
+        }else{
+            $claps = false;
+        }
         $municipios = Municipio::orderBy('nombre_completo', 'ASC')->get();
         $municipios->each(function ($municipio) {
             $clap = Parametro::where('nombre', 'claps')->where('tabla_id', $municipio->id)->first();
@@ -54,14 +59,14 @@ class ModuloClapController extends Controller
 
         });
 
-        //dd($municipios);
+        //dd($claps_estadal);
 
         $programa_clap = Clap::where('programa', 'CLAP')->count();
         $programa_bms = Clap::where('programa','!=', 'CLAP')->count();
 
         return view('android.modulo_clap.index')
             ->with('estadal', $estadal)
-            ->with('claps', $claps_estadal)
+            ->with('claps', $claps)
             ->with('municipios', $municipios)
             ->with('bloques', $municipios->sortByDesc('promedio'))
             ->with('programa_clap', $programa_clap)
